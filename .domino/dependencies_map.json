@@ -23,7 +23,11 @@
             "SimulatePiece",
             "PredictPiece"
         ],
-        "secrets": [],
-        "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0"
+        "secrets": [
+            "onedata_token",
+            "onedata_output_dir",
+            "onedata_onezone_host"
+        ],
+        "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0"
     }
 }
