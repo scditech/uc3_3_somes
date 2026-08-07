@@ -1,5 +1,11 @@
 from pydantic import BaseModel, Field
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+
+
 METRIC_HELP: dict[str, str] = {
     "savings_period": "Úspora na nákladoch za elektrinu počas simulovaného obdobia.",
     "capex": "Jednorazová investícia do FVE a batérie (€).",
@@ -43,7 +49,7 @@ METRIC_HELP: dict[str, str] = {
 }
 
 
-class InputModel(BaseModel):
+class InputModel(RunIdInputMixin):
     report_json: str = Field(default="", description="Path to mrk_savings_report.json (legacy/SEED appendix)")
     kpi_results_csv: str = Field(default="", description="Path to kpi_results.csv (legacy)")
     investment_evaluation_csv: str = Field(default="", description="Path to investment_evaluation.csv (SEED appendix)")
@@ -60,6 +66,10 @@ class InputModel(BaseModel):
     data_quality_report_json: str | None = Field(
         default=None, description="Data validation report from ingestion/preprocessing"
     )
+
+
+class SecretsModel(OneDataSecretsModel):
+    pass
 
 
 class OutputModel(BaseModel):

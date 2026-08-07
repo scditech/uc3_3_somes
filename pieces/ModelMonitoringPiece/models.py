@@ -2,8 +2,14 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
 
-class InputModel(BaseModel):
+
+
+class InputModel(RunIdInputMixin):
     predictions_csv: str = Field(description="CSV with prediction_load_kw and optionally load_kw")
     pv_forecast_csv: str = Field(default="", description="virtual_solar.csv with pv_kw forecast")
     pv_actual_csv: str = Field(default="", description="pv_production_measurements.csv with pv_kw_measured")
@@ -11,6 +17,10 @@ class InputModel(BaseModel):
     bess_telemetry_csv: str = Field(default="", description="BESS telemetry with the executed battery power")
     timestep_hours: float = Field(default=0.25, description="Dispatch timestep used for energy totals")
     history_csv: str = Field(default="", description="Measured history used to label the retraining dataset")
+
+
+class SecretsModel(OneDataSecretsModel):
+    pass
 
 
 class OutputModel(BaseModel):

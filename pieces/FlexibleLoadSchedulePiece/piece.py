@@ -17,9 +17,30 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
 
 class FlexibleLoadSchedulePiece(BasePiece):
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=False, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         repo_root = Path(__file__).resolve().parents[2]
         if str(repo_root) not in sys.path:
             sys.path.insert(0, str(repo_root))
@@ -60,11 +81,23 @@ class FlexibleLoadSchedulePiece(BasePiece):
             meta = {"n_loads": len(loads), "n_activations": len(activation), "workflow_type": "SoMES"}
             (out_dir / "flexible_load_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
             _log(f"Scheduled {len(activation)} flexible loads")
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Flexible load schedule activations={len(activation)}",
                 flexible_load_schedule_csv=str(plan_path),
                 flexible_load_activation_csv=str(act_path),
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "FlexibleLoadSchedulePiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception as exc:
             (out_dir / "flexible_load_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR: {exc}")

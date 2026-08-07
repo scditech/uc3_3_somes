@@ -13,17 +13,46 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
 
 def _safe_load_model(model_path_raw: str, registry_root_raw: str):
+    """Load a registry model; accept absolute, relative, basename, or onedata:// index entries."""
     root = Path(registry_root_raw).resolve()
-    model_path = Path(model_path_raw).resolve()
-    try:
-        model_path.relative_to(root)
-    except ValueError as exc:
-        raise ValueError(f"Model path outside registry root: {model_path}") from exc
-    if not model_path.is_file():
-        raise FileNotFoundError(f"Model file not found: {model_path}")
-    return joblib.load(model_path)
+    raw_s = str(model_path_raw).strip().rstrip("/")
+    base_name = raw_s.rsplit("/", 1)[-1] if "/" in raw_s else Path(raw_s).name
+    candidates = [root / base_name]
+    local = Path(raw_s)
+    if not str(raw_s).startswith("onedata:"):
+        candidates.append(root / local)
+        if local.is_absolute():
+            candidates.insert(0, local)
+    seen: set[str] = set()
+    for cand in candidates:
+        try:
+            model_path = cand.resolve()
+        except Exception:
+            continue
+        key = str(model_path)
+        if key in seen:
+            continue
+        seen.add(key)
+        try:
+            model_path.relative_to(root)
+        except ValueError:
+            continue
+        if model_path.is_file():
+            return joblib.load(model_path)
+    raise FileNotFoundError(
+        f"Model file not found under registry {root}: tried {[str(c) for c in candidates]}"
+    )
 
 
 def _features(df: pd.DataFrame) -> pd.DataFrame:
@@ -173,7 +202,19 @@ def _site_forecast(forecast: pd.DataFrame, history: pd.DataFrame) -> pd.DataFram
 
 
 class ForecastHorizonPiece(BasePiece):
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=False, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         log_path = Path(self.results_path) / "forecast_horizon.log"
         err_path = Path(self.results_path) / "forecast_horizon_error.txt"
         try:
@@ -253,13 +294,25 @@ class ForecastHorizonPiece(BasePiece):
                 f.write(
                     f"[INFO] forecast_rows={len(rows)} departments={len(confidence)} site_steps={len(site_df)}\n"
                 )
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Forecast completed, rows={len(rows)}",
                 forecast_csv=str(out_path),
                 forecast_confidence_json=str(conf_path),
                 peak_demand_json=str(peak_path),
                 site_forecast_csv=str(site_path),
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "ForecastHorizonPiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception:
             err = traceback.format_exc()
             with open(log_path, "a", encoding="utf-8") as f:

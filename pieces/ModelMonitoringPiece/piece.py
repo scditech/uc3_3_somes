@@ -13,6 +13,15 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
 
 def _actual_load(predictions: pd.DataFrame, history_csv: str) -> pd.Series:
     """Realised load aligned to the prediction rows.
@@ -111,7 +120,19 @@ class ModelMonitoringPiece(BasePiece):
     Monitors model quality and data drift on 15-minute predictions.
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=False, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         log_path = Path(self.results_path) / "model_monitoring.log"
         err_path = Path(self.results_path) / "model_monitoring_error.txt"
         try:
@@ -225,7 +246,7 @@ class ModelMonitoringPiece(BasePiece):
                 f.write(f"[INFO] retraining rows={retrain_meta['rows']} labelled={retrain_meta['labelled_rows']}\n")
                 for action in feedback["recommended_actions"]:
                     f.write(f"[ACTION] {action}\n")
-            return OutputModel(
+            _piece_out = OutputModel(
                 report_json=str(report_path),
                 daily_csv=str(daily_path),
                 message=f"Model monitoring report generated (closed loop ok: {feedback['closed_loop_ok']}).",
@@ -233,6 +254,18 @@ class ModelMonitoringPiece(BasePiece):
                 closed_loop_ok=bool(feedback["closed_loop_ok"]),
                 retraining_dataset_csv=str(retrain_path),
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "ModelMonitoringPiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception:
             err = traceback.format_exc()
             with open(log_path, "a", encoding="utf-8") as f:

@@ -15,6 +15,15 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
 
 class SomesConnectorsPiece(BasePiece):
     """Module 1 connectors for SoMES-specific operational data categories.
@@ -24,7 +33,19 @@ class SomesConnectorsPiece(BasePiece):
     the manifest and every dataset is profiled by the quality checks.
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=True, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         repo_root = Path(__file__).resolve().parents[2]
         if str(repo_root) not in sys.path:
             sys.path.insert(0, str(repo_root))
@@ -141,7 +162,7 @@ class SomesConnectorsPiece(BasePiece):
                 f"Ready connectors: {list(files)}; live sources={live_used}; "
                 f"quality={bundle['overall_severity']}"
             )
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"SoMES connectors ready (live={live_used}, quality={bundle['overall_severity']})",
                 connectors_manifest_json=str(manifest_path),
                 weather_forecast_csv=str(out_dir / "weather_forecast.csv"),
@@ -155,6 +176,18 @@ class SomesConnectorsPiece(BasePiece):
                 missing_data_report_csv=str(missing_path),
                 live_sources_used=live_used,
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "SomesConnectorsPiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception as exc:
             (out_dir / "somes_connectors_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR: {exc}")

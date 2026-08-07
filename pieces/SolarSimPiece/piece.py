@@ -18,6 +18,15 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
 
 def _load_simulate_module():
     repo_root = Path(__file__).resolve().parents[2]
@@ -95,7 +104,19 @@ def _production_uncertainty(
 class SolarSimPiece(BasePiece):
     """SoMES PV/RES forecast via UC3.4-style XGBoost PVOUT (fallback: synthetic)."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=False, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         csv_path = Path(input_data.load_csv)
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path or scenario_path.parent)
@@ -237,8 +258,20 @@ class SolarSimPiece(BasePiece):
         out_df.to_csv(out_csv, index=False)
         uncertainty_path = out_dir / "pv_forecast_uncertainty.json"
         _log(f"Wrote output: {out_csv}")
-        return OutputModel(
+        _piece_out = OutputModel(
             message="SoMES PV/RES forecast finished (UC3.4-style AI)",
             virtual_solar_csv=str(out_csv),
             pv_forecast_uncertainty_json=str(uncertainty_path) if uncertainty_path.is_file() else "",
         )
+        if od is not None:
+            if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                try:
+                    _piece_out.run_id = _run_id
+                except Exception:
+                    pass
+            return od.finish_piece(
+                _piece_out, self.results_path, secrets_data, "SolarSimPiece", _stage, run_id=_run_id
+            )
+        if _stage is not None:
+            _stage.cleanup()
+        return _piece_out

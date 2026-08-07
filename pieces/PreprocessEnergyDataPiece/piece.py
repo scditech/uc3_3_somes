@@ -4,6 +4,15 @@ try:
 except ModuleNotFoundError:
     from local_compat.base_piece import BasePiece
 from .models import InputModel, OutputModel
+
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 from pathlib import Path
 import json
 import sys
@@ -17,7 +26,19 @@ class PreprocessEnergyDataPiece(BasePiece):
     The prediction input for PredictPiece is a separate CSV and is not generated here.
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=False, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         log_path = Path(self.results_path) / "preprocess_energy_data.log"
         err_path = Path(self.results_path) / "preprocess_energy_data_error.txt"
         try:
@@ -25,7 +46,13 @@ class PreprocessEnergyDataPiece(BasePiece):
             with open(log_path, "a", encoding="utf-8") as f:
                 f.write("[INFO] PreprocessEnergyDataPiece started\n")
 
-            input_path = Path(input_data.input_path)
+            raw_path = (input_data.input_path or "").strip()
+            if not raw_path:
+                raise ValueError(
+                    "input_path is empty — upstream FetchEnergyDataPiece likely failed "
+                    "or returned no output_path. Set Storage Source = Local and ensure load CSVs exist."
+                )
+            input_path = Path(raw_path)
             generate_predict = getattr(input_data, "generate_predict_dataset", False)
 
             print(f"[INFO] Using input file: {input_path}")
@@ -33,6 +60,8 @@ class PreprocessEnergyDataPiece(BasePiece):
 
             if not input_path.exists():
                 raise FileNotFoundError(f"Input file not found: {input_path}")
+            if input_path.is_dir():
+                raise ValueError(f"input_path must be a parquet file, not a directory: {input_path}")
 
             df = pd.read_parquet(input_path)
 
@@ -107,7 +136,7 @@ class PreprocessEnergyDataPiece(BasePiece):
 
             self.display_result = {"file_type": "parquet", "file_path": str(train_path)}
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Preprocessing finished (quality: {quality['overall_severity']})",
                 train_file_path=str(train_path),
                 predict_file_path=predict_path_str,
@@ -116,6 +145,18 @@ class PreprocessEnergyDataPiece(BasePiece):
                 missing_data_report_csv=str(missing_path),
                 data_quality_severity=str(quality["overall_severity"]),
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "PreprocessEnergyDataPiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception:
             err = traceback.format_exc()
             with open(log_path, "a", encoding="utf-8") as f:

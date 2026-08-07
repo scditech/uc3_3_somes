@@ -1,10 +1,20 @@
 from pydantic import BaseModel, Field
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
 
-class InputModel(BaseModel):
+
+
+class InputModel(RunIdInputMixin):
     next_day_dispatch_plan_csv: str = Field(description="Next-day dispatch plan CSV")
     scenario_yaml: str = Field(default="", description="Scenario YAML with battery/grid params")
     grid_constraints_json: str = Field(default="", description="Grid constraints JSON from connectors")
+
+
+class SecretsModel(OneDataSecretsModel):
+    pass
 
 
 class OutputModel(BaseModel):

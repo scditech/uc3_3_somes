@@ -1,7 +1,13 @@
 from pydantic import BaseModel, Field
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
 
-class InputModel(BaseModel):
+
+
+class InputModel(RunIdInputMixin):
     load_csv: str = Field(description="Path to historical load CSV")
     scenario_yaml: str = Field(description="Path to sized scenario YAML")
     virtual_solar_csv: str = Field(description="Path to virtual_solar.csv")
@@ -20,6 +26,10 @@ class InputModel(BaseModel):
     degradation_cost_eur_kwh: float = Field(default=0.01, description="Battery throughput cost in the objective")
     peak_price_eur_kw: float = Field(default=0.0, description="Peak import charge; >0 enables peak shaving objective")
     terminal_soc_pct: float = Field(default=-1.0, description="Required SOC at horizon end; <0 disables")
+
+
+class SecretsModel(OneDataSecretsModel):
+    pass
 
 
 class OutputModel(BaseModel):

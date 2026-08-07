@@ -7,7 +7,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -24,7 +24,7 @@
             "type": "string"
           }
         },
-        "title": "InputModel",
+        "title": "FetchEnergyDataPiece",
         "type": "object"
       },
       "output_schema": {
@@ -44,7 +44,51 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
         "requests": {
           "cpu": 100,
@@ -74,8 +118,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FetchEnergyDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1001,
-      "repository_id": 0
+      "id": 1278,
+      "repository_id": 93
     },
     "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb": {
       "name": "PreprocessEnergyDataPiece",
@@ -84,7 +128,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -108,7 +152,7 @@
         "required": [
           "input_path"
         ],
-        "title": "InputModel",
+        "title": "PreprocessEnergyDataPiece",
         "type": "object"
       },
       "output_schema": {
@@ -159,7 +203,51 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
         "requests": {
           "cpu": 200,
@@ -190,8 +278,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PreprocessEnergyDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1002,
-      "repository_id": 0
+      "id": 1275,
+      "repository_id": 93
     },
     "102_024b94c5-a535-4d65-a9a5-22c227eb23d8": {
       "name": "TrainModelPiece",
@@ -200,7 +288,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -212,7 +300,7 @@
         "required": [
           "data_path"
         ],
-        "title": "InputModel",
+        "title": "TrainModelPiece",
         "type": "object"
       },
       "output_schema": {
@@ -241,7 +329,51 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
         "requests": {
           "cpu": 200,
@@ -273,8 +405,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/TrainModelPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1003,
-      "repository_id": 0
+      "id": 1281,
+      "repository_id": 93
     },
     "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c": {
       "name": "PredictPiece",
@@ -283,44 +415,22 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
-          "run_id": {
-            "default": "",
-            "description": "Workflow run id (generated by FetchEnergyDataPiece / UserInputPiece when using OneData)",
-            "title": "Run Id",
-            "type": "string"
-          },
           "model_path": {
             "description": "Path to trained XGBoost model",
             "title": "Model Path",
             "type": "string"
           },
-          "load_csv": {
-            "description": "Historical load CSV used to build the future prediction time grid",
-            "title": "Load Csv",
+          "data_path": {
+            "description": "Path to prediction dataset (15min)",
+            "title": "Data Path",
             "type": "string"
           },
-          "prediction_days": {
-            "default": 30,
-            "description": "How many days ahead to predict (overridden by scenario.yaml / workflow JSON when present)",
-            "maximum": 366,
-            "minimum": 1,
-            "title": "Prediction Days",
-            "type": "integer"
-          },
-          "timestep_minutes": {
-            "default": 15,
-            "description": "Time step for the prediction grid (must match training data)",
-            "maximum": 60,
-            "minimum": 1,
-            "title": "Timestep Minutes",
-            "type": "integer"
-          },
           "use_rolling_prediction": {
-            "default": true,
-            "description": "True (default): bridge_rows of real load_kw, then lags from prior predictions.",
+            "default": false,
+            "description": "True: use bridge_rows of real load_kw, then compute lags from prior predictions.",
             "title": "Use Rolling Prediction",
             "type": "boolean"
           },
@@ -333,9 +443,9 @@
         },
         "required": [
           "model_path",
-          "load_csv"
+          "data_path"
         ],
-        "title": "InputModel",
+        "title": "PredictPiece",
         "type": "object"
       },
       "output_schema": {
@@ -347,22 +457,18 @@
           "prediction_file_path": {
             "title": "Prediction File Path",
             "type": "string"
-          },
-          "runtime_load_csv": {
-            "description": "Load CSV for MRK sizing/simulation (load_kw from predictions)",
-            "title": "Runtime Load Csv",
-            "type": "string"
           }
         },
         "required": [
           "message",
-          "prediction_file_path",
-          "runtime_load_csv"
+          "prediction_file_path"
         ],
         "title": "OutputModel",
         "type": "object"
       },
       "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
         "properties": {
           "onedata_onezone_host": {
             "anyOf": [
@@ -374,7 +480,7 @@
               }
             ],
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+            "description": "OneData Onezone host",
             "title": "Onedata Onezone Host"
           },
           "onedata_token": {
@@ -386,8 +492,8 @@
                 "type": "null"
               }
             ],
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg",
-            "description": "Onedata access token (default in code; Domino secrets optional)",
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
             "title": "Onedata Token"
           },
           "onedata_output_dir": {
@@ -399,15 +505,21 @@
                 "type": "null"
               }
             ],
-            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
-            "description": "OneData base dir for run outputs, e.g. onedata:///FilipsSpace/sustainable_model/outputs",
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
             "title": "Onedata Output Dir"
           }
-        },
-        "title": "SecretsModel",
-        "type": "object"
+        }
       },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -426,8 +538,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PredictPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1004,
-      "repository_id": 0
+      "id": 1284,
+      "repository_id": 93
     },
     "104_f493a15c-2457-4e1c-9159-fa27c5237217": {
       "name": "IncrementalTrainPiece",
@@ -436,7 +548,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -475,7 +587,7 @@
           "history_csv",
           "model_registry_dir"
         ],
-        "title": "InputModel",
+        "title": "IncrementalTrainPiece",
         "type": "object"
       },
       "output_schema": {
@@ -501,8 +613,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -521,8 +685,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1005,
-      "repository_id": 0
+      "id": 1274,
+      "repository_id": 93
     },
     "105_cfd055f3-92b7-43a8-90a3-61965d222554": {
       "name": "ForecastHorizonPiece",
@@ -531,7 +695,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -562,7 +726,7 @@
           "models_index_json",
           "model_registry_dir"
         ],
-        "title": "InputModel",
+        "title": "ForecastHorizonPiece",
         "type": "object"
       },
       "output_schema": {
@@ -601,8 +765,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -621,8 +837,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastHorizonPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1006,
-      "repository_id": 0
+      "id": 1276,
+      "repository_id": 93
     },
     "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67": {
       "name": "SomesConnectorsPiece",
@@ -631,10 +847,8 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
-        "title": "InputModel",
-        "type": "object",
         "properties": {
           "connectors_dir": {
             "default": "",
@@ -708,11 +922,11 @@
             "title": "Allow Demo Fallback",
             "type": "boolean"
           }
-        }
+        },
+        "title": "SomesConnectorsPiece",
+        "type": "object"
       },
       "output_schema": {
-        "title": "OutputModel",
-        "type": "object",
         "properties": {
           "message": {
             "title": "Message",
@@ -776,10 +990,64 @@
           "bess_telemetry_csv",
           "grid_constraints_json",
           "flexible_loads_json"
-        ]
+        ],
+        "title": "OutputModel",
+        "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -798,8 +1066,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SomesConnectorsPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1007,
-      "repository_id": 0
+      "id": 1270,
+      "repository_id": 93
     },
     "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb": {
       "name": "PriceForecastPiece",
@@ -808,7 +1076,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "prices_csv": {
@@ -827,7 +1095,7 @@
         "required": [
           "prices_csv"
         ],
-        "title": "InputModel",
+        "title": "PriceForecastPiece",
         "type": "object"
       },
       "output_schema": {
@@ -854,8 +1122,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -874,8 +1194,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PriceForecastPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1008,
-      "repository_id": 0
+      "id": 1282,
+      "repository_id": 93
     },
     "108_1788a415-3315-4f28-b343-93cca3f8249f": {
       "name": "BatteryStrategyOptimizerPiece",
@@ -884,7 +1204,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -902,7 +1222,7 @@
           "load_csv",
           "scenario_yaml"
         ],
-        "title": "InputModel",
+        "title": "BatteryStrategyOptimizerPiece",
         "type": "object"
       },
       "output_schema": {
@@ -923,8 +1243,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -943,8 +1315,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatteryStrategyOptimizerPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1009,
-      "repository_id": 0
+      "id": 1277,
+      "repository_id": 93
     },
     "109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee": {
       "name": "SolarSimPiece",
@@ -953,7 +1325,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -989,7 +1361,7 @@
           "load_csv",
           "scenario_yaml"
         ],
-        "title": "InputModel",
+        "title": "SolarSimPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1016,8 +1388,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1036,8 +1460,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarSimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1010,
-      "repository_id": 0
+      "id": 1272,
+      "repository_id": 93
     },
     "110_e1e3398a-8c76-4a43-a567-1f86061f2c64": {
       "name": "BatterySimPiece",
@@ -1046,7 +1470,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1136,7 +1560,7 @@
           "scenario_yaml",
           "virtual_solar_csv"
         ],
-        "title": "InputModel",
+        "title": "BatterySimPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1197,8 +1621,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1217,8 +1693,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1011,
-      "repository_id": 0
+      "id": 1271,
+      "repository_id": 93
     },
     "111_ab44d9b0-f21e-41b5-9929-922db54b90e4": {
       "name": "ModelMonitoringPiece",
@@ -1227,7 +1703,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -1275,7 +1751,7 @@
         "required": [
           "predictions_csv"
         ],
-        "title": "InputModel",
+        "title": "ModelMonitoringPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1317,8 +1793,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1337,8 +1865,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelMonitoringPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1012,
-      "repository_id": 0
+      "id": 1273,
+      "repository_id": 93
     },
     "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc": {
       "name": "SolarSimPiece",
@@ -1347,7 +1875,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1383,7 +1911,7 @@
           "load_csv",
           "scenario_yaml"
         ],
-        "title": "InputModel",
+        "title": "SolarSimPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1410,8 +1938,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1430,8 +2010,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarSimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1013,
-      "repository_id": 0
+      "id": 1272,
+      "repository_id": 93
     },
     "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33": {
       "name": "FlexibleLoadSchedulePiece",
@@ -1440,7 +2020,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1470,7 +2050,7 @@
         "required": [
           "load_csv"
         ],
-        "title": "InputModel",
+        "title": "FlexibleLoadSchedulePiece",
         "type": "object"
       },
       "output_schema": {
@@ -1496,8 +2076,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1516,8 +2148,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FlexibleLoadSchedulePiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1014,
-      "repository_id": 0
+      "id": 1268,
+      "repository_id": 93
     },
     "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d": {
       "name": "BatterySimPiece",
@@ -1526,7 +2158,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1616,7 +2248,7 @@
           "scenario_yaml",
           "virtual_solar_csv"
         ],
-        "title": "InputModel",
+        "title": "BatterySimPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1677,8 +2309,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1697,8 +2381,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1015,
-      "repository_id": 0
+      "id": 1271,
+      "repository_id": 93
     },
     "115_acc05ac3-51bf-455d-a8e0-009a70c149ad": {
       "name": "GridFeasibilityPiece",
@@ -1707,7 +2391,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "next_day_dispatch_plan_csv": {
@@ -1731,7 +2415,7 @@
         "required": [
           "next_day_dispatch_plan_csv"
         ],
-        "title": "InputModel",
+        "title": "GridFeasibilityPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1774,8 +2458,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1794,8 +2530,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/GridFeasibilityPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1016,
-      "repository_id": 0
+      "id": 1280,
+      "repository_id": 93
     },
     "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d": {
       "name": "EmsBemsOutputPiece",
@@ -1804,7 +2540,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "next_day_dispatch_plan_csv": {
@@ -1900,7 +2636,7 @@
           "next_day_dispatch_plan_csv",
           "technical_validation_json"
         ],
-        "title": "InputModel",
+        "title": "EmsBemsOutputPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1941,8 +2677,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -1961,8 +2749,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EmsBemsOutputPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1017,
-      "repository_id": 0
+      "id": 1279,
+      "repository_id": 93
     },
     "117_150eac84-e09a-46aa-8ed7-412913e37105": {
       "name": "DashboardPiece",
@@ -1971,7 +2759,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -2084,7 +2872,7 @@
             "title": "Data Quality Report Json"
           }
         },
-        "title": "InputModel",
+        "title": "DashboardPiece",
         "type": "object"
       },
       "output_schema": {
@@ -2100,8 +2888,60 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {},
+      "secrets_schema": {
+        "title": "SecretsModel",
+        "type": "object",
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "OneData Onezone host",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "",
+            "description": "Optional; piece code defaults apply when empty",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+            "description": "Base dir for per-run outputs",
+            "title": "Onedata Output Dir"
+          }
+        }
+      },
       "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
         "use_gpu": false
       },
       "tags": [],
@@ -2120,8 +2960,8 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DashboardPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1018,
-      "repository_id": 0
+      "id": 1269,
+      "repository_id": 93
     }
   },
   "workflowPiecesData": {
@@ -2140,14 +2980,21 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/load_input"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/load_input"
         },
         "prices_csv": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/prices.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/prices.csv"
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2165,7 +3012,7 @@
           "fromUpstream": true,
           "upstreamId": "FetchEnerg_88d957781fb14516addc298a3a052669",
           "upstreamArgument": "output_path",
-          "upstreamValue": "",
+          "upstreamValue": "FetchEnergyDataPiece (88d95778) - Output Path",
           "value": ""
         },
         "generate_predict_dataset": {
@@ -2174,6 +3021,20 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": false
+        },
+        "forecast_hours": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 24
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2191,6 +3052,13 @@
           "fromUpstream": true,
           "upstreamId": "Preprocess_c6abd221004b45f5bc50aa3df1f3b4eb",
           "upstreamArgument": "train_file_path",
+          "upstreamValue": "PreprocessEnergyDataPiece (c6abd221) - Train File Path",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
           "upstreamValue": "",
           "value": ""
         }
@@ -2210,29 +3078,8 @@
           "fromUpstream": true,
           "upstreamId": "TrainModel_024b94c5a5354d65a9a522c227eb23d8",
           "upstreamArgument": "model_file_path",
-          "upstreamValue": "",
+          "upstreamValue": "TrainModelPiece (024b94c5) - Model File Path",
           "value": ""
-        },
-        "load_csv": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
-          "value": "/home/shared_storage/somes/predict_in/load.csv"
-        },
-        "prediction_days": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
-          "value": 1
-        },
-        "timestep_minutes": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
-          "value": 15
         },
         "use_rolling_prediction": {
           "fromUpstream": false,
@@ -2247,6 +3094,34 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 4
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "load_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/predict_in/load.csv"
+        },
+        "prediction_days": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 1
+        },
+        "timestep_minutes": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 15
         }
       }
     },
@@ -2265,14 +3140,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/history_by_department.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/history_by_department.csv"
         },
         "model_registry_dir": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/model_registry"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/model_registry"
         },
         "incremental_window_days": {
           "fromUpstream": false,
@@ -2280,6 +3155,27 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 30
+        },
+        "full_retrain_every_n_updates": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 20
+        },
+        "incremental_trees": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 50
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2298,13 +3194,13 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/history_by_department.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/history_by_department.csv"
         },
         "models_index_json": {
           "fromUpstream": true,
           "upstreamId": "Incrementa_f493a15c24574e1c9159fa27c5237217",
           "upstreamArgument": "models_index_json",
-          "upstreamValue": "",
+          "upstreamValue": "IncrementalTrainPiece (f493a15c) - Models Index Json",
           "value": ""
         },
         "model_registry_dir": {
@@ -2312,7 +3208,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/model_registry"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/model_registry"
         },
         "horizon_hours": {
           "fromUpstream": false,
@@ -2320,6 +3216,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 24
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2338,7 +3241,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/connectors"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/connectors"
         },
         "allow_demo_fallback": {
           "fromUpstream": false,
@@ -2388,6 +3291,41 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 30
+        },
+        "weather_url": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "prices_url": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "pv_production_url": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "bess_telemetry_url": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2405,7 +3343,7 @@
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "prices_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Prices Csv",
           "value": ""
         },
         "horizon_steps": {
@@ -2414,6 +3352,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 96
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2431,7 +3376,7 @@
           "fromUpstream": true,
           "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
           "upstreamArgument": "site_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "ForecastHorizonPiece (cfd055f3) - Site Forecast Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2439,7 +3384,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2458,28 +3410,42 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/measured_last_day.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/measured_last_day.csv"
         },
         "scenario_yaml": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "weather_forecast_csv": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/weather_history.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/weather_history.csv"
         },
         "solargis_csv": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/solargis_irradiance.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/solargis_irradiance.csv"
+        },
+        "pv_production_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2498,34 +3464,34 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/measured_last_day.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/measured_last_day.csv"
         },
         "scenario_yaml": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "virtual_solar_csv": {
           "fromUpstream": true,
-          "upstreamId": "SolarSimBa_0e4456083ec54c57b1cd4cb8638fa2ee",
+          "upstreamId": "SolarSimPi_0e4456083ec54c57b1cd4cb8638fa2ee",
           "upstreamArgument": "virtual_solar_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SolarSimPiece (0e445608) - Virtual Solar Csv",
           "value": ""
         },
         "battery_strategy_json": {
           "fromUpstream": true,
           "upstreamId": "BatteryStr_1788a41533154f28b34393cca3f8249f",
           "upstreamArgument": "battery_strategy_recommendation_json",
-          "upstreamValue": "",
+          "upstreamValue": "BatteryStrategyOptimizerPiece (1788a415) - Battery Strategy Recommendation Json",
           "value": ""
         },
         "grid_constraints_json": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "grid_constraints_json",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Grid Constraints Json",
           "value": ""
         },
         "dispatch_method": {
@@ -2555,6 +3521,48 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 50.0
+        },
+        "flexible_load_schedule_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "price_forecast_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "bess_telemetry_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "forecast_accuracy_json": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "peak_price_eur_kw": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.0
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2572,35 +3580,35 @@
           "fromUpstream": true,
           "upstreamId": "PredictPie_cec516563b314ea3ad00bbe8e62a857c",
           "upstreamArgument": "prediction_file_path",
-          "upstreamValue": "",
+          "upstreamValue": "PredictPiece (cec51656) - Prediction File Path",
           "value": ""
         },
         "pv_forecast_csv": {
           "fromUpstream": true,
-          "upstreamId": "SolarSimBa_0e4456083ec54c57b1cd4cb8638fa2ee",
+          "upstreamId": "SolarSimPi_0e4456083ec54c57b1cd4cb8638fa2ee",
           "upstreamArgument": "virtual_solar_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SolarSimPiece (0e445608) - Virtual Solar Csv",
           "value": ""
         },
         "pv_actual_csv": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "pv_production_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Pv Production Csv",
           "value": ""
         },
         "planned_dispatch_csv": {
           "fromUpstream": true,
           "upstreamId": "BatterySim_e1e3398a8c764a43a5671f86061f2c64",
           "upstreamArgument": "next_day_dispatch_plan_csv",
-          "upstreamValue": "",
+          "upstreamValue": "BatterySimPiece (e1e3398a) - Next Day Dispatch Plan Csv",
           "value": ""
         },
         "bess_telemetry_csv": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "bess_telemetry_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Bess Telemetry Csv",
           "value": ""
         },
         "history_csv": {
@@ -2608,7 +3616,21 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/measured_last_day.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/measured_last_day.csv"
+        },
+        "timestep_hours": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.25
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2626,7 +3648,7 @@
           "fromUpstream": true,
           "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
           "upstreamArgument": "site_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "ForecastHorizonPiece (cfd055f3) - Site Forecast Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2634,20 +3656,20 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "weather_forecast_csv": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "weather_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Weather Forecast Csv",
           "value": ""
         },
         "pv_production_csv": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "pv_production_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Pv Production Csv",
           "value": ""
         },
         "solargis_csv": {
@@ -2655,7 +3677,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/solargis_irradiance.csv"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/solargis_irradiance.csv"
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2673,21 +3702,21 @@
           "fromUpstream": true,
           "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
           "upstreamArgument": "site_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "ForecastHorizonPiece (cfd055f3) - Site Forecast Csv",
           "value": ""
         },
         "flexible_loads_json": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "flexible_loads_json",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Flexible Loads Json",
           "value": ""
         },
         "price_forecast_csv": {
           "fromUpstream": true,
           "upstreamId": "PriceForec_c097b5eb34c1462babcf2d2bc61fc4bb",
           "upstreamArgument": "price_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "PriceForecastPiece (c097b5eb) - Price Forecast Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2695,7 +3724,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2713,7 +3749,7 @@
           "fromUpstream": true,
           "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
           "upstreamArgument": "site_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "ForecastHorizonPiece (cfd055f3) - Site Forecast Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2721,55 +3757,55 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "virtual_solar_csv": {
           "fromUpstream": true,
           "upstreamId": "SolarSimPi_c8d7fa0daab642c9be1580526d7219bc",
           "upstreamArgument": "virtual_solar_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SolarSimPiece (c8d7fa0d) - Virtual Solar Csv",
           "value": ""
         },
         "battery_strategy_json": {
           "fromUpstream": true,
           "upstreamId": "BatteryStr_1788a41533154f28b34393cca3f8249f",
           "upstreamArgument": "battery_strategy_recommendation_json",
-          "upstreamValue": "",
+          "upstreamValue": "BatteryStrategyOptimizerPiece (1788a415) - Battery Strategy Recommendation Json",
           "value": ""
         },
         "grid_constraints_json": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "grid_constraints_json",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Grid Constraints Json",
           "value": ""
         },
         "flexible_load_schedule_csv": {
           "fromUpstream": true,
           "upstreamId": "FlexibleLo_4b8ee3c5f007427b8e4ccfdbce2e6c33",
           "upstreamArgument": "flexible_load_schedule_csv",
-          "upstreamValue": "",
+          "upstreamValue": "FlexibleLoadSchedulePiece (4b8ee3c5) - Flexible Load Schedule Csv",
           "value": ""
         },
         "price_forecast_csv": {
           "fromUpstream": true,
           "upstreamId": "PriceForec_c097b5eb34c1462babcf2d2bc61fc4bb",
           "upstreamArgument": "price_forecast_csv",
-          "upstreamValue": "",
+          "upstreamValue": "PriceForecastPiece (c097b5eb) - Price Forecast Csv",
           "value": ""
         },
         "bess_telemetry_csv": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "bess_telemetry_csv",
-          "upstreamValue": "",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Bess Telemetry Csv",
           "value": ""
         },
         "forecast_accuracy_json": {
           "fromUpstream": true,
           "upstreamId": "ModelMonit_ab44d9b0f21e41b59929922db54b90e4",
           "upstreamArgument": "forecast_vs_actual_json",
-          "upstreamValue": "",
+          "upstreamValue": "ModelMonitoringPiece (ab44d9b0) - Forecast Vs Actual Json",
           "value": ""
         },
         "dispatch_method": {
@@ -2799,6 +3835,20 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 50.0
+        },
+        "peak_price_eur_kw": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.0
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2816,7 +3866,7 @@
           "fromUpstream": true,
           "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
           "upstreamArgument": "next_day_dispatch_plan_csv",
-          "upstreamValue": "",
+          "upstreamValue": "BatterySimPiece (bf99a4ed) - Next Day Dispatch Plan Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2824,12 +3874,19 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "/home/shared_storage/somes/scenario.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "grid_constraints_json": {
           "fromUpstream": true,
           "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
           "upstreamArgument": "grid_constraints_json",
+          "upstreamValue": "SomesConnectorsPiece (6e9f8dc5) - Grid Constraints Json",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
           "upstreamValue": "",
           "value": ""
         }
@@ -2849,28 +3906,28 @@
           "fromUpstream": true,
           "upstreamId": "GridFeasib_acc05ac351bf455da8e0009a70c149ad",
           "upstreamArgument": "approved_next_day_plan_csv",
-          "upstreamValue": "",
+          "upstreamValue": "GridFeasibilityPiece (acc05ac3) - Approved Next Day Plan Csv",
           "value": ""
         },
         "technical_validation_json": {
           "fromUpstream": true,
           "upstreamId": "GridFeasib_acc05ac351bf455da8e0009a70c149ad",
           "upstreamArgument": "technical_validation_json",
-          "upstreamValue": "",
+          "upstreamValue": "GridFeasibilityPiece (acc05ac3) - Technical Validation Json",
           "value": ""
         },
         "operational_kpis_json": {
           "fromUpstream": true,
           "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
           "upstreamArgument": "operational_kpis_json",
-          "upstreamValue": "",
+          "upstreamValue": "BatterySimPiece (bf99a4ed) - Operational Kpis Json",
           "value": ""
         },
         "flexible_load_activation_csv": {
           "fromUpstream": true,
           "upstreamId": "FlexibleLo_4b8ee3c5f007427b8e4ccfdbce2e6c33",
           "upstreamArgument": "flexible_load_activation_csv",
-          "upstreamValue": "",
+          "upstreamValue": "FlexibleLoadSchedulePiece (4b8ee3c5) - Flexible Load Activation Csv",
           "value": ""
         },
         "emit_register_map": {
@@ -2879,6 +3936,83 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": true
+        },
+        "ems_endpoint_url": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "auth_mode": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "none"
+        },
+        "auth_token": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "auth_username": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "auth_password": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "api_key_header": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "X-API-Key"
+        },
+        "request_timeout_s": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 15
+        },
+        "max_retries": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 3
+        },
+        "backoff_seconds": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 1.5
+        },
+        "require_delivery": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": false
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2896,34 +4030,76 @@
           "fromUpstream": true,
           "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
           "upstreamArgument": "next_day_dispatch_plan_csv",
-          "upstreamValue": "",
+          "upstreamValue": "BatterySimPiece (bf99a4ed) - Next Day Dispatch Plan Csv",
           "value": ""
         },
         "operational_kpis_json": {
           "fromUpstream": true,
           "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
           "upstreamArgument": "operational_kpis_json",
-          "upstreamValue": "",
+          "upstreamValue": "BatterySimPiece (bf99a4ed) - Operational Kpis Json",
           "value": ""
         },
         "technical_validation_json": {
           "fromUpstream": true,
           "upstreamId": "GridFeasib_acc05ac351bf455da8e0009a70c149ad",
           "upstreamArgument": "technical_validation_json",
-          "upstreamValue": "",
+          "upstreamValue": "GridFeasibilityPiece (acc05ac3) - Technical Validation Json",
           "value": ""
         },
         "forecast_vs_actual_json": {
           "fromUpstream": true,
           "upstreamId": "ModelMonit_ab44d9b0f21e41b59929922db54b90e4",
           "upstreamArgument": "forecast_vs_actual_json",
-          "upstreamValue": "",
+          "upstreamValue": "ModelMonitoringPiece (ab44d9b0) - Forecast Vs Actual Json",
           "value": ""
         },
         "data_quality_report_json": {
           "fromUpstream": true,
           "upstreamId": "Preprocess_c6abd221004b45f5bc50aa3df1f3b4eb",
           "upstreamArgument": "data_quality_report_json",
+          "upstreamValue": "PreprocessEnergyDataPiece (c6abd221) - Data Quality Report Json",
+          "value": ""
+        },
+        "report_json": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "kpi_results_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "investment_evaluation_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "anomaly_alerts_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "drift_report_json": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
           "upstreamValue": "",
           "value": ""
         }

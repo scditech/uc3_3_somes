@@ -1,7 +1,13 @@
 from pydantic import BaseModel, Field
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
 
-class InputModel(BaseModel):
+
+
+class InputModel(RunIdInputMixin):
     next_day_dispatch_plan_csv: str = Field(description="Approved next-day dispatch plan CSV")
     technical_validation_json: str = Field(description="Technical validation bundle JSON")
     operational_kpis_json: str = Field(default="", description="Optional operational KPIs JSON")
@@ -22,6 +28,10 @@ class InputModel(BaseModel):
         default=False, description="Fail the piece when an endpoint is configured but delivery is not acknowledged"
     )
     emit_register_map: bool = Field(default=True, description="Write a Modbus/IEC-104 point map next to the payload")
+
+
+class SecretsModel(OneDataSecretsModel):
+    pass
 
 
 class OutputModel(BaseModel):

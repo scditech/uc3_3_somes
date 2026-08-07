@@ -3,6 +3,15 @@ try:
 except ModuleNotFoundError:
     from local_compat.base_piece import BasePiece
 from .models import InputModel, OutputModel
+
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 import pandas as pd
 from pathlib import Path
 import traceback
@@ -87,7 +96,19 @@ class FetchEnergyDataPiece(BasePiece):
     Load and merge energy CSV files from shared storage
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=True, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         try:
             _log(self.results_path, "[INFO] FetchEnergyDataPiece started")
             _log(self.results_path, f"[INFO] Load CSV: {input_data.load_csv}")
@@ -114,7 +135,10 @@ class FetchEnergyDataPiece(BasePiece):
             if not load_files:
                 message = f"No load CSV files found at: {load_csv}"
                 _log(self.results_path, f"[ERROR] {message}")
-                return OutputModel(message=message, output_path="")
+                raise FileNotFoundError(
+                    f"{message}. Check Domino Settings → Storage Source = Local "
+                    "and that the path exists under /home/shared_storage."
+                )
 
             _log(self.results_path, "[INFO] Reading CSV files")
             merged_parts = []
@@ -145,10 +169,22 @@ class FetchEnergyDataPiece(BasePiece):
             _log(self.results_path, f"[SUCCESS] Output written to {output_path}")
 
             self.display_result = {"file_type": "parquet", "file_path": str(output_path)}
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Data merged successfully ({len(merged_df)} rows)",
                 output_path=str(output_path),
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "FetchEnergyDataPiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception:
             err = traceback.format_exc()
             _log(self.results_path, f"[ERROR] {err}")

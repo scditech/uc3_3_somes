@@ -1,7 +1,13 @@
 from pydantic import BaseModel, Field
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
 
-class InputModel(BaseModel):
+
+
+class InputModel(RunIdInputMixin):
     """
     Input model for Fetch Energy Data Piece
     """
@@ -17,7 +23,12 @@ class InputModel(BaseModel):
     )
 
 
+class SecretsModel(OneDataSecretsModel):
+    pass
+
+
 class OutputModel(BaseModel):
+    run_id: str = Field(default="", description="OneData run folder id")
     """
     Output model for Fetch Energy Data Piece
     """

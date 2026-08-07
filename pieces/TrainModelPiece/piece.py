@@ -5,6 +5,15 @@ except ModuleNotFoundError:
     from local_compat.base_piece import BasePiece
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
 import json
 import traceback
 import numpy as np
@@ -120,7 +129,19 @@ def _add_load_features(df: pd.DataFrame, target: str) -> pd.DataFrame:
 
 class TrainModelPiece(BasePiece):
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(
+                input_data, secrets_data, generate=False, results_path=getattr(self, "results_path", None)
+            )
+            if hasattr(input_data, "run_id") and _run_id and not getattr(input_data, "run_id", ""):
+                try:
+                    input_data.run_id = _run_id
+                except Exception:
+                    pass
         piece_log = Path(self.results_path) / "train_model.log"
         piece_err = Path(self.results_path) / "train_model_error.txt"
         try:
@@ -149,6 +170,18 @@ class TrainModelPiece(BasePiece):
             if target not in df.columns:
                 raise ValueError(f"Target column '{target}' not found")
 
+            # Site-level model: multi-department rows must be aggregated first.
+            # Leaving department_id as object breaks XGBoost; lag features across
+            # mixed departments would also be wrong.
+            if "department_id" in df.columns:
+                print("[INFO] Aggregating department loads to site total for TrainModelPiece")
+                df = (
+                    df.groupby("datetime", as_index=False)[target]
+                    .sum()
+                    .sort_values("datetime")
+                    .reset_index(drop=True)
+                )
+
             print("[INFO] Detecting shift profile from historical load")
             shift_profile = _build_shift_profile(df)
 
@@ -171,7 +204,11 @@ class TrainModelPiece(BasePiece):
             train_df = df.iloc[:split_index]
             test_df = df.iloc[split_index:]
 
-            feature_cols = [c for c in df.columns if c not in ["datetime", target]]
+            feature_cols = [
+                c
+                for c in df.columns
+                if c not in ["datetime", target] and pd.api.types.is_numeric_dtype(df[c])
+            ]
 
             X_train = train_df[feature_cols]
             y_train = train_df[target]
@@ -243,7 +280,7 @@ class TrainModelPiece(BasePiece):
 
             print(f"[SUCCESS] Model saved to {model_path}")
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=(
                     f"Model trained. MAE={mae:.2f} kW ({mae_pct:.2f}%), "
                     f"RMSE={rmse:.2f} kW ({rmse_pct:.2f}%), MAPE={mape:.2f}%"
@@ -251,6 +288,18 @@ class TrainModelPiece(BasePiece):
                 model_file_path=str(model_path),
                 train_log_path=str(log_path)
             )
+            if od is not None:
+                if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
+                    try:
+                        _piece_out.run_id = _run_id
+                    except Exception:
+                        pass
+                return od.finish_piece(
+                    _piece_out, self.results_path, secrets_data, "TrainModelPiece", _stage, run_id=_run_id
+                )
+            if _stage is not None:
+                _stage.cleanup()
+            return _piece_out
         except Exception:
             err = traceback.format_exc()
             with open(piece_log, "a", encoding="utf-8") as f:
