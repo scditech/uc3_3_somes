@@ -1,28 +1,29 @@
 {
-  "group0": {
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "pieces": [
-      "BatterySimPiece",
-      "BatteryStrategyOptimizerPiece",
-      "DashboardPiece",
-      "EmsBemsOutputPiece",
-      "FetchEnergyDataPiece",
-      "FlexibleLoadSchedulePiece",
-      "ForecastHorizonPiece",
-      "GridFeasibilityPiece",
-      "IncrementalTrainPiece",
-      "ModelMonitoringPiece",
-      "PredictPiece",
-      "PreprocessEnergyDataPiece",
-      "PriceForecastPiece",
-      "SimulatePiece",
-      "SolarSimPiece",
-      "SomesConnectorsPiece",
-      "TrainModelPiece"
-    ],
-    "secrets": []
-  }
+    "group0": {
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "pieces": [
+            "FlexibleLoadSchedulePiece",
+            "DashboardPiece",
+            "SomesConnectorsPiece",
+            "BatterySimPiece",
+            "SolarSimPiece",
+            "ModelMonitoringPiece",
+            "IncrementalTrainPiece",
+            "PreprocessEnergyDataPiece",
+            "ForecastHorizonPiece",
+            "BatteryStrategyOptimizerPiece",
+            "FetchEnergyDataPiece",
+            "EmsBemsOutputPiece",
+            "GridFeasibilityPiece",
+            "TrainModelPiece",
+            "PriceForecastPiece",
+            "SimulatePiece",
+            "PredictPiece"
+        ],
+        "secrets": [],
+        "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0"
+    }
 }

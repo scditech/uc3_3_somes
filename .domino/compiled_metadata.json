@@ -1,1843 +1,1771 @@
 {
-  "TrainModelPiece": {
-    "name": "TrainModelPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [
-      "XGBoost",
-      "Training",
-      "Energy"
-    ],
-    "style": {
-      "node_label": "TrainModelPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:brain",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Train XGBoost energy forecasting model",
-    "dependencies_group": "0",
-    "container_resources": {
-      "requests": {
-        "cpu": 200,
-        "memory": 256
-      },
-      "limits": {
-        "cpu": 1000,
-        "memory": 1024
-      }
-    },
-    "input_schema": {
-      "properties": {
-        "data_path": {
-          "description": "Path to preprocessed parquet or CSV dataset",
-          "title": "Training dataset path",
-          "type": "string"
-        }
-      },
-      "required": [
-        "data_path"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "description": "Training result message",
-          "title": "Message",
-          "type": "string"
+    "FlexibleLoadSchedulePiece": {
+        "name": "FlexibleLoadSchedulePiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "model_file_path": {
-          "description": "Path to trained model file",
-          "title": "Model File Path",
-          "type": "string"
-        },
-        "train_log_path": {
-          "description": "Path to training log file",
-          "title": "Train Log Path",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "model_file_path",
-        "train_log_path"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/TrainModelPiece"
-  },
-  "PreprocessEnergyDataPiece": {
-    "name": "PreprocessEnergyDataPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [
-      "Energy",
-      "Preprocessing"
-    ],
-    "style": {
-      "node_label": "PreprocessEnergyDataPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:filter",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Clean, resample and prepare energy data for training and prediction",
-    "dependencies_group": "0",
-    "container_resources": {
-      "requests": {
-        "cpu": 200,
-        "memory": 256
-      },
-      "limits": {
-        "cpu": 500,
-        "memory": 512
-      }
-    },
-    "input_schema": {
-      "properties": {
-        "input_path": {
-          "description": "Path to merged energy parquet file",
-          "title": "Input Path",
-          "type": "string"
-        },
-        "forecast_hours": {
-          "default": 24,
-          "description": "Ignored when generate_predict_dataset is False",
-          "title": "Forecast Hours",
-          "type": "integer"
-        },
-        "generate_predict_dataset": {
-          "default": false,
-          "description": "If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
-          "title": "Generate Predict Dataset",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "input_path"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "train_file_path": {
-          "title": "Train File Path",
-          "type": "string"
-        },
-        "predict_file_path": {
-          "default": "",
-          "description": "Empty if generate_predict_dataset is False",
-          "title": "Predict File Path",
-          "type": "string"
-        },
-        "data_quality_report_json": {
-          "default": "",
-          "description": "Quality indicators + correction recommendations",
-          "title": "Data Quality Report Json",
-          "type": "string"
-        },
-        "data_quality_indicators_csv": {
-          "default": "",
-          "description": "One row per ingested dataset",
-          "title": "Data Quality Indicators Csv",
-          "type": "string"
-        },
-        "missing_data_report_csv": {
-          "default": "",
-          "description": "Gaps and NaN counts found before correction",
-          "title": "Missing Data Report Csv",
-          "type": "string"
-        },
-        "data_quality_severity": {
-          "default": "ok",
-          "description": "ok | info | warning | critical",
-          "title": "Data Quality Severity",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "train_file_path"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PreprocessEnergyDataPiece"
-  },
-  "IncrementalTrainPiece": {
-    "name": "IncrementalTrainPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "IncrementalTrainPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:brain",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Train or incrementally update load models by department",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "history_csv": {
-          "description": "Merged long-term history CSV",
-          "title": "History Csv",
-          "type": "string"
-        },
-        "model_registry_dir": {
-          "description": "Directory for per-department model artifacts",
-          "title": "Model Registry Dir",
-          "type": "string"
-        },
-        "incremental_window_days": {
-          "default": 30,
-          "description": "Train update only on recent window in days",
-          "minimum": 1,
-          "title": "Incremental Window Days",
-          "type": "integer"
-        },
-        "full_retrain_every_n_updates": {
-          "default": 20,
-          "description": "Run full retrain after this many incremental updates",
-          "minimum": 1,
-          "title": "Full Retrain Every N Updates",
-          "type": "integer"
-        },
-        "incremental_trees": {
-          "default": 50,
-          "description": "Number of trees appended in incremental update",
-          "minimum": 10,
-          "title": "Incremental Trees",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "history_csv",
-        "model_registry_dir"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "models_index_json": {
-          "title": "Models Index Json",
-          "type": "string"
-        },
-        "training_summary_json": {
-          "title": "Training Summary Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "models_index_json",
-        "training_summary_json"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece"
-  },
-  "PredictPiece": {
-    "name": "PredictPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "PredictPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:chart-line",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Run prediction using trained XGBoost model",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "run_id": {
-          "default": "",
-          "description": "Workflow run id (generated by FetchEnergyDataPiece / UserInputPiece when using OneData)",
-          "title": "Run Id",
-          "type": "string"
-        },
-        "model_path": {
-          "description": "Path to trained XGBoost model",
-          "title": "Model Path",
-          "type": "string"
-        },
-        "load_csv": {
-          "description": "Historical load CSV used to build the future prediction time grid",
-          "title": "Load Csv",
-          "type": "string"
-        },
-        "prediction_days": {
-          "default": 30,
-          "description": "How many days ahead to predict (overridden by scenario.yaml / workflow JSON when present)",
-          "maximum": 366,
-          "minimum": 1,
-          "title": "Prediction Days",
-          "type": "integer"
-        },
-        "timestep_minutes": {
-          "default": 15,
-          "description": "Time step for the prediction grid (must match training data)",
-          "maximum": 60,
-          "minimum": 1,
-          "title": "Timestep Minutes",
-          "type": "integer"
-        },
-        "use_rolling_prediction": {
-          "default": true,
-          "description": "True (default): bridge_rows of real load_kw, then lags from prior predictions.",
-          "title": "Use Rolling Prediction",
-          "type": "boolean"
-        },
-        "bridge_rows": {
-          "default": 4,
-          "minimum": 1,
-          "title": "Bridge Rows",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "model_path",
-        "load_csv"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "prediction_file_path": {
-          "title": "Prediction File Path",
-          "type": "string"
-        },
-        "runtime_load_csv": {
-          "description": "Load CSV for MRK sizing/simulation (load_kw from predictions)",
-          "title": "Runtime Load Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "prediction_file_path",
-        "runtime_load_csv"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": {
-      "properties": {
-        "onedata_onezone_host": {
-          "anyOf": [
-            {
-              "type": "string"
+        "tags": [],
+        "style": {
+            "node_label": "FlexibleLoadSchedulePiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
             },
-            {
-              "type": "null"
+            "useIcon": true,
+            "icon_class_name": "fa-solid:sliders",
+            "iconStyle": {
+                "cursor": "pointer"
             }
-          ],
-          "default": "data.spice-platform.eu",
-          "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
-          "title": "Onedata Onezone Host"
         },
-        "onedata_token": {
-          "anyOf": [
-            {
-              "type": "string"
+        "description": "SoMES flexible load shifting schedule for the optimisation horizon",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Load / horizon CSV with datetime",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "flexible_loads_json": {
+                    "default": "",
+                    "description": "Flexible load definitions JSON",
+                    "title": "Flexible Loads Json",
+                    "type": "string"
+                },
+                "price_forecast_csv": {
+                    "default": "",
+                    "description": "Optional price forecast CSV",
+                    "title": "Price Forecast Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "default": "",
+                    "description": "Optional scenario YAML for timestep",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
             },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg",
-          "description": "Onedata access token (default in code; Domino secrets optional)",
-          "title": "Onedata Token"
+            "required": [
+                "load_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
         },
-        "onedata_output_dir": {
-          "anyOf": [
-            {
-              "type": "string"
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "flexible_load_schedule_csv": {
+                    "title": "Flexible Load Schedule Csv",
+                    "type": "string"
+                },
+                "flexible_load_activation_csv": {
+                    "title": "Flexible Load Activation Csv",
+                    "type": "string"
+                }
             },
-            {
-              "type": "null"
-            }
-          ],
-          "default": "onedata:///FilipsSpace/sustainable_model/outputs",
-          "description": "OneData base dir for run outputs, e.g. onedata:///FilipsSpace/sustainable_model/outputs",
-          "title": "Onedata Output Dir"
-        }
-      },
-      "title": "SecretsModel",
-      "type": "object"
+            "required": [
+                "message",
+                "flexible_load_schedule_csv",
+                "flexible_load_activation_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FlexibleLoadSchedulePiece"
     },
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PredictPiece"
-  },
-  "SolarSimPiece": {
-    "name": "SolarSimPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "Solar Simulation",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:sun",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Generate synthetic PV profile for selected sizing",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "load_csv": {
-          "description": "Path to historical load CSV",
-          "title": "Load Csv",
-          "type": "string"
+    "DashboardPiece": {
+        "name": "DashboardPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "scenario_yaml": {
-          "description": "Path to sized scenario YAML",
-          "title": "Scenario Yaml",
-          "type": "string"
-        },
-        "weather_forecast_csv": {
-          "default": "",
-          "description": "Optional weather/irradiance forecast CSV",
-          "title": "Weather Forecast Csv",
-          "type": "string"
-        },
-        "pv_production_csv": {
-          "default": "",
-          "description": "Optional measured PV production CSV for calibration",
-          "title": "Pv Production Csv",
-          "type": "string"
-        },
-        "solargis_csv": {
-          "default": "",
-          "description": "Optional SolarGIS irradiance history used to train PVOUT",
-          "title": "Solargis Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "load_csv",
-        "scenario_yaml"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "virtual_solar_csv": {
-          "title": "Virtual Solar Csv",
-          "type": "string"
-        },
-        "pv_forecast_uncertainty_json": {
-          "default": "",
-          "description": "Production uncertainty indicators",
-          "title": "Pv Forecast Uncertainty Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "virtual_solar_csv"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarSimPiece"
-  },
-  "SimulatePiece": {
-    "name": "SimulatePiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "Simulate MRK Scenario",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:calculator",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Run MRK simulation baseline/PV/battery",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "load_csv": {
-          "description": "Path to historical load CSV",
-          "title": "Load Csv",
-          "type": "string"
-        },
-        "scenario_yaml": {
-          "description": "Path to scenario YAML",
-          "title": "Scenario Yaml",
-          "type": "string"
-        },
-        "output_dir": {
-          "default": "",
-          "description": "Optional output dir when results_path is not set",
-          "title": "Output Dir",
-          "type": "string"
-        },
-        "battery_strategy_recommendation_json": {
-          "default": "",
-          "description": "Optional battery strategy recommendation JSON",
-          "title": "Battery Strategy Recommendation Json",
-          "type": "string"
-        },
-        "ranked_catalog_json": {
-          "default": "",
-          "description": "Optional ranked catalog recommendation JSON",
-          "title": "Ranked Catalog Json",
-          "type": "string"
-        },
-        "inverter_catalog_json": {
-          "default": "",
-          "description": "Optional inverter catalog JSON",
-          "title": "Inverter Catalog Json",
-          "type": "string"
-        },
-        "battery_catalog_json": {
-          "default": "",
-          "description": "Optional battery catalog JSON",
-          "title": "Battery Catalog Json",
-          "type": "string"
-        },
-        "catalog_manifest_json": {
-          "default": "",
-          "description": "Optional catalog sync manifest JSON",
-          "title": "Catalog Manifest Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "load_csv",
-        "scenario_yaml"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "report_json": {
-          "title": "Report Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "report_json"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SimulatePiece"
-  },
-  "FetchEnergyDataPiece": {
-    "name": "FetchEnergyDataPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [
-      "Energy"
-    ],
-    "style": {
-      "node_label": "FetchEnergyDataPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:bolt",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Load and merge energy CSV files",
-    "dependencies_group": "0",
-    "container_resources": {
-      "requests": {
-        "cpu": 100,
-        "memory": 128
-      },
-      "limits": {
-        "cpu": 500,
-        "memory": 512
-      }
-    },
-    "input_schema": {
-      "description": "Input model for Fetch Energy Data Piece",
-      "properties": {
-        "load_csv": {
-          "default": "/home/shared_storage/load.csv",
-          "description": "Path to load CSV file or a directory with load*.csv files",
-          "title": "Load Csv",
-          "type": "string"
-        },
-        "prices_csv": {
-          "default": "/home/shared_storage/prices.csv",
-          "description": "Path to prices CSV file",
-          "title": "Prices Csv",
-          "type": "string"
-        }
-      },
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "description": "Output model for Fetch Energy Data Piece",
-      "properties": {
-        "message": {
-          "default": "",
-          "title": "Message",
-          "type": "string"
-        },
-        "output_path": {
-          "default": "",
-          "title": "Output Path",
-          "type": "string"
-        }
-      },
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FetchEnergyDataPiece"
-  },
-  "BatterySimPiece": {
-    "name": "BatterySimPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "Battery Simulation",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:battery-half",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Generate battery SOC timeseries from load and PV profile",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "load_csv": {
-          "description": "Path to historical load CSV",
-          "title": "Load Csv",
-          "type": "string"
-        },
-        "scenario_yaml": {
-          "description": "Path to sized scenario YAML",
-          "title": "Scenario Yaml",
-          "type": "string"
-        },
-        "virtual_solar_csv": {
-          "description": "Path to virtual_solar.csv",
-          "title": "Virtual Solar Csv",
-          "type": "string"
-        },
-        "battery_strategy_json": {
-          "default": "",
-          "description": "Optional battery strategy recommendation JSON",
-          "title": "Battery Strategy Json",
-          "type": "string"
-        },
-        "grid_constraints_json": {
-          "default": "",
-          "description": "Optional SoMES grid constraints JSON",
-          "title": "Grid Constraints Json",
-          "type": "string"
-        },
-        "flexible_load_schedule_csv": {
-          "default": "",
-          "description": "Optional flexible load schedule CSV",
-          "title": "Flexible Load Schedule Csv",
-          "type": "string"
-        },
-        "price_forecast_csv": {
-          "default": "",
-          "description": "Optional price/tariff forecast CSV",
-          "title": "Price Forecast Csv",
-          "type": "string"
-        },
-        "bess_telemetry_csv": {
-          "default": "",
-          "description": "BESS telemetry CSV; last record initialises SOC and available power",
-          "title": "Bess Telemetry Csv",
-          "type": "string"
-        },
-        "dispatch_method": {
-          "default": "auto",
-          "description": "auto (LP with greedy fallback) | lp | greedy",
-          "title": "Dispatch Method",
-          "type": "string"
-        },
-        "export_price_eur_kwh": {
-          "default": 0.05,
-          "description": "Feed-in remuneration used by the optimiser",
-          "title": "Export Price Eur Kwh",
-          "type": "number"
-        },
-        "forecast_accuracy_json": {
-          "default": "",
-          "description": "Forecast error statistics folded into the KPI set",
-          "title": "Forecast Accuracy Json",
-          "type": "string"
-        },
-        "degradation_cost_eur_kwh": {
-          "default": 0.01,
-          "description": "Battery throughput cost in the objective",
-          "title": "Degradation Cost Eur Kwh",
-          "type": "number"
-        },
-        "peak_price_eur_kw": {
-          "default": 0.0,
-          "description": "Peak import charge; >0 enables peak shaving objective",
-          "title": "Peak Price Eur Kw",
-          "type": "number"
-        },
-        "terminal_soc_pct": {
-          "default": -1.0,
-          "description": "Required SOC at horizon end; <0 disables",
-          "title": "Terminal Soc Pct",
-          "type": "number"
-        }
-      },
-      "required": [
-        "load_csv",
-        "scenario_yaml",
-        "virtual_solar_csv"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "virtual_battery_soc_csv": {
-          "title": "Virtual Battery Soc Csv",
-          "type": "string"
-        },
-        "battery_summary_csv": {
-          "title": "Battery Summary Csv",
-          "type": "string"
-        },
-        "battery_charge_discharge_plan_csv": {
-          "title": "Battery Charge Discharge Plan Csv",
-          "type": "string"
-        },
-        "grid_import_export_plan_csv": {
-          "title": "Grid Import Export Plan Csv",
-          "type": "string"
-        },
-        "next_day_dispatch_plan_csv": {
-          "title": "Next Day Dispatch Plan Csv",
-          "type": "string"
-        },
-        "technical_validation_json": {
-          "title": "Technical Validation Json",
-          "type": "string"
-        },
-        "operational_kpis_json": {
-          "title": "Operational Kpis Json",
-          "type": "string"
-        },
-        "dispatch_method_used": {
-          "default": "",
-          "title": "Dispatch Method Used",
-          "type": "string"
-        },
-        "bess_state_json": {
-          "default": "",
-          "title": "Bess State Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "virtual_battery_soc_csv",
-        "battery_summary_csv",
-        "battery_charge_discharge_plan_csv",
-        "grid_import_export_plan_csv",
-        "next_day_dispatch_plan_csv",
-        "technical_validation_json",
-        "operational_kpis_json"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece"
-  },
-  "DashboardPiece": {
-    "name": "DashboardPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "Dashboard Data",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:chart-line",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "report_json": {
-          "default": "",
-          "description": "Path to mrk_savings_report.json (legacy/SEED appendix)",
-          "title": "Report Json",
-          "type": "string"
-        },
-        "kpi_results_csv": {
-          "default": "",
-          "description": "Path to kpi_results.csv (legacy)",
-          "title": "Kpi Results Csv",
-          "type": "string"
-        },
-        "investment_evaluation_csv": {
-          "default": "",
-          "description": "Path to investment_evaluation.csv (SEED appendix)",
-          "title": "Investment Evaluation Csv",
-          "type": "string"
-        },
-        "anomaly_alerts_csv": {
-          "anyOf": [
-            {
-              "type": "string"
+        "tags": [],
+        "style": {
+            "node_label": "Dashboard Data",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
             },
-            {
-              "type": "null"
+            "useIcon": true,
+            "icon_class_name": "fa-solid:chart-line",
+            "iconStyle": {
+                "cursor": "pointer"
             }
-          ],
-          "default": null,
-          "description": "Optional path to anomaly_alerts.csv",
-          "title": "Anomaly Alerts Csv"
         },
-        "drift_report_json": {
-          "anyOf": [
-            {
-              "type": "string"
+        "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "report_json": {
+                    "default": "",
+                    "description": "Path to mrk_savings_report.json (legacy/SEED appendix)",
+                    "title": "Report Json",
+                    "type": "string"
+                },
+                "kpi_results_csv": {
+                    "default": "",
+                    "description": "Path to kpi_results.csv (legacy)",
+                    "title": "Kpi Results Csv",
+                    "type": "string"
+                },
+                "investment_evaluation_csv": {
+                    "default": "",
+                    "description": "Path to investment_evaluation.csv (SEED appendix)",
+                    "title": "Investment Evaluation Csv",
+                    "type": "string"
+                },
+                "anomaly_alerts_csv": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Optional path to anomaly_alerts.csv",
+                    "title": "Anomaly Alerts Csv"
+                },
+                "drift_report_json": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Optional path to drift_report.json",
+                    "title": "Drift Report Json"
+                },
+                "next_day_dispatch_plan_csv": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "SoMES next-day dispatch plan (enables operational dashboard)",
+                    "title": "Next Day Dispatch Plan Csv"
+                },
+                "operational_kpis_json": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "SoMES operational KPIs JSON",
+                    "title": "Operational Kpis Json"
+                },
+                "technical_validation_json": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "SoMES technical validation JSON",
+                    "title": "Technical Validation Json"
+                },
+                "forecast_vs_actual_json": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Feedback loop bundle from ModelMonitoringPiece",
+                    "title": "Forecast Vs Actual Json"
+                },
+                "data_quality_report_json": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Data validation report from ingestion/preprocessing",
+                    "title": "Data Quality Report Json"
+                }
             },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Optional path to drift_report.json",
-          "title": "Drift Report Json"
+            "title": "InputModel",
+            "type": "object"
         },
-        "next_day_dispatch_plan_csv": {
-          "anyOf": [
-            {
-              "type": "string"
+        "output_schema": {
+            "properties": {
+                "dashboard_data_json": {
+                    "title": "Dashboard Data Json",
+                    "type": "string"
+                }
             },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "SoMES next-day dispatch plan (enables operational dashboard)",
-          "title": "Next Day Dispatch Plan Csv"
+            "required": [
+                "dashboard_data_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
         },
-        "operational_kpis_json": {
-          "anyOf": [
-            {
-              "type": "string"
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DashboardPiece"
+    },
+    "SomesConnectorsPiece": {
+        "name": "SomesConnectorsPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "SomesConnectorsPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
             },
-            {
-              "type": "null"
+            "useIcon": true,
+            "icon_class_name": "fa-solid:plug",
+            "iconStyle": {
+                "cursor": "pointer"
             }
-          ],
-          "default": null,
-          "description": "SoMES operational KPIs JSON",
-          "title": "Operational Kpis Json"
         },
-        "technical_validation_json": {
-          "anyOf": [
-            {
-              "type": "string"
+        "description": "SoMES data connectors: weather, PV production, BESS telemetry, grid constraints, flexible loads",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "connectors_dir": {
+                    "default": "",
+                    "description": "Directory with SoMES connector files (created with demos if empty/missing)",
+                    "title": "Connectors Dir",
+                    "type": "string"
+                },
+                "weather_api_enabled": {
+                    "default": false,
+                    "description": "Pull live irradiance/temperature forecast from Open-Meteo",
+                    "title": "Weather Api Enabled",
+                    "type": "boolean"
+                },
+                "latitude": {
+                    "default": 48.148,
+                    "description": "Site latitude for the weather pull",
+                    "title": "Latitude",
+                    "type": "number"
+                },
+                "longitude": {
+                    "default": 17.107,
+                    "description": "Site longitude for the weather pull",
+                    "title": "Longitude",
+                    "type": "number"
+                },
+                "forecast_days": {
+                    "default": 2,
+                    "description": "Weather forecast horizon in days",
+                    "title": "Forecast Days",
+                    "type": "integer"
+                },
+                "prices_api_enabled": {
+                    "default": false,
+                    "description": "Pull day-ahead spot prices from the OKTE ISOT public API",
+                    "title": "Prices Api Enabled",
+                    "type": "boolean"
+                },
+                "prices_lookback_days": {
+                    "default": 30,
+                    "description": "How many past days of OKTE prices to pull together with D+1",
+                    "title": "Prices Lookback Days",
+                    "type": "integer"
+                },
+                "weather_url": {
+                    "default": "",
+                    "description": "Optional CSV endpoint overriding the weather provider",
+                    "title": "Weather Url",
+                    "type": "string"
+                },
+                "prices_url": {
+                    "default": "",
+                    "description": "Optional CSV endpoint overriding the price provider",
+                    "title": "Prices Url",
+                    "type": "string"
+                },
+                "pv_production_url": {
+                    "default": "",
+                    "description": "Optional CSV endpoint with measured PV production",
+                    "title": "Pv Production Url",
+                    "type": "string"
+                },
+                "bess_telemetry_url": {
+                    "default": "",
+                    "description": "Optional CSV endpoint with BESS telemetry",
+                    "title": "Bess Telemetry Url",
+                    "type": "string"
+                },
+                "allow_demo_fallback": {
+                    "default": true,
+                    "description": "If False the piece fails instead of generating synthetic fixtures",
+                    "title": "Allow Demo Fallback",
+                    "type": "boolean"
+                }
             },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "SoMES technical validation JSON",
-          "title": "Technical Validation Json"
+            "title": "InputModel",
+            "type": "object"
         },
-        "forecast_vs_actual_json": {
-          "anyOf": [
-            {
-              "type": "string"
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "connectors_manifest_json": {
+                    "title": "Connectors Manifest Json",
+                    "type": "string"
+                },
+                "weather_forecast_csv": {
+                    "title": "Weather Forecast Csv",
+                    "type": "string"
+                },
+                "pv_production_csv": {
+                    "title": "Pv Production Csv",
+                    "type": "string"
+                },
+                "bess_telemetry_csv": {
+                    "title": "Bess Telemetry Csv",
+                    "type": "string"
+                },
+                "prices_csv": {
+                    "default": "",
+                    "title": "Prices Csv",
+                    "type": "string"
+                },
+                "grid_constraints_json": {
+                    "title": "Grid Constraints Json",
+                    "type": "string"
+                },
+                "flexible_loads_json": {
+                    "title": "Flexible Loads Json",
+                    "type": "string"
+                },
+                "data_quality_report_json": {
+                    "default": "",
+                    "title": "Data Quality Report Json",
+                    "type": "string"
+                },
+                "data_quality_indicators_csv": {
+                    "default": "",
+                    "title": "Data Quality Indicators Csv",
+                    "type": "string"
+                },
+                "missing_data_report_csv": {
+                    "default": "",
+                    "title": "Missing Data Report Csv",
+                    "type": "string"
+                },
+                "live_sources_used": {
+                    "default": 0,
+                    "title": "Live Sources Used",
+                    "type": "integer"
+                }
             },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "Feedback loop bundle from ModelMonitoringPiece",
-          "title": "Forecast Vs Actual Json"
+            "required": [
+                "message",
+                "connectors_manifest_json",
+                "weather_forecast_csv",
+                "pv_production_csv",
+                "bess_telemetry_csv",
+                "grid_constraints_json",
+                "flexible_loads_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
         },
-        "data_quality_report_json": {
-          "anyOf": [
-            {
-              "type": "string"
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SomesConnectorsPiece"
+    },
+    "BatterySimPiece": {
+        "name": "BatterySimPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Battery Simulation",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
             },
-            {
-              "type": "null"
+            "useIcon": true,
+            "icon_class_name": "fa-solid:battery-half",
+            "iconStyle": {
+                "cursor": "pointer"
             }
-          ],
-          "default": null,
-          "description": "Data validation report from ingestion/preprocessing",
-          "title": "Data Quality Report Json"
-        }
-      },
-      "title": "InputModel",
-      "type": "object"
+        },
+        "description": "Generate battery SOC timeseries from load and PV profile",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "virtual_solar_csv": {
+                    "description": "Path to virtual_solar.csv",
+                    "title": "Virtual Solar Csv",
+                    "type": "string"
+                },
+                "battery_strategy_json": {
+                    "default": "",
+                    "description": "Optional battery strategy recommendation JSON",
+                    "title": "Battery Strategy Json",
+                    "type": "string"
+                },
+                "grid_constraints_json": {
+                    "default": "",
+                    "description": "Optional SoMES grid constraints JSON",
+                    "title": "Grid Constraints Json",
+                    "type": "string"
+                },
+                "flexible_load_schedule_csv": {
+                    "default": "",
+                    "description": "Optional flexible load schedule CSV",
+                    "title": "Flexible Load Schedule Csv",
+                    "type": "string"
+                },
+                "price_forecast_csv": {
+                    "default": "",
+                    "description": "Optional price/tariff forecast CSV",
+                    "title": "Price Forecast Csv",
+                    "type": "string"
+                },
+                "bess_telemetry_csv": {
+                    "default": "",
+                    "description": "BESS telemetry CSV; last record initialises SOC and available power",
+                    "title": "Bess Telemetry Csv",
+                    "type": "string"
+                },
+                "dispatch_method": {
+                    "default": "auto",
+                    "description": "auto (LP with greedy fallback) | lp | greedy",
+                    "title": "Dispatch Method",
+                    "type": "string"
+                },
+                "export_price_eur_kwh": {
+                    "default": 0.05,
+                    "description": "Feed-in remuneration used by the optimiser",
+                    "title": "Export Price Eur Kwh",
+                    "type": "number"
+                },
+                "forecast_accuracy_json": {
+                    "default": "",
+                    "description": "Forecast error statistics folded into the KPI set",
+                    "title": "Forecast Accuracy Json",
+                    "type": "string"
+                },
+                "degradation_cost_eur_kwh": {
+                    "default": 0.01,
+                    "description": "Battery throughput cost in the objective",
+                    "title": "Degradation Cost Eur Kwh",
+                    "type": "number"
+                },
+                "peak_price_eur_kw": {
+                    "default": 0.0,
+                    "description": "Peak import charge; >0 enables peak shaving objective",
+                    "title": "Peak Price Eur Kw",
+                    "type": "number"
+                },
+                "terminal_soc_pct": {
+                    "default": -1.0,
+                    "description": "Required SOC at horizon end; <0 disables",
+                    "title": "Terminal Soc Pct",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml",
+                "virtual_solar_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "virtual_battery_soc_csv": {
+                    "title": "Virtual Battery Soc Csv",
+                    "type": "string"
+                },
+                "battery_summary_csv": {
+                    "title": "Battery Summary Csv",
+                    "type": "string"
+                },
+                "battery_charge_discharge_plan_csv": {
+                    "title": "Battery Charge Discharge Plan Csv",
+                    "type": "string"
+                },
+                "grid_import_export_plan_csv": {
+                    "title": "Grid Import Export Plan Csv",
+                    "type": "string"
+                },
+                "next_day_dispatch_plan_csv": {
+                    "title": "Next Day Dispatch Plan Csv",
+                    "type": "string"
+                },
+                "technical_validation_json": {
+                    "title": "Technical Validation Json",
+                    "type": "string"
+                },
+                "operational_kpis_json": {
+                    "title": "Operational Kpis Json",
+                    "type": "string"
+                },
+                "dispatch_method_used": {
+                    "default": "",
+                    "title": "Dispatch Method Used",
+                    "type": "string"
+                },
+                "bess_state_json": {
+                    "default": "",
+                    "title": "Bess State Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "virtual_battery_soc_csv",
+                "battery_summary_csv",
+                "battery_charge_discharge_plan_csv",
+                "grid_import_export_plan_csv",
+                "next_day_dispatch_plan_csv",
+                "technical_validation_json",
+                "operational_kpis_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece"
     },
-    "output_schema": {
-      "properties": {
-        "dashboard_data_json": {
-          "title": "Dashboard Data Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "dashboard_data_json"
-      ],
-      "title": "OutputModel",
-      "type": "object"
+    "SolarSimPiece": {
+        "name": "SolarSimPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Solar Simulation",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:sun",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Generate synthetic PV profile for selected sizing",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "weather_forecast_csv": {
+                    "default": "",
+                    "description": "Optional weather/irradiance forecast CSV",
+                    "title": "Weather Forecast Csv",
+                    "type": "string"
+                },
+                "pv_production_csv": {
+                    "default": "",
+                    "description": "Optional measured PV production CSV for calibration",
+                    "title": "Pv Production Csv",
+                    "type": "string"
+                },
+                "solargis_csv": {
+                    "default": "",
+                    "description": "Optional SolarGIS irradiance history used to train PVOUT",
+                    "title": "Solargis Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "virtual_solar_csv": {
+                    "title": "Virtual Solar Csv",
+                    "type": "string"
+                },
+                "pv_forecast_uncertainty_json": {
+                    "default": "",
+                    "description": "Production uncertainty indicators",
+                    "title": "Pv Forecast Uncertainty Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "virtual_solar_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarSimPiece"
     },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DashboardPiece"
-  },
-  "ForecastHorizonPiece": {
-    "name": "ForecastHorizonPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
+    "ModelMonitoringPiece": {
+        "name": "ModelMonitoringPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "ModelMonitoringPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid fa-circle",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Monitor model quality and prediction drift",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "predictions_csv": {
+                    "description": "CSV with prediction_load_kw and optionally load_kw",
+                    "title": "Predictions Csv",
+                    "type": "string"
+                },
+                "pv_forecast_csv": {
+                    "default": "",
+                    "description": "virtual_solar.csv with pv_kw forecast",
+                    "title": "Pv Forecast Csv",
+                    "type": "string"
+                },
+                "pv_actual_csv": {
+                    "default": "",
+                    "description": "pv_production_measurements.csv with pv_kw_measured",
+                    "title": "Pv Actual Csv",
+                    "type": "string"
+                },
+                "planned_dispatch_csv": {
+                    "default": "",
+                    "description": "next_day_dispatch_plan.csv issued to the EMS",
+                    "title": "Planned Dispatch Csv",
+                    "type": "string"
+                },
+                "bess_telemetry_csv": {
+                    "default": "",
+                    "description": "BESS telemetry with the executed battery power",
+                    "title": "Bess Telemetry Csv",
+                    "type": "string"
+                },
+                "timestep_hours": {
+                    "default": 0.25,
+                    "description": "Dispatch timestep used for energy totals",
+                    "title": "Timestep Hours",
+                    "type": "number"
+                },
+                "history_csv": {
+                    "default": "",
+                    "description": "Measured history used to label the retraining dataset",
+                    "title": "History Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "predictions_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "report_json": {
+                    "title": "Report Json",
+                    "type": "string"
+                },
+                "daily_csv": {
+                    "title": "Daily Csv",
+                    "type": "string"
+                },
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "forecast_vs_actual_json": {
+                    "default": "",
+                    "title": "Forecast Vs Actual Json",
+                    "type": "string"
+                },
+                "closed_loop_ok": {
+                    "default": true,
+                    "title": "Closed Loop Ok",
+                    "type": "boolean"
+                },
+                "retraining_dataset_csv": {
+                    "default": "",
+                    "description": "Labelled dataset for the next incremental training run",
+                    "title": "Retraining Dataset Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "report_json",
+                "daily_csv",
+                "message"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelMonitoringPiece"
     },
-    "tags": [],
-    "style": {
-      "node_label": "ForecastHorizonPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:clock",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
+    "IncrementalTrainPiece": {
+        "name": "IncrementalTrainPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "IncrementalTrainPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:brain",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Train or incrementally update load models by department",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "history_csv": {
+                    "description": "Merged long-term history CSV",
+                    "title": "History Csv",
+                    "type": "string"
+                },
+                "model_registry_dir": {
+                    "description": "Directory for per-department model artifacts",
+                    "title": "Model Registry Dir",
+                    "type": "string"
+                },
+                "incremental_window_days": {
+                    "default": 30,
+                    "description": "Train update only on recent window in days",
+                    "minimum": 1,
+                    "title": "Incremental Window Days",
+                    "type": "integer"
+                },
+                "full_retrain_every_n_updates": {
+                    "default": 20,
+                    "description": "Run full retrain after this many incremental updates",
+                    "minimum": 1,
+                    "title": "Full Retrain Every N Updates",
+                    "type": "integer"
+                },
+                "incremental_trees": {
+                    "default": 50,
+                    "description": "Number of trees appended in incremental update",
+                    "minimum": 10,
+                    "title": "Incremental Trees",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "history_csv",
+                "model_registry_dir"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "models_index_json": {
+                    "title": "Models Index Json",
+                    "type": "string"
+                },
+                "training_summary_json": {
+                    "title": "Training Summary Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "models_index_json",
+                "training_summary_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece"
     },
-    "description": "Forecast consumption by department for chosen horizon",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "history_csv": {
-          "description": "Merged history CSV",
-          "title": "History Csv",
-          "type": "string"
+    "PreprocessEnergyDataPiece": {
+        "name": "PreprocessEnergyDataPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "models_index_json": {
-          "description": "JSON map department -> model path",
-          "title": "Models Index Json",
-          "type": "string"
+        "tags": [
+            "Energy",
+            "Preprocessing"
+        ],
+        "style": {
+            "node_label": "PreprocessEnergyDataPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:filter",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
         },
-        "model_registry_dir": {
-          "description": "Allowed model registry root for secure loading",
-          "title": "Model Registry Dir",
-          "type": "string"
+        "description": "Clean, resample and prepare energy data for training and prediction",
+        "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 256
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
         },
-        "horizon_hours": {
-          "default": 24,
-          "description": "Forecast horizon in hours",
-          "minimum": 1,
-          "title": "Horizon Hours",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "history_csv",
-        "models_index_json",
-        "model_registry_dir"
-      ],
-      "title": "InputModel",
-      "type": "object"
+        "input_schema": {
+            "properties": {
+                "input_path": {
+                    "description": "Path to merged energy parquet file",
+                    "title": "Input Path",
+                    "type": "string"
+                },
+                "forecast_hours": {
+                    "default": 24,
+                    "description": "Ignored when generate_predict_dataset is False",
+                    "title": "Forecast Hours",
+                    "type": "integer"
+                },
+                "generate_predict_dataset": {
+                    "default": false,
+                    "description": "If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
+                    "title": "Generate Predict Dataset",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "input_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "train_file_path": {
+                    "title": "Train File Path",
+                    "type": "string"
+                },
+                "predict_file_path": {
+                    "default": "",
+                    "description": "Empty if generate_predict_dataset is False",
+                    "title": "Predict File Path",
+                    "type": "string"
+                },
+                "data_quality_report_json": {
+                    "default": "",
+                    "description": "Quality indicators + correction recommendations",
+                    "title": "Data Quality Report Json",
+                    "type": "string"
+                },
+                "data_quality_indicators_csv": {
+                    "default": "",
+                    "description": "One row per ingested dataset",
+                    "title": "Data Quality Indicators Csv",
+                    "type": "string"
+                },
+                "missing_data_report_csv": {
+                    "default": "",
+                    "description": "Gaps and NaN counts found before correction",
+                    "title": "Missing Data Report Csv",
+                    "type": "string"
+                },
+                "data_quality_severity": {
+                    "default": "ok",
+                    "description": "ok | info | warning | critical",
+                    "title": "Data Quality Severity",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "train_file_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PreprocessEnergyDataPiece"
     },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
+    "ForecastHorizonPiece": {
+        "name": "ForecastHorizonPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "forecast_csv": {
-          "title": "Forecast Csv",
-          "type": "string"
+        "tags": [],
+        "style": {
+            "node_label": "ForecastHorizonPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:clock",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
         },
-        "forecast_confidence_json": {
-          "default": "",
-          "description": "Forecast confidence metrics per department",
-          "title": "Forecast Confidence Json",
-          "type": "string"
+        "description": "Forecast consumption by department for chosen horizon",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "history_csv": {
+                    "description": "Merged history CSV",
+                    "title": "History Csv",
+                    "type": "string"
+                },
+                "models_index_json": {
+                    "description": "JSON map department -> model path",
+                    "title": "Models Index Json",
+                    "type": "string"
+                },
+                "model_registry_dir": {
+                    "description": "Allowed model registry root for secure loading",
+                    "title": "Model Registry Dir",
+                    "type": "string"
+                },
+                "horizon_hours": {
+                    "default": 24,
+                    "description": "Forecast horizon in hours",
+                    "minimum": 1,
+                    "title": "Horizon Hours",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "history_csv",
+                "models_index_json",
+                "model_registry_dir"
+            ],
+            "title": "InputModel",
+            "type": "object"
         },
-        "peak_demand_json": {
-          "default": "",
-          "description": "Predicted peak demand values per day and department",
-          "title": "Peak Demand Json",
-          "type": "string"
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "forecast_csv": {
+                    "title": "Forecast Csv",
+                    "type": "string"
+                },
+                "forecast_confidence_json": {
+                    "default": "",
+                    "description": "Forecast confidence metrics per department",
+                    "title": "Forecast Confidence Json",
+                    "type": "string"
+                },
+                "peak_demand_json": {
+                    "default": "",
+                    "description": "Predicted peak demand values per day and department",
+                    "title": "Peak Demand Json",
+                    "type": "string"
+                },
+                "site_forecast_csv": {
+                    "default": "",
+                    "description": "Site-level D+1 load profile with prices, consumed by the dispatch chain",
+                    "title": "Site Forecast Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "forecast_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
         },
-        "site_forecast_csv": {
-          "default": "",
-          "description": "Site-level D+1 load profile with prices, consumed by the dispatch chain",
-          "title": "Site Forecast Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "forecast_csv"
-      ],
-      "title": "OutputModel",
-      "type": "object"
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastHorizonPiece"
     },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastHorizonPiece"
-  },
-  "ModelMonitoringPiece": {
-    "name": "ModelMonitoringPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
+    "BatteryStrategyOptimizerPiece": {
+        "name": "BatteryStrategyOptimizerPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Battery Strategy",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:sliders",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Create battery dispatch strategy recommendation",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "battery_strategy_recommendation_json": {
+                    "title": "Battery Strategy Recommendation Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "battery_strategy_recommendation_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatteryStrategyOptimizerPiece"
     },
-    "tags": [],
-    "style": {
-      "node_label": "ModelMonitoringPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid fa-circle",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
+    "FetchEnergyDataPiece": {
+        "name": "FetchEnergyDataPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [
+            "Energy"
+        ],
+        "style": {
+            "node_label": "FetchEnergyDataPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:bolt",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Load and merge energy CSV files",
+        "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "input_schema": {
+            "description": "Input model for Fetch Energy Data Piece",
+            "properties": {
+                "load_csv": {
+                    "default": "/home/shared_storage/load.csv",
+                    "description": "Path to load CSV file or a directory with load*.csv files",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "prices_csv": {
+                    "default": "/home/shared_storage/prices.csv",
+                    "description": "Path to prices CSV file",
+                    "title": "Prices Csv",
+                    "type": "string"
+                }
+            },
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "Output model for Fetch Energy Data Piece",
+            "properties": {
+                "message": {
+                    "default": "",
+                    "title": "Message",
+                    "type": "string"
+                },
+                "output_path": {
+                    "default": "",
+                    "title": "Output Path",
+                    "type": "string"
+                }
+            },
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FetchEnergyDataPiece"
     },
-    "description": "Monitor model quality and prediction drift",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "predictions_csv": {
-          "description": "CSV with prediction_load_kw and optionally load_kw",
-          "title": "Predictions Csv",
-          "type": "string"
+    "EmsBemsOutputPiece": {
+        "name": "EmsBemsOutputPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "pv_forecast_csv": {
-          "default": "",
-          "description": "virtual_solar.csv with pv_kw forecast",
-          "title": "Pv Forecast Csv",
-          "type": "string"
+        "tags": [],
+        "style": {
+            "node_label": "EmsBemsOutputPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:network-wired",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
         },
-        "pv_actual_csv": {
-          "default": "",
-          "description": "pv_production_measurements.csv with pv_kw_measured",
-          "title": "Pv Actual Csv",
-          "type": "string"
+        "description": "SoMES Output API / EMS-BEMS integration interface",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "next_day_dispatch_plan_csv": {
+                    "description": "Approved next-day dispatch plan CSV",
+                    "title": "Next Day Dispatch Plan Csv",
+                    "type": "string"
+                },
+                "technical_validation_json": {
+                    "description": "Technical validation bundle JSON",
+                    "title": "Technical Validation Json",
+                    "type": "string"
+                },
+                "operational_kpis_json": {
+                    "default": "",
+                    "description": "Optional operational KPIs JSON",
+                    "title": "Operational Kpis Json",
+                    "type": "string"
+                },
+                "flexible_load_activation_csv": {
+                    "default": "",
+                    "description": "Optional flexible load activation CSV",
+                    "title": "Flexible Load Activation Csv",
+                    "type": "string"
+                },
+                "ems_endpoint_url": {
+                    "default": "",
+                    "description": "HTTP endpoint for EMS/BEMS POST (file + register map always written)",
+                    "title": "Ems Endpoint Url",
+                    "type": "string"
+                },
+                "auth_mode": {
+                    "default": "none",
+                    "description": "none | bearer | basic | api_key",
+                    "title": "Auth Mode",
+                    "type": "string"
+                },
+                "auth_token": {
+                    "default": "",
+                    "description": "Bearer token or API key value",
+                    "title": "Auth Token",
+                    "type": "string"
+                },
+                "auth_username": {
+                    "default": "",
+                    "description": "Username for basic auth",
+                    "title": "Auth Username",
+                    "type": "string"
+                },
+                "auth_password": {
+                    "default": "",
+                    "description": "Password for basic auth",
+                    "title": "Auth Password",
+                    "type": "string"
+                },
+                "api_key_header": {
+                    "default": "X-API-Key",
+                    "description": "Header name used in api_key mode",
+                    "title": "Api Key Header",
+                    "type": "string"
+                },
+                "request_timeout_s": {
+                    "default": 15,
+                    "description": "Per-attempt HTTP timeout",
+                    "title": "Request Timeout S",
+                    "type": "integer"
+                },
+                "max_retries": {
+                    "default": 3,
+                    "description": "Delivery attempts before giving up",
+                    "title": "Max Retries",
+                    "type": "integer"
+                },
+                "backoff_seconds": {
+                    "default": 1.5,
+                    "description": "Base for exponential backoff between attempts",
+                    "title": "Backoff Seconds",
+                    "type": "number"
+                },
+                "require_delivery": {
+                    "default": false,
+                    "description": "Fail the piece when an endpoint is configured but delivery is not acknowledged",
+                    "title": "Require Delivery",
+                    "type": "boolean"
+                },
+                "emit_register_map": {
+                    "default": true,
+                    "description": "Write a Modbus/IEC-104 point map next to the payload",
+                    "title": "Emit Register Map",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "next_day_dispatch_plan_csv",
+                "technical_validation_json"
+            ],
+            "title": "InputModel",
+            "type": "object"
         },
-        "planned_dispatch_csv": {
-          "default": "",
-          "description": "next_day_dispatch_plan.csv issued to the EMS",
-          "title": "Planned Dispatch Csv",
-          "type": "string"
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "ems_bems_payload_json": {
+                    "title": "Ems Bems Payload Json",
+                    "type": "string"
+                },
+                "ems_bems_schedule_csv": {
+                    "title": "Ems Bems Schedule Csv",
+                    "type": "string"
+                },
+                "ems_bems_ack_json": {
+                    "default": "",
+                    "title": "Ems Bems Ack Json",
+                    "type": "string"
+                },
+                "ems_bems_register_map_csv": {
+                    "default": "",
+                    "title": "Ems Bems Register Map Csv",
+                    "type": "string"
+                },
+                "delivered": {
+                    "default": false,
+                    "title": "Delivered",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "message",
+                "ems_bems_payload_json",
+                "ems_bems_schedule_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
         },
-        "bess_telemetry_csv": {
-          "default": "",
-          "description": "BESS telemetry with the executed battery power",
-          "title": "Bess Telemetry Csv",
-          "type": "string"
-        },
-        "timestep_hours": {
-          "default": 0.25,
-          "description": "Dispatch timestep used for energy totals",
-          "title": "Timestep Hours",
-          "type": "number"
-        },
-        "history_csv": {
-          "default": "",
-          "description": "Measured history used to label the retraining dataset",
-          "title": "History Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "predictions_csv"
-      ],
-      "title": "InputModel",
-      "type": "object"
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EmsBemsOutputPiece"
     },
-    "output_schema": {
-      "properties": {
-        "report_json": {
-          "title": "Report Json",
-          "type": "string"
+    "GridFeasibilityPiece": {
+        "name": "GridFeasibilityPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "daily_csv": {
-          "title": "Daily Csv",
-          "type": "string"
+        "tags": [],
+        "style": {
+            "node_label": "GridFeasibilityPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:shield-halved",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
         },
-        "message": {
-          "title": "Message",
-          "type": "string"
+        "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "next_day_dispatch_plan_csv": {
+                    "description": "Next-day dispatch plan CSV",
+                    "title": "Next Day Dispatch Plan Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "default": "",
+                    "description": "Scenario YAML with battery/grid params",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "grid_constraints_json": {
+                    "default": "",
+                    "description": "Grid constraints JSON from connectors",
+                    "title": "Grid Constraints Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "next_day_dispatch_plan_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
         },
-        "forecast_vs_actual_json": {
-          "default": "",
-          "title": "Forecast Vs Actual Json",
-          "type": "string"
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "technical_validation_json": {
+                    "title": "Technical Validation Json",
+                    "type": "string"
+                },
+                "approved_next_day_plan_csv": {
+                    "title": "Approved Next Day Plan Csv",
+                    "type": "string"
+                },
+                "feasibility_ok": {
+                    "title": "Feasibility Ok",
+                    "type": "boolean"
+                },
+                "corrected_operating_plan_csv": {
+                    "default": "",
+                    "description": "Schedule clipped back inside technical limits",
+                    "title": "Corrected Operating Plan Csv",
+                    "type": "string"
+                },
+                "corrected_operating_recommendations_csv": {
+                    "default": "",
+                    "description": "Per-step correction recommendations",
+                    "title": "Corrected Operating Recommendations Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "technical_validation_json",
+                "approved_next_day_plan_csv",
+                "feasibility_ok"
+            ],
+            "title": "OutputModel",
+            "type": "object"
         },
-        "closed_loop_ok": {
-          "default": true,
-          "title": "Closed Loop Ok",
-          "type": "boolean"
-        },
-        "retraining_dataset_csv": {
-          "default": "",
-          "description": "Labelled dataset for the next incremental training run",
-          "title": "Retraining Dataset Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "report_json",
-        "daily_csv",
-        "message"
-      ],
-      "title": "OutputModel",
-      "type": "object"
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/GridFeasibilityPiece"
     },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelMonitoringPiece"
-  },
-  "BatteryStrategyOptimizerPiece": {
-    "name": "BatteryStrategyOptimizerPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
+    "TrainModelPiece": {
+        "name": "TrainModelPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [
+            "XGBoost",
+            "Training",
+            "Energy"
+        ],
+        "style": {
+            "node_label": "TrainModelPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:brain",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Train XGBoost energy forecasting model",
+        "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 256
+            },
+            "limits": {
+                "cpu": 1000,
+                "memory": 1024
+            }
+        },
+        "input_schema": {
+            "properties": {
+                "data_path": {
+                    "description": "Path to preprocessed parquet or CSV dataset",
+                    "title": "Training dataset path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "data_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "description": "Training result message",
+                    "title": "Message",
+                    "type": "string"
+                },
+                "model_file_path": {
+                    "description": "Path to trained model file",
+                    "title": "Model File Path",
+                    "type": "string"
+                },
+                "train_log_path": {
+                    "description": "Path to training log file",
+                    "title": "Train Log Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "model_file_path",
+                "train_log_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/TrainModelPiece"
     },
-    "tags": [],
-    "style": {
-      "node_label": "Battery Strategy",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:sliders",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
+    "PriceForecastPiece": {
+        "name": "PriceForecastPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "PriceForecastPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:chart-line",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "SoMES price/tariff forecast for the optimisation horizon",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "prices_csv": {
+                    "description": "Historical electricity prices CSV",
+                    "title": "Prices Csv",
+                    "type": "string"
+                },
+                "horizon_steps": {
+                    "default": 96,
+                    "description": "Forecast horizon steps (15-min default)",
+                    "minimum": 1,
+                    "title": "Horizon Steps",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "prices_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "price_forecast_csv": {
+                    "title": "Price Forecast Csv",
+                    "type": "string"
+                },
+                "tariff_scenarios_csv": {
+                    "default": "",
+                    "description": "Long-format low/base/high tariff scenarios",
+                    "title": "Tariff Scenarios Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "price_forecast_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PriceForecastPiece"
     },
-    "description": "Create battery dispatch strategy recommendation",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "load_csv": {
-          "description": "Path to historical load CSV",
-          "title": "Load Csv",
-          "type": "string"
+    "SimulatePiece": {
+        "name": "SimulatePiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "scenario_yaml": {
-          "description": "Path to sized scenario YAML",
-          "title": "Scenario Yaml",
-          "type": "string"
-        }
-      },
-      "required": [
-        "load_csv",
-        "scenario_yaml"
-      ],
-      "title": "InputModel",
-      "type": "object"
+        "tags": [],
+        "style": {
+            "node_label": "Simulate MRK Scenario",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:calculator",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Run MRK simulation baseline/PV/battery",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "output_dir": {
+                    "default": "",
+                    "description": "Optional output dir when results_path is not set",
+                    "title": "Output Dir",
+                    "type": "string"
+                },
+                "battery_strategy_recommendation_json": {
+                    "default": "",
+                    "description": "Optional battery strategy recommendation JSON",
+                    "title": "Battery Strategy Recommendation Json",
+                    "type": "string"
+                },
+                "ranked_catalog_json": {
+                    "default": "",
+                    "description": "Optional ranked catalog recommendation JSON",
+                    "title": "Ranked Catalog Json",
+                    "type": "string"
+                },
+                "inverter_catalog_json": {
+                    "default": "",
+                    "description": "Optional inverter catalog JSON",
+                    "title": "Inverter Catalog Json",
+                    "type": "string"
+                },
+                "battery_catalog_json": {
+                    "default": "",
+                    "description": "Optional battery catalog JSON",
+                    "title": "Battery Catalog Json",
+                    "type": "string"
+                },
+                "catalog_manifest_json": {
+                    "default": "",
+                    "description": "Optional catalog sync manifest JSON",
+                    "title": "Catalog Manifest Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "report_json": {
+                    "title": "Report Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "report_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SimulatePiece"
     },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
+    "PredictPiece": {
+        "name": "PredictPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
         },
-        "battery_strategy_recommendation_json": {
-          "title": "Battery Strategy Recommendation Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "battery_strategy_recommendation_json"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatteryStrategyOptimizerPiece"
-  },
-  "EmsBemsOutputPiece": {
-    "name": "EmsBemsOutputPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "EmsBemsOutputPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:network-wired",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "SoMES Output API / EMS-BEMS integration interface",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "next_day_dispatch_plan_csv": {
-          "description": "Approved next-day dispatch plan CSV",
-          "title": "Next Day Dispatch Plan Csv",
-          "type": "string"
+        "tags": [],
+        "style": {
+            "node_label": "PredictPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:chart-line",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
         },
-        "technical_validation_json": {
-          "description": "Technical validation bundle JSON",
-          "title": "Technical Validation Json",
-          "type": "string"
+        "description": "Run prediction using trained XGBoost model",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "model_path": {
+                    "description": "Path to trained XGBoost model",
+                    "title": "Model Path",
+                    "type": "string"
+                },
+                "data_path": {
+                    "description": "Path to prediction dataset (15min)",
+                    "title": "Data Path",
+                    "type": "string"
+                },
+                "use_rolling_prediction": {
+                    "default": false,
+                    "description": "True: use bridge_rows of real load_kw, then compute lags from prior predictions.",
+                    "title": "Use Rolling Prediction",
+                    "type": "boolean"
+                },
+                "bridge_rows": {
+                    "default": 4,
+                    "minimum": 1,
+                    "title": "Bridge Rows",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "model_path",
+                "data_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
         },
-        "operational_kpis_json": {
-          "default": "",
-          "description": "Optional operational KPIs JSON",
-          "title": "Operational Kpis Json",
-          "type": "string"
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "prediction_file_path": {
+                    "title": "Prediction File Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "prediction_file_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
         },
-        "flexible_load_activation_csv": {
-          "default": "",
-          "description": "Optional flexible load activation CSV",
-          "title": "Flexible Load Activation Csv",
-          "type": "string"
-        },
-        "ems_endpoint_url": {
-          "default": "",
-          "description": "HTTP endpoint for EMS/BEMS POST (file + register map always written)",
-          "title": "Ems Endpoint Url",
-          "type": "string"
-        },
-        "auth_mode": {
-          "default": "none",
-          "description": "none | bearer | basic | api_key",
-          "title": "Auth Mode",
-          "type": "string"
-        },
-        "auth_token": {
-          "default": "",
-          "description": "Bearer token or API key value",
-          "title": "Auth Token",
-          "type": "string"
-        },
-        "auth_username": {
-          "default": "",
-          "description": "Username for basic auth",
-          "title": "Auth Username",
-          "type": "string"
-        },
-        "auth_password": {
-          "default": "",
-          "description": "Password for basic auth",
-          "title": "Auth Password",
-          "type": "string"
-        },
-        "api_key_header": {
-          "default": "X-API-Key",
-          "description": "Header name used in api_key mode",
-          "title": "Api Key Header",
-          "type": "string"
-        },
-        "request_timeout_s": {
-          "default": 15,
-          "description": "Per-attempt HTTP timeout",
-          "title": "Request Timeout S",
-          "type": "integer"
-        },
-        "max_retries": {
-          "default": 3,
-          "description": "Delivery attempts before giving up",
-          "title": "Max Retries",
-          "type": "integer"
-        },
-        "backoff_seconds": {
-          "default": 1.5,
-          "description": "Base for exponential backoff between attempts",
-          "title": "Backoff Seconds",
-          "type": "number"
-        },
-        "require_delivery": {
-          "default": false,
-          "description": "Fail the piece when an endpoint is configured but delivery is not acknowledged",
-          "title": "Require Delivery",
-          "type": "boolean"
-        },
-        "emit_register_map": {
-          "default": true,
-          "description": "Write a Modbus/IEC-104 point map next to the payload",
-          "title": "Emit Register Map",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "next_day_dispatch_plan_csv",
-        "technical_validation_json"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "ems_bems_payload_json": {
-          "title": "Ems Bems Payload Json",
-          "type": "string"
-        },
-        "ems_bems_schedule_csv": {
-          "title": "Ems Bems Schedule Csv",
-          "type": "string"
-        },
-        "ems_bems_ack_json": {
-          "default": "",
-          "title": "Ems Bems Ack Json",
-          "type": "string"
-        },
-        "ems_bems_register_map_csv": {
-          "default": "",
-          "title": "Ems Bems Register Map Csv",
-          "type": "string"
-        },
-        "delivered": {
-          "default": false,
-          "title": "Delivered",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "message",
-        "ems_bems_payload_json",
-        "ems_bems_schedule_csv"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EmsBemsOutputPiece"
-  },
-  "FlexibleLoadSchedulePiece": {
-    "name": "FlexibleLoadSchedulePiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "FlexibleLoadSchedulePiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:sliders",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "SoMES flexible load shifting schedule for the optimisation horizon",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "load_csv": {
-          "description": "Load / horizon CSV with datetime",
-          "title": "Load Csv",
-          "type": "string"
-        },
-        "flexible_loads_json": {
-          "default": "",
-          "description": "Flexible load definitions JSON",
-          "title": "Flexible Loads Json",
-          "type": "string"
-        },
-        "price_forecast_csv": {
-          "default": "",
-          "description": "Optional price forecast CSV",
-          "title": "Price Forecast Csv",
-          "type": "string"
-        },
-        "scenario_yaml": {
-          "default": "",
-          "description": "Optional scenario YAML for timestep",
-          "title": "Scenario Yaml",
-          "type": "string"
-        }
-      },
-      "required": [
-        "load_csv"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "flexible_load_schedule_csv": {
-          "title": "Flexible Load Schedule Csv",
-          "type": "string"
-        },
-        "flexible_load_activation_csv": {
-          "title": "Flexible Load Activation Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "flexible_load_schedule_csv",
-        "flexible_load_activation_csv"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FlexibleLoadSchedulePiece"
-  },
-  "GridFeasibilityPiece": {
-    "name": "GridFeasibilityPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "GridFeasibilityPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:shield-halved",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "next_day_dispatch_plan_csv": {
-          "description": "Next-day dispatch plan CSV",
-          "title": "Next Day Dispatch Plan Csv",
-          "type": "string"
-        },
-        "scenario_yaml": {
-          "default": "",
-          "description": "Scenario YAML with battery/grid params",
-          "title": "Scenario Yaml",
-          "type": "string"
-        },
-        "grid_constraints_json": {
-          "default": "",
-          "description": "Grid constraints JSON from connectors",
-          "title": "Grid Constraints Json",
-          "type": "string"
-        }
-      },
-      "required": [
-        "next_day_dispatch_plan_csv"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "technical_validation_json": {
-          "title": "Technical Validation Json",
-          "type": "string"
-        },
-        "approved_next_day_plan_csv": {
-          "title": "Approved Next Day Plan Csv",
-          "type": "string"
-        },
-        "feasibility_ok": {
-          "title": "Feasibility Ok",
-          "type": "boolean"
-        },
-        "corrected_operating_plan_csv": {
-          "default": "",
-          "description": "Schedule clipped back inside technical limits",
-          "title": "Corrected Operating Plan Csv",
-          "type": "string"
-        },
-        "corrected_operating_recommendations_csv": {
-          "default": "",
-          "description": "Per-step correction recommendations",
-          "title": "Corrected Operating Recommendations Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "technical_validation_json",
-        "approved_next_day_plan_csv",
-        "feasibility_ok"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/GridFeasibilityPiece"
-  },
-  "PriceForecastPiece": {
-    "name": "PriceForecastPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "PriceForecastPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:chart-line",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "SoMES price/tariff forecast for the optimisation horizon",
-    "dependencies_group": "0",
-    "input_schema": {
-      "properties": {
-        "prices_csv": {
-          "description": "Historical electricity prices CSV",
-          "title": "Prices Csv",
-          "type": "string"
-        },
-        "horizon_steps": {
-          "default": 96,
-          "description": "Forecast horizon steps (15-min default)",
-          "minimum": 1,
-          "title": "Horizon Steps",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "prices_csv"
-      ],
-      "title": "InputModel",
-      "type": "object"
-    },
-    "output_schema": {
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "price_forecast_csv": {
-          "title": "Price Forecast Csv",
-          "type": "string"
-        },
-        "tariff_scenarios_csv": {
-          "default": "",
-          "description": "Long-format low/base/high tariff scenarios",
-          "title": "Tariff Scenarios Csv",
-          "type": "string"
-        }
-      },
-      "required": [
-        "message",
-        "price_forecast_csv"
-      ],
-      "title": "OutputModel",
-      "type": "object"
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PriceForecastPiece"
-  },
-  "SomesConnectorsPiece": {
-    "name": "SomesConnectorsPiece",
-    "dependency": {
-      "dockerfile": null,
-      "requirements_file": "requirements_0.txt"
-    },
-    "tags": [],
-    "style": {
-      "node_label": "SomesConnectorsPiece",
-      "node_type": "default",
-      "node_style": {
-        "backgroundColor": "#ebebeb"
-      },
-      "useIcon": true,
-      "icon_class_name": "fa-solid:plug",
-      "iconStyle": {
-        "cursor": "pointer"
-      }
-    },
-    "description": "SoMES data connectors: weather, PV production, BESS telemetry, grid constraints, flexible loads",
-    "dependencies_group": "0",
-    "input_schema": {
-      "title": "InputModel",
-      "type": "object",
-      "properties": {
-        "connectors_dir": {
-          "default": "",
-          "description": "Directory with SoMES connector files (created with demos if empty/missing)",
-          "title": "Connectors Dir",
-          "type": "string"
-        },
-        "weather_api_enabled": {
-          "default": false,
-          "description": "Pull live irradiance/temperature forecast from Open-Meteo",
-          "title": "Weather Api Enabled",
-          "type": "boolean"
-        },
-        "latitude": {
-          "default": 48.148,
-          "description": "Site latitude for the weather pull",
-          "title": "Latitude",
-          "type": "number"
-        },
-        "longitude": {
-          "default": 17.107,
-          "description": "Site longitude for the weather pull",
-          "title": "Longitude",
-          "type": "number"
-        },
-        "forecast_days": {
-          "default": 2,
-          "description": "Weather forecast horizon in days",
-          "title": "Forecast Days",
-          "type": "integer"
-        },
-        "prices_api_enabled": {
-          "default": false,
-          "description": "Pull day-ahead spot prices from the OKTE ISOT public API",
-          "title": "Prices Api Enabled",
-          "type": "boolean"
-        },
-        "prices_lookback_days": {
-          "default": 30,
-          "description": "How many past days of OKTE prices to pull together with D+1",
-          "title": "Prices Lookback Days",
-          "type": "integer"
-        },
-        "weather_url": {
-          "default": "",
-          "description": "Optional CSV endpoint overriding the weather provider",
-          "title": "Weather Url",
-          "type": "string"
-        },
-        "prices_url": {
-          "default": "",
-          "description": "Optional CSV endpoint overriding the price provider",
-          "title": "Prices Url",
-          "type": "string"
-        },
-        "pv_production_url": {
-          "default": "",
-          "description": "Optional CSV endpoint with measured PV production",
-          "title": "Pv Production Url",
-          "type": "string"
-        },
-        "bess_telemetry_url": {
-          "default": "",
-          "description": "Optional CSV endpoint with BESS telemetry",
-          "title": "Bess Telemetry Url",
-          "type": "string"
-        },
-        "allow_demo_fallback": {
-          "default": true,
-          "description": "If False the piece fails instead of generating synthetic fixtures",
-          "title": "Allow Demo Fallback",
-          "type": "boolean"
-        }
-      }
-    },
-    "output_schema": {
-      "title": "OutputModel",
-      "type": "object",
-      "properties": {
-        "message": {
-          "title": "Message",
-          "type": "string"
-        },
-        "connectors_manifest_json": {
-          "title": "Connectors Manifest Json",
-          "type": "string"
-        },
-        "weather_forecast_csv": {
-          "title": "Weather Forecast Csv",
-          "type": "string"
-        },
-        "pv_production_csv": {
-          "title": "Pv Production Csv",
-          "type": "string"
-        },
-        "bess_telemetry_csv": {
-          "title": "Bess Telemetry Csv",
-          "type": "string"
-        },
-        "prices_csv": {
-          "default": "",
-          "title": "Prices Csv",
-          "type": "string"
-        },
-        "grid_constraints_json": {
-          "title": "Grid Constraints Json",
-          "type": "string"
-        },
-        "flexible_loads_json": {
-          "title": "Flexible Loads Json",
-          "type": "string"
-        },
-        "data_quality_report_json": {
-          "default": "",
-          "title": "Data Quality Report Json",
-          "type": "string"
-        },
-        "data_quality_indicators_csv": {
-          "default": "",
-          "title": "Data Quality Indicators Csv",
-          "type": "string"
-        },
-        "missing_data_report_csv": {
-          "default": "",
-          "title": "Missing Data Report Csv",
-          "type": "string"
-        },
-        "live_sources_used": {
-          "default": 0,
-          "title": "Live Sources Used",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "message",
-        "connectors_manifest_json",
-        "weather_forecast_csv",
-        "pv_production_csv",
-        "bess_telemetry_csv",
-        "grid_constraints_json",
-        "flexible_loads_json"
-      ]
-    },
-    "secrets_schema": null,
-    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SomesConnectorsPiece"
-  }
+        "secrets_schema": null,
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PredictPiece"
+    }
 }
