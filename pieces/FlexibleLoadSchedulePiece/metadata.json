@@ -1,0 +1,12 @@
+{
+  "name": "FlexibleLoadSchedulePiece",
+  "description": "SoMES flexible load shifting schedule for the optimisation horizon",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "FlexibleLoadSchedulePiece",
+    "icon_class_name": "fa-solid:sliders"
+  }
+}

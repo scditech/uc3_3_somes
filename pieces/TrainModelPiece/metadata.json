@@ -1,0 +1,27 @@
+{
+  "name": "TrainModelPiece",
+  "description": "Train XGBoost energy forecasting model",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 200,
+      "memory": 256
+    },
+    "limits": {
+      "cpu": 1000,
+      "memory": 1024
+    }
+  },
+  "tags": [
+    "XGBoost",
+    "Training",
+    "Energy"
+  ],
+  "style": {
+    "node_label": "TrainModelPiece",
+    "icon_class_name": "fa-solid:brain"
+  }
+}

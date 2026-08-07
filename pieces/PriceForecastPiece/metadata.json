@@ -1,0 +1,12 @@
+{
+  "name": "PriceForecastPiece",
+  "description": "SoMES price/tariff forecast for the optimisation horizon",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "PriceForecastPiece",
+    "icon_class_name": "fa-solid:chart-line"
+  }
+}

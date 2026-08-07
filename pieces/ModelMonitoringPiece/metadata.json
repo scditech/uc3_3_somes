@@ -1,0 +1,11 @@
+{
+  "name": "ModelMonitoringPiece",
+  "description": "Monitor model quality and prediction drift",
+  "dependencies_group": "0",
+  "style": {
+    "node_label": "ModelMonitoringPiece"
+  },
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  }
+}

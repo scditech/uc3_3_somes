@@ -1,0 +1,12 @@
+{
+  "name": "BatteryStrategyOptimizerPiece",
+  "description": "Create battery dispatch strategy recommendation",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "Battery Strategy",
+    "icon_class_name": "fa-solid:sliders"
+  }
+}

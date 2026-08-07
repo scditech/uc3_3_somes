@@ -1,0 +1,12 @@
+{
+  "name": "IncrementalTrainPiece",
+  "description": "Train or incrementally update load models by department",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "IncrementalTrainPiece",
+    "icon_class_name": "fa-solid:brain"
+  }
+}

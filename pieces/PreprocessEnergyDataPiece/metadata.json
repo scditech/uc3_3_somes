@@ -1,0 +1,26 @@
+{
+  "name": "PreprocessEnergyDataPiece",
+  "description": "Clean, resample and prepare energy data for training and prediction",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 200,
+      "memory": 256
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "Energy",
+    "Preprocessing"
+  ],
+  "style": {
+    "node_label": "PreprocessEnergyDataPiece",
+    "icon_class_name": "fa-solid:filter"
+  }
+}

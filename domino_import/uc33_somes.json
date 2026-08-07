@@ -1,0 +1,3888 @@
+{
+  "workflowPieces": {
+    "100_88d95778-1fb1-4516-addc-298a3a052669": {
+      "name": "FetchEnergyDataPiece",
+      "description": "Load and merge energy CSV files",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "description": "Input model for Fetch Energy Data Piece",
+        "properties": {
+          "load_csv": {
+            "default": "/home/shared_storage/load.csv",
+            "description": "Path to load CSV file or a directory with load*.csv files",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "prices_csv": {
+            "default": "/home/shared_storage/prices.csv",
+            "description": "Path to prices CSV file",
+            "title": "Prices Csv",
+            "type": "string"
+          }
+        },
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "description": "Output model for Fetch Energy Data Piece",
+        "properties": {
+          "message": {
+            "default": "",
+            "title": "Message",
+            "type": "string"
+          },
+          "output_path": {
+            "default": "",
+            "title": "Output Path",
+            "type": "string"
+          }
+        },
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        }
+      },
+      "tags": [
+        "Energy"
+      ],
+      "style": {
+        "module": "FetchEnergyDataPiece",
+        "label": "FetchEnergyDataPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:bolt",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FetchEnergyDataPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb": {
+      "name": "PreprocessEnergyDataPiece",
+      "description": "Clean, resample and prepare energy data for training and prediction",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "input_path": {
+            "description": "Path to merged energy parquet file",
+            "title": "Input Path",
+            "type": "string"
+          },
+          "forecast_hours": {
+            "default": 24,
+            "description": "Ignored when generate_predict_dataset is False",
+            "title": "Forecast Hours",
+            "type": "integer"
+          },
+          "generate_predict_dataset": {
+            "default": false,
+            "description": "If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
+            "title": "Generate Predict Dataset",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "input_path"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "train_file_path": {
+            "title": "Train File Path",
+            "type": "string"
+          },
+          "predict_file_path": {
+            "default": "",
+            "description": "Empty if generate_predict_dataset is False",
+            "title": "Predict File Path",
+            "type": "string"
+          },
+          "data_quality_report_json": {
+            "default": "",
+            "description": "Quality indicators + correction recommendations",
+            "title": "Data Quality Report Json",
+            "type": "string"
+          },
+          "data_quality_indicators_csv": {
+            "default": "",
+            "description": "One row per ingested dataset",
+            "title": "Data Quality Indicators Csv",
+            "type": "string"
+          },
+          "missing_data_report_csv": {
+            "default": "",
+            "description": "Gaps and NaN counts found before correction",
+            "title": "Missing Data Report Csv",
+            "type": "string"
+          },
+          "data_quality_severity": {
+            "default": "ok",
+            "description": "ok | info | warning | critical",
+            "title": "Data Quality Severity",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "train_file_path"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {
+        "requests": {
+          "cpu": 200,
+          "memory": 256
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        }
+      },
+      "tags": [
+        "Energy",
+        "Preprocessing"
+      ],
+      "style": {
+        "module": "PreprocessEnergyDataPiece",
+        "label": "PreprocessEnergyDataPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:filter",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PreprocessEnergyDataPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "102_024b94c5-a535-4d65-a9a5-22c227eb23d8": {
+      "name": "TrainModelPiece",
+      "description": "Train XGBoost energy forecasting model",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "data_path": {
+            "description": "Path to preprocessed parquet or CSV dataset",
+            "title": "Training dataset path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "data_path"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "description": "Training result message",
+            "title": "Message",
+            "type": "string"
+          },
+          "model_file_path": {
+            "description": "Path to trained model file",
+            "title": "Model File Path",
+            "type": "string"
+          },
+          "train_log_path": {
+            "description": "Path to training log file",
+            "title": "Train Log Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "model_file_path",
+          "train_log_path"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {
+        "requests": {
+          "cpu": 200,
+          "memory": 256
+        },
+        "limits": {
+          "cpu": 1000,
+          "memory": 1024
+        }
+      },
+      "tags": [
+        "XGBoost",
+        "Training",
+        "Energy"
+      ],
+      "style": {
+        "module": "TrainModelPiece",
+        "label": "TrainModelPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:brain",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/TrainModelPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c": {
+      "name": "PredictPiece",
+      "description": "Run prediction using trained XGBoost model",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id (generated by FetchEnergyDataPiece / UserInputPiece when using OneData)",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "model_path": {
+            "description": "Path to trained XGBoost model",
+            "title": "Model Path",
+            "type": "string"
+          },
+          "load_csv": {
+            "description": "Historical load CSV used to build the future prediction time grid",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "prediction_days": {
+            "default": 30,
+            "description": "How many days ahead to predict (overridden by scenario.yaml / workflow JSON when present)",
+            "maximum": 366,
+            "minimum": 1,
+            "title": "Prediction Days",
+            "type": "integer"
+          },
+          "timestep_minutes": {
+            "default": 15,
+            "description": "Time step for the prediction grid (must match training data)",
+            "maximum": 60,
+            "minimum": 1,
+            "title": "Timestep Minutes",
+            "type": "integer"
+          },
+          "use_rolling_prediction": {
+            "default": true,
+            "description": "True (default): bridge_rows of real load_kw, then lags from prior predictions.",
+            "title": "Use Rolling Prediction",
+            "type": "boolean"
+          },
+          "bridge_rows": {
+            "default": 4,
+            "minimum": 1,
+            "title": "Bridge Rows",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "model_path",
+          "load_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "prediction_file_path": {
+            "title": "Prediction File Path",
+            "type": "string"
+          },
+          "runtime_load_csv": {
+            "description": "Load CSV for MRK sizing/simulation (load_kw from predictions)",
+            "title": "Runtime Load Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "prediction_file_path",
+          "runtime_load_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {
+        "properties": {
+          "onedata_onezone_host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "data.spice-platform.eu",
+            "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+            "title": "Onedata Onezone Host"
+          },
+          "onedata_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
+            "title": "Onedata Token"
+          },
+          "onedata_output_dir": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
+            "description": "OneData base dir for run outputs, e.g. onedata:///FilipsSpace/sustainable_model/outputs",
+            "title": "Onedata Output Dir"
+          }
+        },
+        "title": "SecretsModel",
+        "type": "object"
+      },
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "PredictPiece",
+        "label": "PredictPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:chart-line",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PredictPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "104_f493a15c-2457-4e1c-9159-fa27c5237217": {
+      "name": "IncrementalTrainPiece",
+      "description": "Train or incrementally update load models by department",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "history_csv": {
+            "description": "Merged long-term history CSV",
+            "title": "History Csv",
+            "type": "string"
+          },
+          "model_registry_dir": {
+            "description": "Directory for per-department model artifacts",
+            "title": "Model Registry Dir",
+            "type": "string"
+          },
+          "incremental_window_days": {
+            "default": 30,
+            "description": "Train update only on recent window in days",
+            "minimum": 1,
+            "title": "Incremental Window Days",
+            "type": "integer"
+          },
+          "full_retrain_every_n_updates": {
+            "default": 20,
+            "description": "Run full retrain after this many incremental updates",
+            "minimum": 1,
+            "title": "Full Retrain Every N Updates",
+            "type": "integer"
+          },
+          "incremental_trees": {
+            "default": 50,
+            "description": "Number of trees appended in incremental update",
+            "minimum": 10,
+            "title": "Incremental Trees",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "history_csv",
+          "model_registry_dir"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "models_index_json": {
+            "title": "Models Index Json",
+            "type": "string"
+          },
+          "training_summary_json": {
+            "title": "Training Summary Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "models_index_json",
+          "training_summary_json"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "IncrementalTrainPiece",
+        "label": "IncrementalTrainPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:brain",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "105_cfd055f3-92b7-43a8-90a3-61965d222554": {
+      "name": "ForecastHorizonPiece",
+      "description": "Forecast consumption by department for chosen horizon",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "history_csv": {
+            "description": "Merged history CSV",
+            "title": "History Csv",
+            "type": "string"
+          },
+          "models_index_json": {
+            "description": "JSON map department -> model path",
+            "title": "Models Index Json",
+            "type": "string"
+          },
+          "model_registry_dir": {
+            "description": "Allowed model registry root for secure loading",
+            "title": "Model Registry Dir",
+            "type": "string"
+          },
+          "horizon_hours": {
+            "default": 24,
+            "description": "Forecast horizon in hours",
+            "minimum": 1,
+            "title": "Horizon Hours",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "history_csv",
+          "models_index_json",
+          "model_registry_dir"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "forecast_csv": {
+            "title": "Forecast Csv",
+            "type": "string"
+          },
+          "forecast_confidence_json": {
+            "default": "",
+            "description": "Forecast confidence metrics per department",
+            "title": "Forecast Confidence Json",
+            "type": "string"
+          },
+          "peak_demand_json": {
+            "default": "",
+            "description": "Predicted peak demand values per day and department",
+            "title": "Peak Demand Json",
+            "type": "string"
+          },
+          "site_forecast_csv": {
+            "default": "",
+            "description": "Site-level D+1 load profile with prices, consumed by the dispatch chain",
+            "title": "Site Forecast Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "forecast_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "ForecastHorizonPiece",
+        "label": "ForecastHorizonPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:clock",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastHorizonPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67": {
+      "name": "SomesConnectorsPiece",
+      "description": "SoMES data connectors: weather, PV production, BESS telemetry, grid constraints, flexible loads",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "title": "InputModel",
+        "type": "object",
+        "properties": {
+          "connectors_dir": {
+            "default": "",
+            "description": "Directory with SoMES connector files (created with demos if empty/missing)",
+            "title": "Connectors Dir",
+            "type": "string"
+          },
+          "weather_api_enabled": {
+            "default": false,
+            "description": "Pull live irradiance/temperature forecast from Open-Meteo",
+            "title": "Weather Api Enabled",
+            "type": "boolean"
+          },
+          "latitude": {
+            "default": 48.148,
+            "description": "Site latitude for the weather pull",
+            "title": "Latitude",
+            "type": "number"
+          },
+          "longitude": {
+            "default": 17.107,
+            "description": "Site longitude for the weather pull",
+            "title": "Longitude",
+            "type": "number"
+          },
+          "forecast_days": {
+            "default": 2,
+            "description": "Weather forecast horizon in days",
+            "title": "Forecast Days",
+            "type": "integer"
+          },
+          "prices_api_enabled": {
+            "default": false,
+            "description": "Pull day-ahead spot prices from the OKTE ISOT public API",
+            "title": "Prices Api Enabled",
+            "type": "boolean"
+          },
+          "prices_lookback_days": {
+            "default": 30,
+            "description": "How many past days of OKTE prices to pull together with D+1",
+            "title": "Prices Lookback Days",
+            "type": "integer"
+          },
+          "weather_url": {
+            "default": "",
+            "description": "Optional CSV endpoint overriding the weather provider",
+            "title": "Weather Url",
+            "type": "string"
+          },
+          "prices_url": {
+            "default": "",
+            "description": "Optional CSV endpoint overriding the price provider",
+            "title": "Prices Url",
+            "type": "string"
+          },
+          "pv_production_url": {
+            "default": "",
+            "description": "Optional CSV endpoint with measured PV production",
+            "title": "Pv Production Url",
+            "type": "string"
+          },
+          "bess_telemetry_url": {
+            "default": "",
+            "description": "Optional CSV endpoint with BESS telemetry",
+            "title": "Bess Telemetry Url",
+            "type": "string"
+          },
+          "allow_demo_fallback": {
+            "default": true,
+            "description": "If False the piece fails instead of generating synthetic fixtures",
+            "title": "Allow Demo Fallback",
+            "type": "boolean"
+          }
+        }
+      },
+      "output_schema": {
+        "title": "OutputModel",
+        "type": "object",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "connectors_manifest_json": {
+            "title": "Connectors Manifest Json",
+            "type": "string"
+          },
+          "weather_forecast_csv": {
+            "title": "Weather Forecast Csv",
+            "type": "string"
+          },
+          "pv_production_csv": {
+            "title": "Pv Production Csv",
+            "type": "string"
+          },
+          "bess_telemetry_csv": {
+            "title": "Bess Telemetry Csv",
+            "type": "string"
+          },
+          "prices_csv": {
+            "default": "",
+            "title": "Prices Csv",
+            "type": "string"
+          },
+          "grid_constraints_json": {
+            "title": "Grid Constraints Json",
+            "type": "string"
+          },
+          "flexible_loads_json": {
+            "title": "Flexible Loads Json",
+            "type": "string"
+          },
+          "data_quality_report_json": {
+            "default": "",
+            "title": "Data Quality Report Json",
+            "type": "string"
+          },
+          "data_quality_indicators_csv": {
+            "default": "",
+            "title": "Data Quality Indicators Csv",
+            "type": "string"
+          },
+          "missing_data_report_csv": {
+            "default": "",
+            "title": "Missing Data Report Csv",
+            "type": "string"
+          },
+          "live_sources_used": {
+            "default": 0,
+            "title": "Live Sources Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "message",
+          "connectors_manifest_json",
+          "weather_forecast_csv",
+          "pv_production_csv",
+          "bess_telemetry_csv",
+          "grid_constraints_json",
+          "flexible_loads_json"
+        ]
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "SomesConnectorsPiece",
+        "label": "SomesConnectorsPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:plug",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SomesConnectorsPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb": {
+      "name": "PriceForecastPiece",
+      "description": "SoMES price/tariff forecast for the optimisation horizon",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "prices_csv": {
+            "description": "Historical electricity prices CSV",
+            "title": "Prices Csv",
+            "type": "string"
+          },
+          "horizon_steps": {
+            "default": 96,
+            "description": "Forecast horizon steps (15-min default)",
+            "minimum": 1,
+            "title": "Horizon Steps",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "prices_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "price_forecast_csv": {
+            "title": "Price Forecast Csv",
+            "type": "string"
+          },
+          "tariff_scenarios_csv": {
+            "default": "",
+            "description": "Long-format low/base/high tariff scenarios",
+            "title": "Tariff Scenarios Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "price_forecast_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "PriceForecastPiece",
+        "label": "PriceForecastPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:chart-line",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PriceForecastPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "108_1788a415-3315-4f28-b343-93cca3f8249f": {
+      "name": "BatteryStrategyOptimizerPiece",
+      "description": "Create battery dispatch strategy recommendation",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "load_csv": {
+            "description": "Path to historical load CSV",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "description": "Path to sized scenario YAML",
+            "title": "Scenario Yaml",
+            "type": "string"
+          }
+        },
+        "required": [
+          "load_csv",
+          "scenario_yaml"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "battery_strategy_recommendation_json": {
+            "title": "Battery Strategy Recommendation Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "battery_strategy_recommendation_json"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "BatteryStrategyOptimizerPiece",
+        "label": "Battery Strategy",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:sliders",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatteryStrategyOptimizerPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee": {
+      "name": "SolarSimPiece",
+      "description": "Generate synthetic PV profile for selected sizing",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "load_csv": {
+            "description": "Path to historical load CSV",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "description": "Path to sized scenario YAML",
+            "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "weather_forecast_csv": {
+            "default": "",
+            "description": "Optional weather/irradiance forecast CSV",
+            "title": "Weather Forecast Csv",
+            "type": "string"
+          },
+          "pv_production_csv": {
+            "default": "",
+            "description": "Optional measured PV production CSV for calibration",
+            "title": "Pv Production Csv",
+            "type": "string"
+          },
+          "solargis_csv": {
+            "default": "",
+            "description": "Optional SolarGIS irradiance history used to train PVOUT",
+            "title": "Solargis Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "load_csv",
+          "scenario_yaml"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "virtual_solar_csv": {
+            "title": "Virtual Solar Csv",
+            "type": "string"
+          },
+          "pv_forecast_uncertainty_json": {
+            "default": "",
+            "description": "Production uncertainty indicators",
+            "title": "Pv Forecast Uncertainty Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "virtual_solar_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "SolarSimPiece",
+        "label": "Solar Simulation",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:sun",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarSimPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "110_e1e3398a-8c76-4a43-a567-1f86061f2c64": {
+      "name": "BatterySimPiece",
+      "description": "Generate battery SOC timeseries from load and PV profile",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "load_csv": {
+            "description": "Path to historical load CSV",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "description": "Path to sized scenario YAML",
+            "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "virtual_solar_csv": {
+            "description": "Path to virtual_solar.csv",
+            "title": "Virtual Solar Csv",
+            "type": "string"
+          },
+          "battery_strategy_json": {
+            "default": "",
+            "description": "Optional battery strategy recommendation JSON",
+            "title": "Battery Strategy Json",
+            "type": "string"
+          },
+          "grid_constraints_json": {
+            "default": "",
+            "description": "Optional SoMES grid constraints JSON",
+            "title": "Grid Constraints Json",
+            "type": "string"
+          },
+          "flexible_load_schedule_csv": {
+            "default": "",
+            "description": "Optional flexible load schedule CSV",
+            "title": "Flexible Load Schedule Csv",
+            "type": "string"
+          },
+          "price_forecast_csv": {
+            "default": "",
+            "description": "Optional price/tariff forecast CSV",
+            "title": "Price Forecast Csv",
+            "type": "string"
+          },
+          "bess_telemetry_csv": {
+            "default": "",
+            "description": "BESS telemetry CSV; last record initialises SOC and available power",
+            "title": "Bess Telemetry Csv",
+            "type": "string"
+          },
+          "dispatch_method": {
+            "default": "auto",
+            "description": "auto (LP with greedy fallback) | lp | greedy",
+            "title": "Dispatch Method",
+            "type": "string"
+          },
+          "export_price_eur_kwh": {
+            "default": 0.05,
+            "description": "Feed-in remuneration used by the optimiser",
+            "title": "Export Price Eur Kwh",
+            "type": "number"
+          },
+          "forecast_accuracy_json": {
+            "default": "",
+            "description": "Forecast error statistics folded into the KPI set",
+            "title": "Forecast Accuracy Json",
+            "type": "string"
+          },
+          "degradation_cost_eur_kwh": {
+            "default": 0.01,
+            "description": "Battery throughput cost in the objective",
+            "title": "Degradation Cost Eur Kwh",
+            "type": "number"
+          },
+          "peak_price_eur_kw": {
+            "default": 0.0,
+            "description": "Peak import charge; >0 enables peak shaving objective",
+            "title": "Peak Price Eur Kw",
+            "type": "number"
+          },
+          "terminal_soc_pct": {
+            "default": -1.0,
+            "description": "Required SOC at horizon end; <0 disables",
+            "title": "Terminal Soc Pct",
+            "type": "number"
+          }
+        },
+        "required": [
+          "load_csv",
+          "scenario_yaml",
+          "virtual_solar_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "virtual_battery_soc_csv": {
+            "title": "Virtual Battery Soc Csv",
+            "type": "string"
+          },
+          "battery_summary_csv": {
+            "title": "Battery Summary Csv",
+            "type": "string"
+          },
+          "battery_charge_discharge_plan_csv": {
+            "title": "Battery Charge Discharge Plan Csv",
+            "type": "string"
+          },
+          "grid_import_export_plan_csv": {
+            "title": "Grid Import Export Plan Csv",
+            "type": "string"
+          },
+          "next_day_dispatch_plan_csv": {
+            "title": "Next Day Dispatch Plan Csv",
+            "type": "string"
+          },
+          "technical_validation_json": {
+            "title": "Technical Validation Json",
+            "type": "string"
+          },
+          "operational_kpis_json": {
+            "title": "Operational Kpis Json",
+            "type": "string"
+          },
+          "dispatch_method_used": {
+            "default": "",
+            "title": "Dispatch Method Used",
+            "type": "string"
+          },
+          "bess_state_json": {
+            "default": "",
+            "title": "Bess State Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "virtual_battery_soc_csv",
+          "battery_summary_csv",
+          "battery_charge_discharge_plan_csv",
+          "grid_import_export_plan_csv",
+          "next_day_dispatch_plan_csv",
+          "technical_validation_json",
+          "operational_kpis_json"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "BatterySimPiece",
+        "label": "Battery Simulation",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:battery-half",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "111_ab44d9b0-f21e-41b5-9929-922db54b90e4": {
+      "name": "ModelMonitoringPiece",
+      "description": "Monitor model quality and prediction drift",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "predictions_csv": {
+            "description": "CSV with prediction_load_kw and optionally load_kw",
+            "title": "Predictions Csv",
+            "type": "string"
+          },
+          "pv_forecast_csv": {
+            "default": "",
+            "description": "virtual_solar.csv with pv_kw forecast",
+            "title": "Pv Forecast Csv",
+            "type": "string"
+          },
+          "pv_actual_csv": {
+            "default": "",
+            "description": "pv_production_measurements.csv with pv_kw_measured",
+            "title": "Pv Actual Csv",
+            "type": "string"
+          },
+          "planned_dispatch_csv": {
+            "default": "",
+            "description": "next_day_dispatch_plan.csv issued to the EMS",
+            "title": "Planned Dispatch Csv",
+            "type": "string"
+          },
+          "bess_telemetry_csv": {
+            "default": "",
+            "description": "BESS telemetry with the executed battery power",
+            "title": "Bess Telemetry Csv",
+            "type": "string"
+          },
+          "timestep_hours": {
+            "default": 0.25,
+            "description": "Dispatch timestep used for energy totals",
+            "title": "Timestep Hours",
+            "type": "number"
+          },
+          "history_csv": {
+            "default": "",
+            "description": "Measured history used to label the retraining dataset",
+            "title": "History Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "predictions_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "report_json": {
+            "title": "Report Json",
+            "type": "string"
+          },
+          "daily_csv": {
+            "title": "Daily Csv",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "forecast_vs_actual_json": {
+            "default": "",
+            "title": "Forecast Vs Actual Json",
+            "type": "string"
+          },
+          "closed_loop_ok": {
+            "default": true,
+            "title": "Closed Loop Ok",
+            "type": "boolean"
+          },
+          "retraining_dataset_csv": {
+            "default": "",
+            "description": "Labelled dataset for the next incremental training run",
+            "title": "Retraining Dataset Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "report_json",
+          "daily_csv",
+          "message"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "ModelMonitoringPiece",
+        "label": "ModelMonitoringPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid fa-circle",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelMonitoringPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc": {
+      "name": "SolarSimPiece",
+      "description": "Generate synthetic PV profile for selected sizing",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "load_csv": {
+            "description": "Path to historical load CSV",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "description": "Path to sized scenario YAML",
+            "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "weather_forecast_csv": {
+            "default": "",
+            "description": "Optional weather/irradiance forecast CSV",
+            "title": "Weather Forecast Csv",
+            "type": "string"
+          },
+          "pv_production_csv": {
+            "default": "",
+            "description": "Optional measured PV production CSV for calibration",
+            "title": "Pv Production Csv",
+            "type": "string"
+          },
+          "solargis_csv": {
+            "default": "",
+            "description": "Optional SolarGIS irradiance history used to train PVOUT",
+            "title": "Solargis Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "load_csv",
+          "scenario_yaml"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "virtual_solar_csv": {
+            "title": "Virtual Solar Csv",
+            "type": "string"
+          },
+          "pv_forecast_uncertainty_json": {
+            "default": "",
+            "description": "Production uncertainty indicators",
+            "title": "Pv Forecast Uncertainty Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "virtual_solar_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "SolarSimPiece",
+        "label": "Solar Simulation",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:sun",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarSimPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33": {
+      "name": "FlexibleLoadSchedulePiece",
+      "description": "SoMES flexible load shifting schedule for the optimisation horizon",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "load_csv": {
+            "description": "Load / horizon CSV with datetime",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "flexible_loads_json": {
+            "default": "",
+            "description": "Flexible load definitions JSON",
+            "title": "Flexible Loads Json",
+            "type": "string"
+          },
+          "price_forecast_csv": {
+            "default": "",
+            "description": "Optional price forecast CSV",
+            "title": "Price Forecast Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "default": "",
+            "description": "Optional scenario YAML for timestep",
+            "title": "Scenario Yaml",
+            "type": "string"
+          }
+        },
+        "required": [
+          "load_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "flexible_load_schedule_csv": {
+            "title": "Flexible Load Schedule Csv",
+            "type": "string"
+          },
+          "flexible_load_activation_csv": {
+            "title": "Flexible Load Activation Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "flexible_load_schedule_csv",
+          "flexible_load_activation_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "FlexibleLoadSchedulePiece",
+        "label": "FlexibleLoadSchedulePiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:sliders",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FlexibleLoadSchedulePiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d": {
+      "name": "BatterySimPiece",
+      "description": "Generate battery SOC timeseries from load and PV profile",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "load_csv": {
+            "description": "Path to historical load CSV",
+            "title": "Load Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "description": "Path to sized scenario YAML",
+            "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "virtual_solar_csv": {
+            "description": "Path to virtual_solar.csv",
+            "title": "Virtual Solar Csv",
+            "type": "string"
+          },
+          "battery_strategy_json": {
+            "default": "",
+            "description": "Optional battery strategy recommendation JSON",
+            "title": "Battery Strategy Json",
+            "type": "string"
+          },
+          "grid_constraints_json": {
+            "default": "",
+            "description": "Optional SoMES grid constraints JSON",
+            "title": "Grid Constraints Json",
+            "type": "string"
+          },
+          "flexible_load_schedule_csv": {
+            "default": "",
+            "description": "Optional flexible load schedule CSV",
+            "title": "Flexible Load Schedule Csv",
+            "type": "string"
+          },
+          "price_forecast_csv": {
+            "default": "",
+            "description": "Optional price/tariff forecast CSV",
+            "title": "Price Forecast Csv",
+            "type": "string"
+          },
+          "bess_telemetry_csv": {
+            "default": "",
+            "description": "BESS telemetry CSV; last record initialises SOC and available power",
+            "title": "Bess Telemetry Csv",
+            "type": "string"
+          },
+          "dispatch_method": {
+            "default": "auto",
+            "description": "auto (LP with greedy fallback) | lp | greedy",
+            "title": "Dispatch Method",
+            "type": "string"
+          },
+          "export_price_eur_kwh": {
+            "default": 0.05,
+            "description": "Feed-in remuneration used by the optimiser",
+            "title": "Export Price Eur Kwh",
+            "type": "number"
+          },
+          "forecast_accuracy_json": {
+            "default": "",
+            "description": "Forecast error statistics folded into the KPI set",
+            "title": "Forecast Accuracy Json",
+            "type": "string"
+          },
+          "degradation_cost_eur_kwh": {
+            "default": 0.01,
+            "description": "Battery throughput cost in the objective",
+            "title": "Degradation Cost Eur Kwh",
+            "type": "number"
+          },
+          "peak_price_eur_kw": {
+            "default": 0.0,
+            "description": "Peak import charge; >0 enables peak shaving objective",
+            "title": "Peak Price Eur Kw",
+            "type": "number"
+          },
+          "terminal_soc_pct": {
+            "default": -1.0,
+            "description": "Required SOC at horizon end; <0 disables",
+            "title": "Terminal Soc Pct",
+            "type": "number"
+          }
+        },
+        "required": [
+          "load_csv",
+          "scenario_yaml",
+          "virtual_solar_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "virtual_battery_soc_csv": {
+            "title": "Virtual Battery Soc Csv",
+            "type": "string"
+          },
+          "battery_summary_csv": {
+            "title": "Battery Summary Csv",
+            "type": "string"
+          },
+          "battery_charge_discharge_plan_csv": {
+            "title": "Battery Charge Discharge Plan Csv",
+            "type": "string"
+          },
+          "grid_import_export_plan_csv": {
+            "title": "Grid Import Export Plan Csv",
+            "type": "string"
+          },
+          "next_day_dispatch_plan_csv": {
+            "title": "Next Day Dispatch Plan Csv",
+            "type": "string"
+          },
+          "technical_validation_json": {
+            "title": "Technical Validation Json",
+            "type": "string"
+          },
+          "operational_kpis_json": {
+            "title": "Operational Kpis Json",
+            "type": "string"
+          },
+          "dispatch_method_used": {
+            "default": "",
+            "title": "Dispatch Method Used",
+            "type": "string"
+          },
+          "bess_state_json": {
+            "default": "",
+            "title": "Bess State Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "virtual_battery_soc_csv",
+          "battery_summary_csv",
+          "battery_charge_discharge_plan_csv",
+          "grid_import_export_plan_csv",
+          "next_day_dispatch_plan_csv",
+          "technical_validation_json",
+          "operational_kpis_json"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "BatterySimPiece",
+        "label": "Battery Simulation",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:battery-half",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "115_acc05ac3-51bf-455d-a8e0-009a70c149ad": {
+      "name": "GridFeasibilityPiece",
+      "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "next_day_dispatch_plan_csv": {
+            "description": "Next-day dispatch plan CSV",
+            "title": "Next Day Dispatch Plan Csv",
+            "type": "string"
+          },
+          "scenario_yaml": {
+            "default": "",
+            "description": "Scenario YAML with battery/grid params",
+            "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "grid_constraints_json": {
+            "default": "",
+            "description": "Grid constraints JSON from connectors",
+            "title": "Grid Constraints Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "next_day_dispatch_plan_csv"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "technical_validation_json": {
+            "title": "Technical Validation Json",
+            "type": "string"
+          },
+          "approved_next_day_plan_csv": {
+            "title": "Approved Next Day Plan Csv",
+            "type": "string"
+          },
+          "feasibility_ok": {
+            "title": "Feasibility Ok",
+            "type": "boolean"
+          },
+          "corrected_operating_plan_csv": {
+            "default": "",
+            "description": "Schedule clipped back inside technical limits",
+            "title": "Corrected Operating Plan Csv",
+            "type": "string"
+          },
+          "corrected_operating_recommendations_csv": {
+            "default": "",
+            "description": "Per-step correction recommendations",
+            "title": "Corrected Operating Recommendations Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "technical_validation_json",
+          "approved_next_day_plan_csv",
+          "feasibility_ok"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "GridFeasibilityPiece",
+        "label": "GridFeasibilityPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:shield-halved",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/GridFeasibilityPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d": {
+      "name": "EmsBemsOutputPiece",
+      "description": "SoMES Output API / EMS-BEMS integration interface",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "next_day_dispatch_plan_csv": {
+            "description": "Approved next-day dispatch plan CSV",
+            "title": "Next Day Dispatch Plan Csv",
+            "type": "string"
+          },
+          "technical_validation_json": {
+            "description": "Technical validation bundle JSON",
+            "title": "Technical Validation Json",
+            "type": "string"
+          },
+          "operational_kpis_json": {
+            "default": "",
+            "description": "Optional operational KPIs JSON",
+            "title": "Operational Kpis Json",
+            "type": "string"
+          },
+          "flexible_load_activation_csv": {
+            "default": "",
+            "description": "Optional flexible load activation CSV",
+            "title": "Flexible Load Activation Csv",
+            "type": "string"
+          },
+          "ems_endpoint_url": {
+            "default": "",
+            "description": "HTTP endpoint for EMS/BEMS POST (file + register map always written)",
+            "title": "Ems Endpoint Url",
+            "type": "string"
+          },
+          "auth_mode": {
+            "default": "none",
+            "description": "none | bearer | basic | api_key",
+            "title": "Auth Mode",
+            "type": "string"
+          },
+          "auth_token": {
+            "default": "",
+            "description": "Bearer token or API key value",
+            "title": "Auth Token",
+            "type": "string"
+          },
+          "auth_username": {
+            "default": "",
+            "description": "Username for basic auth",
+            "title": "Auth Username",
+            "type": "string"
+          },
+          "auth_password": {
+            "default": "",
+            "description": "Password for basic auth",
+            "title": "Auth Password",
+            "type": "string"
+          },
+          "api_key_header": {
+            "default": "X-API-Key",
+            "description": "Header name used in api_key mode",
+            "title": "Api Key Header",
+            "type": "string"
+          },
+          "request_timeout_s": {
+            "default": 15,
+            "description": "Per-attempt HTTP timeout",
+            "title": "Request Timeout S",
+            "type": "integer"
+          },
+          "max_retries": {
+            "default": 3,
+            "description": "Delivery attempts before giving up",
+            "title": "Max Retries",
+            "type": "integer"
+          },
+          "backoff_seconds": {
+            "default": 1.5,
+            "description": "Base for exponential backoff between attempts",
+            "title": "Backoff Seconds",
+            "type": "number"
+          },
+          "require_delivery": {
+            "default": false,
+            "description": "Fail the piece when an endpoint is configured but delivery is not acknowledged",
+            "title": "Require Delivery",
+            "type": "boolean"
+          },
+          "emit_register_map": {
+            "default": true,
+            "description": "Write a Modbus/IEC-104 point map next to the payload",
+            "title": "Emit Register Map",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "next_day_dispatch_plan_csv",
+          "technical_validation_json"
+        ],
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "ems_bems_payload_json": {
+            "title": "Ems Bems Payload Json",
+            "type": "string"
+          },
+          "ems_bems_schedule_csv": {
+            "title": "Ems Bems Schedule Csv",
+            "type": "string"
+          },
+          "ems_bems_ack_json": {
+            "default": "",
+            "title": "Ems Bems Ack Json",
+            "type": "string"
+          },
+          "ems_bems_register_map_csv": {
+            "default": "",
+            "title": "Ems Bems Register Map Csv",
+            "type": "string"
+          },
+          "delivered": {
+            "default": false,
+            "title": "Delivered",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "message",
+          "ems_bems_payload_json",
+          "ems_bems_schedule_csv"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "EmsBemsOutputPiece",
+        "label": "EmsBemsOutputPiece",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:network-wired",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EmsBemsOutputPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    },
+    "117_150eac84-e09a-46aa-8ed7-412913e37105": {
+      "name": "DashboardPiece",
+      "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.0-group0",
+      "input_schema": {
+        "properties": {
+          "report_json": {
+            "default": "",
+            "description": "Path to mrk_savings_report.json (legacy/SEED appendix)",
+            "title": "Report Json",
+            "type": "string"
+          },
+          "kpi_results_csv": {
+            "default": "",
+            "description": "Path to kpi_results.csv (legacy)",
+            "title": "Kpi Results Csv",
+            "type": "string"
+          },
+          "investment_evaluation_csv": {
+            "default": "",
+            "description": "Path to investment_evaluation.csv (SEED appendix)",
+            "title": "Investment Evaluation Csv",
+            "type": "string"
+          },
+          "anomaly_alerts_csv": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional path to anomaly_alerts.csv",
+            "title": "Anomaly Alerts Csv"
+          },
+          "drift_report_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional path to drift_report.json",
+            "title": "Drift Report Json"
+          },
+          "next_day_dispatch_plan_csv": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "SoMES next-day dispatch plan (enables operational dashboard)",
+            "title": "Next Day Dispatch Plan Csv"
+          },
+          "operational_kpis_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "SoMES operational KPIs JSON",
+            "title": "Operational Kpis Json"
+          },
+          "technical_validation_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "SoMES technical validation JSON",
+            "title": "Technical Validation Json"
+          },
+          "forecast_vs_actual_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Feedback loop bundle from ModelMonitoringPiece",
+            "title": "Forecast Vs Actual Json"
+          },
+          "data_quality_report_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Data validation report from ingestion/preprocessing",
+            "title": "Data Quality Report Json"
+          }
+        },
+        "title": "InputModel",
+        "type": "object"
+      },
+      "output_schema": {
+        "properties": {
+          "dashboard_data_json": {
+            "title": "Dashboard Data Json",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dashboard_data_json"
+        ],
+        "title": "OutputModel",
+        "type": "object"
+      },
+      "secrets_schema": {},
+      "container_resources": {},
+      "tags": [],
+      "style": {
+        "module": "DashboardPiece",
+        "label": "Dashboard Data",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:chart-line",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DashboardPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
+    }
+  },
+  "workflowPiecesData": {
+    "100_88d95778-1fb1-4516-addc-298a3a052669": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/load_input"
+        },
+        "prices_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/prices.csv"
+        }
+      }
+    },
+    "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "input_path": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_88d957781fb14516addc298a3a052669",
+          "upstreamArgument": "output_path",
+          "upstreamValue": "",
+          "value": null
+        },
+        "generate_predict_dataset": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": false
+        }
+      }
+    },
+    "102_024b94c5-a535-4d65-a9a5-22c227eb23d8": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "data_path": {
+          "fromUpstream": true,
+          "upstreamId": "Preprocess_c6abd221004b45f5bc50aa3df1f3b4eb",
+          "upstreamArgument": "train_file_path",
+          "upstreamValue": "",
+          "value": null
+        }
+      }
+    },
+    "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "model_path": {
+          "fromUpstream": true,
+          "upstreamId": "TrainModel_024b94c5a5354d65a9a522c227eb23d8",
+          "upstreamArgument": "model_file_path",
+          "upstreamValue": "",
+          "value": null
+        },
+        "load_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/predict_in/load.csv"
+        },
+        "prediction_days": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 1
+        },
+        "timestep_minutes": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 15
+        },
+        "use_rolling_prediction": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": true
+        },
+        "bridge_rows": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 4
+        }
+      }
+    },
+    "104_f493a15c-2457-4e1c-9159-fa27c5237217": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "history_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/history_by_department.csv"
+        },
+        "model_registry_dir": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/model_registry"
+        },
+        "incremental_window_days": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 30
+        }
+      }
+    },
+    "105_cfd055f3-92b7-43a8-90a3-61965d222554": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "history_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/history_by_department.csv"
+        },
+        "models_index_json": {
+          "fromUpstream": true,
+          "upstreamId": "Incrementa_f493a15c24574e1c9159fa27c5237217",
+          "upstreamArgument": "models_index_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "model_registry_dir": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/model_registry"
+        },
+        "horizon_hours": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 24
+        }
+      }
+    },
+    "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "connectors_dir": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/connectors"
+        },
+        "allow_demo_fallback": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": false
+        },
+        "weather_api_enabled": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": true
+        },
+        "prices_api_enabled": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": true
+        },
+        "latitude": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 48.148
+        },
+        "longitude": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 17.107
+        },
+        "forecast_days": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 2
+        },
+        "prices_lookback_days": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 30
+        }
+      }
+    },
+    "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "prices_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "prices_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "horizon_steps": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 96
+        }
+      }
+    },
+    "108_1788a415-3315-4f28-b343-93cca3f8249f": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": true,
+          "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
+          "upstreamArgument": "site_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        }
+      }
+    },
+    "109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/measured_last_day.csv"
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        },
+        "weather_forecast_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/weather_history.csv"
+        },
+        "solargis_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/solargis_irradiance.csv"
+        }
+      }
+    },
+    "110_e1e3398a-8c76-4a43-a567-1f86061f2c64": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/measured_last_day.csv"
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        },
+        "virtual_solar_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SolarSimBa_0e4456083ec54c57b1cd4cb8638fa2ee",
+          "upstreamArgument": "virtual_solar_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "battery_strategy_json": {
+          "fromUpstream": true,
+          "upstreamId": "BatteryStr_1788a41533154f28b34393cca3f8249f",
+          "upstreamArgument": "battery_strategy_recommendation_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "grid_constraints_json": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "grid_constraints_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "dispatch_method": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "auto"
+        },
+        "export_price_eur_kwh": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.052
+        },
+        "degradation_cost_eur_kwh": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.01
+        },
+        "terminal_soc_pct": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 50.0
+        }
+      }
+    },
+    "111_ab44d9b0-f21e-41b5-9929-922db54b90e4": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "predictions_csv": {
+          "fromUpstream": true,
+          "upstreamId": "PredictPie_cec516563b314ea3ad00bbe8e62a857c",
+          "upstreamArgument": "prediction_file_path",
+          "upstreamValue": "",
+          "value": null
+        },
+        "pv_forecast_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SolarSimBa_0e4456083ec54c57b1cd4cb8638fa2ee",
+          "upstreamArgument": "virtual_solar_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "pv_actual_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "pv_production_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "planned_dispatch_csv": {
+          "fromUpstream": true,
+          "upstreamId": "BatterySim_e1e3398a8c764a43a5671f86061f2c64",
+          "upstreamArgument": "next_day_dispatch_plan_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "bess_telemetry_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "bess_telemetry_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "history_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/measured_last_day.csv"
+        }
+      }
+    },
+    "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": true,
+          "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
+          "upstreamArgument": "site_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        },
+        "weather_forecast_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "weather_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "pv_production_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "pv_production_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "solargis_csv": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/solargis_irradiance.csv"
+        }
+      }
+    },
+    "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": true,
+          "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
+          "upstreamArgument": "site_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "flexible_loads_json": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "flexible_loads_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "price_forecast_csv": {
+          "fromUpstream": true,
+          "upstreamId": "PriceForec_c097b5eb34c1462babcf2d2bc61fc4bb",
+          "upstreamArgument": "price_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        }
+      }
+    },
+    "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "load_csv": {
+          "fromUpstream": true,
+          "upstreamId": "ForecastHo_cfd055f392b743a890a361965d222554",
+          "upstreamArgument": "site_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        },
+        "virtual_solar_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SolarSimPi_c8d7fa0daab642c9be1580526d7219bc",
+          "upstreamArgument": "virtual_solar_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "battery_strategy_json": {
+          "fromUpstream": true,
+          "upstreamId": "BatteryStr_1788a41533154f28b34393cca3f8249f",
+          "upstreamArgument": "battery_strategy_recommendation_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "grid_constraints_json": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "grid_constraints_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "flexible_load_schedule_csv": {
+          "fromUpstream": true,
+          "upstreamId": "FlexibleLo_4b8ee3c5f007427b8e4ccfdbce2e6c33",
+          "upstreamArgument": "flexible_load_schedule_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "price_forecast_csv": {
+          "fromUpstream": true,
+          "upstreamId": "PriceForec_c097b5eb34c1462babcf2d2bc61fc4bb",
+          "upstreamArgument": "price_forecast_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "bess_telemetry_csv": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "bess_telemetry_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "forecast_accuracy_json": {
+          "fromUpstream": true,
+          "upstreamId": "ModelMonit_ab44d9b0f21e41b59929922db54b90e4",
+          "upstreamArgument": "forecast_vs_actual_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "dispatch_method": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "auto"
+        },
+        "export_price_eur_kwh": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.052
+        },
+        "degradation_cost_eur_kwh": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 0.01
+        },
+        "terminal_soc_pct": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": 50.0
+        }
+      }
+    },
+    "115_acc05ac3-51bf-455d-a8e0-009a70c149ad": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "next_day_dispatch_plan_csv": {
+          "fromUpstream": true,
+          "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
+          "upstreamArgument": "next_day_dispatch_plan_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "/home/shared_storage/somes/scenario.yaml"
+        },
+        "grid_constraints_json": {
+          "fromUpstream": true,
+          "upstreamId": "SomesConne_6e9f8dc5d2444bb09a4bb8424b9edf67",
+          "upstreamArgument": "grid_constraints_json",
+          "upstreamValue": "",
+          "value": null
+        }
+      }
+    },
+    "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "next_day_dispatch_plan_csv": {
+          "fromUpstream": true,
+          "upstreamId": "GridFeasib_acc05ac351bf455da8e0009a70c149ad",
+          "upstreamArgument": "approved_next_day_plan_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "technical_validation_json": {
+          "fromUpstream": true,
+          "upstreamId": "GridFeasib_acc05ac351bf455da8e0009a70c149ad",
+          "upstreamArgument": "technical_validation_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "operational_kpis_json": {
+          "fromUpstream": true,
+          "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
+          "upstreamArgument": "operational_kpis_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "flexible_load_activation_csv": {
+          "fromUpstream": true,
+          "upstreamId": "FlexibleLo_4b8ee3c5f007427b8e4ccfdbce2e6c33",
+          "upstreamArgument": "flexible_load_activation_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "emit_register_map": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": true
+        }
+      }
+    },
+    "117_150eac84-e09a-46aa-8ed7-412913e37105": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
+      "inputs": {
+        "next_day_dispatch_plan_csv": {
+          "fromUpstream": true,
+          "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
+          "upstreamArgument": "next_day_dispatch_plan_csv",
+          "upstreamValue": "",
+          "value": null
+        },
+        "operational_kpis_json": {
+          "fromUpstream": true,
+          "upstreamId": "BatterySim_bf99a4eddba642fb87ef93e5ac39b89d",
+          "upstreamArgument": "operational_kpis_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "technical_validation_json": {
+          "fromUpstream": true,
+          "upstreamId": "GridFeasib_acc05ac351bf455da8e0009a70c149ad",
+          "upstreamArgument": "technical_validation_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "forecast_vs_actual_json": {
+          "fromUpstream": true,
+          "upstreamId": "ModelMonit_ab44d9b0f21e41b59929922db54b90e4",
+          "upstreamArgument": "forecast_vs_actual_json",
+          "upstreamValue": "",
+          "value": null
+        },
+        "data_quality_report_json": {
+          "fromUpstream": true,
+          "upstreamId": "Preprocess_c6abd221004b45f5bc50aa3df1f3b4eb",
+          "upstreamArgument": "data_quality_report_json",
+          "upstreamValue": "",
+          "value": null
+        }
+      }
+    }
+  },
+  "workflowNodes": [
+    {
+      "id": "100_88d95778-1fb1-4516-addc-298a3a052669",
+      "type": "CustomNode",
+      "position": {
+        "x": 60,
+        "y": 60
+      },
+      "data": {
+        "name": "FetchEnergyDataPiece",
+        "style": {
+          "module": "FetchEnergyDataPiece",
+          "label": "FetchEnergyDataPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:bolt",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 60,
+        "y": 60
+      }
+    },
+    {
+      "id": "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "type": "CustomNode",
+      "position": {
+        "x": 290,
+        "y": 60
+      },
+      "data": {
+        "name": "PreprocessEnergyDataPiece",
+        "style": {
+          "module": "PreprocessEnergyDataPiece",
+          "label": "PreprocessEnergyDataPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:filter",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 290,
+        "y": 60
+      }
+    },
+    {
+      "id": "102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
+      "type": "CustomNode",
+      "position": {
+        "x": 520,
+        "y": 60
+      },
+      "data": {
+        "name": "TrainModelPiece",
+        "style": {
+          "module": "TrainModelPiece",
+          "label": "TrainModelPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:brain",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 520,
+        "y": 60
+      }
+    },
+    {
+      "id": "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
+      "type": "CustomNode",
+      "position": {
+        "x": 750,
+        "y": 60
+      },
+      "data": {
+        "name": "PredictPiece",
+        "style": {
+          "module": "PredictPiece",
+          "label": "PredictPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:chart-line",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 750,
+        "y": 60
+      }
+    },
+    {
+      "id": "104_f493a15c-2457-4e1c-9159-fa27c5237217",
+      "type": "CustomNode",
+      "position": {
+        "x": 60,
+        "y": 320
+      },
+      "data": {
+        "name": "IncrementalTrainPiece",
+        "style": {
+          "module": "IncrementalTrainPiece",
+          "label": "IncrementalTrainPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:brain",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 60,
+        "y": 320
+      }
+    },
+    {
+      "id": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "type": "CustomNode",
+      "position": {
+        "x": 290,
+        "y": 320
+      },
+      "data": {
+        "name": "ForecastHorizonPiece",
+        "style": {
+          "module": "ForecastHorizonPiece",
+          "label": "ForecastHorizonPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:clock",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 290,
+        "y": 320
+      }
+    },
+    {
+      "id": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "type": "CustomNode",
+      "position": {
+        "x": 60,
+        "y": 190
+      },
+      "data": {
+        "name": "SomesConnectorsPiece",
+        "style": {
+          "module": "SomesConnectorsPiece",
+          "label": "SomesConnectorsPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:plug",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 60,
+        "y": 190
+      }
+    },
+    {
+      "id": "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "type": "CustomNode",
+      "position": {
+        "x": 290,
+        "y": 190
+      },
+      "data": {
+        "name": "PriceForecastPiece",
+        "style": {
+          "module": "PriceForecastPiece",
+          "label": "PriceForecastPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:chart-line",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 290,
+        "y": 190
+      }
+    },
+    {
+      "id": "108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "type": "CustomNode",
+      "position": {
+        "x": 520,
+        "y": 320
+      },
+      "data": {
+        "name": "BatteryStrategyOptimizerPiece",
+        "style": {
+          "module": "BatteryStrategyOptimizerPiece",
+          "label": "Battery Strategy",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:sliders",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 520,
+        "y": 320
+      }
+    },
+    {
+      "id": "109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee",
+      "type": "CustomNode",
+      "position": {
+        "x": 520,
+        "y": 190
+      },
+      "data": {
+        "name": "SolarSimPiece",
+        "style": {
+          "module": "SolarSimPiece",
+          "label": "Solar Simulation",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:sun",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 520,
+        "y": 190
+      }
+    },
+    {
+      "id": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "type": "CustomNode",
+      "position": {
+        "x": 750,
+        "y": 190
+      },
+      "data": {
+        "name": "BatterySimPiece",
+        "style": {
+          "module": "BatterySimPiece",
+          "label": "Battery Simulation",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:battery-half",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 750,
+        "y": 190
+      }
+    },
+    {
+      "id": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "type": "CustomNode",
+      "position": {
+        "x": 980,
+        "y": 60
+      },
+      "data": {
+        "name": "ModelMonitoringPiece",
+        "style": {
+          "module": "ModelMonitoringPiece",
+          "label": "ModelMonitoringPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid fa-circle",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 980,
+        "y": 60
+      }
+    },
+    {
+      "id": "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "type": "CustomNode",
+      "position": {
+        "x": 750,
+        "y": 320
+      },
+      "data": {
+        "name": "SolarSimPiece",
+        "style": {
+          "module": "SolarSimPiece",
+          "label": "Solar Simulation",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:sun",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 750,
+        "y": 320
+      }
+    },
+    {
+      "id": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "type": "CustomNode",
+      "position": {
+        "x": 980,
+        "y": 190
+      },
+      "data": {
+        "name": "FlexibleLoadSchedulePiece",
+        "style": {
+          "module": "FlexibleLoadSchedulePiece",
+          "label": "FlexibleLoadSchedulePiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:sliders",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 980,
+        "y": 190
+      }
+    },
+    {
+      "id": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "type": "CustomNode",
+      "position": {
+        "x": 1210,
+        "y": 60
+      },
+      "data": {
+        "name": "BatterySimPiece",
+        "style": {
+          "module": "BatterySimPiece",
+          "label": "Battery Simulation",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:battery-half",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1210,
+        "y": 60
+      }
+    },
+    {
+      "id": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "type": "CustomNode",
+      "position": {
+        "x": 1440,
+        "y": 60
+      },
+      "data": {
+        "name": "GridFeasibilityPiece",
+        "style": {
+          "module": "GridFeasibilityPiece",
+          "label": "GridFeasibilityPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:shield-halved",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1440,
+        "y": 60
+      }
+    },
+    {
+      "id": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "type": "CustomNode",
+      "position": {
+        "x": 1670,
+        "y": 60
+      },
+      "data": {
+        "name": "EmsBemsOutputPiece",
+        "style": {
+          "module": "EmsBemsOutputPiece",
+          "label": "EmsBemsOutputPiece",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:network-wired",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1670,
+        "y": 60
+      }
+    },
+    {
+      "id": "117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "type": "CustomNode",
+      "position": {
+        "x": 1670,
+        "y": 190
+      },
+      "data": {
+        "name": "DashboardPiece",
+        "style": {
+          "module": "DashboardPiece",
+          "label": "Dashboard Data",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:chart-line",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1670,
+        "y": 190
+      }
+    }
+  ],
+  "workflowEdges": [
+    {
+      "source": "100_88d95778-1fb1-4516-addc-298a3a052669",
+      "sourceHandle": "source-100_88d95778-1fb1-4516-addc-298a3a052669",
+      "target": "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "targetHandle": "target-101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "id": "e-100_88d95778-1fb1-4516-addc-298a3a052669-101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "sourceHandle": "source-101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "target": "102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
+      "targetHandle": "target-102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
+      "id": "e-101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb-102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
+      "sourceHandle": "source-102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
+      "target": "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
+      "targetHandle": "target-103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
+      "id": "e-102_024b94c5-a535-4d65-a9a5-22c227eb23d8-103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "104_f493a15c-2457-4e1c-9159-fa27c5237217",
+      "sourceHandle": "source-104_f493a15c-2457-4e1c-9159-fa27c5237217",
+      "target": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "targetHandle": "target-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "id": "e-104_f493a15c-2457-4e1c-9159-fa27c5237217-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "targetHandle": "target-107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "sourceHandle": "source-108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "target": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "targetHandle": "target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "id": "e-108_1788a415-3315-4f28-b343-93cca3f8249f-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee",
+      "sourceHandle": "source-109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee",
+      "target": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "targetHandle": "target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "id": "e-109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "targetHandle": "target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "sourceHandle": "source-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "target": "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "targetHandle": "target-112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "id": "e-105_cfd055f3-92b7-43a8-90a3-61965d222554-112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "targetHandle": "target-112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "sourceHandle": "source-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "target": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "targetHandle": "target-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "id": "e-105_cfd055f3-92b7-43a8-90a3-61965d222554-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "sourceHandle": "source-107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "target": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "targetHandle": "target-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "id": "e-107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "targetHandle": "target-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "sourceHandle": "source-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "target": "108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "targetHandle": "target-108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "id": "e-105_cfd055f3-92b7-43a8-90a3-61965d222554-108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "sourceHandle": "source-108_1788a415-3315-4f28-b343-93cca3f8249f",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-108_1788a415-3315-4f28-b343-93cca3f8249f-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "sourceHandle": "source-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "sourceHandle": "source-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-105_cfd055f3-92b7-43a8-90a3-61965d222554-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "sourceHandle": "source-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-111_ab44d9b0-f21e-41b5-9929-922db54b90e4-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "sourceHandle": "source-107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "sourceHandle": "source-112_c8d7fa0d-aab6-42c9-be15-80526d7219bc",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-112_c8d7fa0d-aab6-42c9-be15-80526d7219bc-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "sourceHandle": "source-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "target": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "targetHandle": "target-115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "id": "e-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d-115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "targetHandle": "target-115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "sourceHandle": "source-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "target": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "targetHandle": "target-116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "id": "e-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d-116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "sourceHandle": "source-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
+      "target": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "targetHandle": "target-116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "id": "e-113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33-116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "sourceHandle": "source-115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "target": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "targetHandle": "target-116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "id": "e-115_acc05ac3-51bf-455d-a8e0-009a70c149ad-116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "sourceHandle": "source-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "e-110_e1e3398a-8c76-4a43-a567-1f86061f2c64-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
+      "sourceHandle": "source-103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
+      "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "e-103_cec51656-3b31-4ea3-ad00-bbe8e62a857c-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee",
+      "sourceHandle": "source-109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee",
+      "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "e-109_0e445608-3ec5-4c57-b1cd-4cb8638fa2ee-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "sourceHandle": "source-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
+      "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "e-106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "sourceHandle": "source-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "target": "117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "targetHandle": "target-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "id": "e-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "sourceHandle": "source-115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
+      "target": "117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "targetHandle": "target-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "id": "e-115_acc05ac3-51bf-455d-a8e0-009a70c149ad-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "sourceHandle": "source-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "target": "117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "targetHandle": "target-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "id": "e-111_ab44d9b0-f21e-41b5-9929-922db54b90e4-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "sourceHandle": "source-101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
+      "target": "117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "targetHandle": "target-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "id": "e-101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb-117_150eac84-e09a-46aa-8ed7-412913e37105",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    }
+  ]
+}

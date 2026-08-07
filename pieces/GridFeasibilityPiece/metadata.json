@@ -1,0 +1,12 @@
+{
+  "name": "GridFeasibilityPiece",
+  "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "GridFeasibilityPiece",
+    "icon_class_name": "fa-solid:shield-halved"
+  }
+}

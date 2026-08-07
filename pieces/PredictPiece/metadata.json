@@ -1,0 +1,12 @@
+{
+  "name": "PredictPiece",
+  "description": "Run prediction using trained XGBoost model",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "PredictPiece",
+    "icon_class_name": "fa-solid:chart-line"
+  }
+}

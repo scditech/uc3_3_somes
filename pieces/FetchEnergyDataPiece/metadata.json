@@ -1,0 +1,25 @@
+{
+  "name": "FetchEnergyDataPiece",
+  "description": "Load and merge energy CSV files",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "Energy"
+  ],
+  "style": {
+    "node_label": "FetchEnergyDataPiece",
+    "icon_class_name": "fa-solid:bolt"
+  }
+}

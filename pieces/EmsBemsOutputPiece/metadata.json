@@ -1,0 +1,12 @@
+{
+  "name": "EmsBemsOutputPiece",
+  "description": "SoMES Output API / EMS-BEMS integration interface",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "EmsBemsOutputPiece",
+    "icon_class_name": "fa-solid:network-wired"
+  }
+}

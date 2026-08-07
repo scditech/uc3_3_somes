@@ -1,0 +1,12 @@
+{
+  "name": "SimulatePiece",
+  "description": "Run MRK simulation baseline/PV/battery",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "Simulate MRK Scenario",
+    "icon_class_name": "fa-solid:calculator"
+  }
+}

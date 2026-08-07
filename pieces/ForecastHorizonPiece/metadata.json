@@ -1,0 +1,12 @@
+{
+  "name": "ForecastHorizonPiece",
+  "description": "Forecast consumption by department for chosen horizon",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "ForecastHorizonPiece",
+    "icon_class_name": "fa-solid:clock"
+  }
+}
