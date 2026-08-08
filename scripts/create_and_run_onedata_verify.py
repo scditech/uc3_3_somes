@@ -16,7 +16,7 @@ WORKSPACE_ID = 4
 OUT_DIR = Path(r"C:\Users\NTB\Desktop\somes_domino_import_test")
 # Must match the piece repository registered in workspace "test".
 # Local Docker has this tag retargeted to the OneData-enabled overlay build.
-SOURCE_IMAGE = "ghcr.io/scditech/uc3_3_somes:0.2.0-group0"
+SOURCE_IMAGE = "ghcr.io/scditech/uc3_3_somes:0.2.1-group0"
 
 
 def api(method: str, path: str, token: str | None = None, body: dict | None = None):

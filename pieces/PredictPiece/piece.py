@@ -16,13 +16,18 @@ import yaml
 
 try:
     from common import onedata_io as od
-    from common.predictions_load import predictions_to_load_csv
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
-        from pieces.common.predictions_load import predictions_to_load_csv
     except ModuleNotFoundError:
         od = None
+
+try:
+    from common.predictions_load import predictions_to_load_csv
+except ModuleNotFoundError:
+    try:
+        from pieces.common.predictions_load import predictions_to_load_csv
+    except ModuleNotFoundError:
         predictions_to_load_csv = None
 
 
@@ -320,6 +325,14 @@ class PredictPiece(BasePiece):
             _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
             if _stage is not None and _stage.active:
                 od.fetch_sibling(_orig_model_path, input_data.model_path, "shift_profile.json")
+        elif any(
+            isinstance(v, str) and str(v).startswith("onedata:")
+            for v in (getattr(input_data, "load_csv", None), getattr(input_data, "model_path", None))
+        ):
+            raise RuntimeError(
+                "OneData paths given but onedata_io failed to import "
+                "(check pieces/common; predictions_load must not block od import)."
+            )
         _piece_out = None
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
@@ -332,8 +345,10 @@ class PredictPiece(BasePiece):
 
             model_path = Path(input_data.model_path)
             load_path = Path(input_data.load_csv)
-            if not load_path.is_file():
-                raise FileNotFoundError(f"Load CSV not found: {load_path}")
+            if str(load_path).startswith("onedata:") or not load_path.is_file():
+                raise FileNotFoundError(
+                    f"Load CSV not found (staging may have failed): {load_path}"
+                )
             prediction_days, timestep_minutes = _resolve_prediction_horizon(input_data, load_path)
             print(
                 f"[INFO] Prediction horizon: {prediction_days} days "

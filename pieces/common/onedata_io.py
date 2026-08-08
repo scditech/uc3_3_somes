@@ -655,10 +655,19 @@ def mirror_results(results_path: str | os.PathLike[str], secrets_data: Any,
     if not rp.exists():
         return None
     target = f"{base.rstrip('/')}/{piece_name}"
+    uploaded = 0
     for f in rp.rglob("*"):
         if f.is_file():
             rel = f.relative_to(rp).as_posix()
-            write_bytes(f"{target}/{rel}", f.read_bytes())
+            remote = f"{target}/{rel}"
+            write_bytes(remote, f.read_bytes())
+            if not exists(remote):
+                raise RuntimeError(f"OneData mirror write did not persist: {remote}")
+            uploaded += 1
+    if uploaded == 0:
+        print(f"[WARN] mirror_results: no files under {rp} for {piece_name}")
+    else:
+        print(f"[INFO] Mirrored {uploaded} file(s) to {target}")
     return target
 
 

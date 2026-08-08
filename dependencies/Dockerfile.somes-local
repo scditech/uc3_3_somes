@@ -2,6 +2,10 @@ FROM ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.34-group0
 
 # Local overlay image for Domino Desktop (OneData-enabled SoMES ops pieces).
 COPY config.toml /home/domino/pieces_repository/config.toml
+# Overlay Domino piece registry so new ops pieces (e.g. SomesConnectorsPiece) resolve.
+COPY .domino/compiled_metadata.json /home/domino/pieces_repository/.domino/compiled_metadata.json
+COPY .domino/images_map.json /home/domino/pieces_repository/.domino/images_map.json
+COPY .domino/dependencies_map.json /home/domino/pieces_repository/.domino/dependencies_map.json
 COPY pieces/common_somes /home/domino/pieces_repository/pieces/common_somes
 COPY pieces/common /home/domino/pieces_repository/pieces/common
 COPY pieces/SolarSimPiece /home/domino/pieces_repository/pieces/SolarSimPiece
