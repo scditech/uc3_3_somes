@@ -7,7 +7,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -139,7 +139,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -305,7 +305,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -438,7 +438,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -599,7 +599,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -758,7 +758,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -916,7 +916,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1157,7 +1157,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1291,7 +1291,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1418,7 +1418,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1569,7 +1569,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1808,7 +1808,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1986,7 +1986,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2137,7 +2137,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2281,7 +2281,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2520,7 +2520,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2675,7 +2675,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2900,7 +2900,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.1-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
       "input_schema": {
         "properties": {
           "run_id": {
