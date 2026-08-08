@@ -25,8 +25,8 @@
         ],
         "secrets": [
             "onedata_output_dir",
-            "onedata_token",
-            "onedata_onezone_host"
+            "onedata_onezone_host",
+            "onedata_token"
         ],
         "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0"
     }
