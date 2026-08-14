@@ -1,0 +1,26 @@
+{
+  "name": "DataPreprocessingPiece",
+  "description": "Template piece for cleaning, validating, and preprocessing input data prior to feature engineering or training.",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "Template",
+    "Data",
+    "Preprocessing"
+  ],
+  "style": {
+    "node_label": "Data Preprocessing",
+    "icon_class_name": "fa-solid:filter"
+  }
+}

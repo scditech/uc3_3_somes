@@ -15,5 +15,19 @@
   "SimulatePiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
   "SolarSimPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
   "SomesConnectorsPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
-  "TrainModelPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0"
+  "TrainModelPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "SolarGISDataGeneratorPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "DataPreprocessingPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "ModelDeciderPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "DataNormalizationPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "PVOUTPredictionModelTrainPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "PVOUTErrorCorrectionModelTrainPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "InferencePiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "EvaluateMLModelPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "ForecastAggregatorPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "ExplainablePredictionPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "SyntheticDataGeneratorPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "PvoutToVirtualSolarPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "PvoutModelFeatureSelectPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0",
+  "PvoutStagedInferenceSpecPiece": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0"
 }

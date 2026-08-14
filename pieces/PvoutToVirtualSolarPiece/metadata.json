@@ -1,0 +1,19 @@
+{
+  "name": "PvoutToVirtualSolarPiece",
+  "dependency": {
+    "dockerfile": null,
+    "requirements_file": "requirements_0.txt"
+  },
+  "tags": ["somes", "pv", "uc3.4-adapter"],
+  "style": {
+    "node_label": "PVOUT → Virtual Solar",
+    "node_type": "default",
+    "node_style": { "backgroundColor": "#ebebeb" },
+    "useIcon": true,
+    "icon_class_name": "fa-solid:sun",
+    "iconStyle": { "cursor": "pointer" }
+  },
+  "description": "Adapter: UC3.4 Inference forecast CSV → SoMES virtual_solar.csv (datetime, pv_kw).",
+  "dependencies_group": "0",
+  "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutToVirtualSolarPiece"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ExplainablePredictionPiece",
+  "description": "Template piece for generating prediction explanations (e.g., feature attributions) alongside inference results.",
+  "dependency": {
+    "requirements_file": "requirements_3.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 1024
+    }
+  },
+  "tags": [
+    "Template",
+    "Model",
+    "Explainability"
+  ],
+  "style": {
+    "node_label": "Explainable Prediction",
+    "icon_class_name": "fa-solid:magnifying-glass-chart"
+  }
+}

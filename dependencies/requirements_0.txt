@@ -14,3 +14,6 @@ openpyxl>=3.1
 scipy>=1.11
 fsspec>=2023.9
 onedatafilerestclient>=25.0.0
+requests>=2.31,<3.0
+shap>=0.44
+lime>=0.2.0.1

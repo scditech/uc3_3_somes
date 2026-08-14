@@ -1,0 +1,26 @@
+{
+  "name": "DataNormalizationPiece",
+  "description": "Template piece for normalizing raw smart-grid data into a consistent scale and schema.",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "Template",
+    "Data",
+    "Normalization"
+  ],
+  "style": {
+    "node_label": "Data Normalization",
+    "icon_class_name": "fa-solid:scale-balanced"
+  }
+}

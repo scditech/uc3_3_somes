@@ -1,32 +1,14 @@
 FROM ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.34-group0
 
-# Local overlay image for Domino Desktop (OneData-enabled SoMES ops pieces).
+# Local overlay: full SoMES ops + UC3.4 PVOUT pieces (unmodified packages).
 COPY config.toml /home/domino/pieces_repository/config.toml
-# Overlay Domino piece registry so new ops pieces (e.g. SomesConnectorsPiece) resolve.
 COPY .domino/compiled_metadata.json /home/domino/pieces_repository/.domino/compiled_metadata.json
 COPY .domino/images_map.json /home/domino/pieces_repository/.domino/images_map.json
 COPY .domino/dependencies_map.json /home/domino/pieces_repository/.domino/dependencies_map.json
-COPY pieces/common_somes /home/domino/pieces_repository/pieces/common_somes
-COPY pieces/common /home/domino/pieces_repository/pieces/common
-COPY pieces/SolarSimPiece /home/domino/pieces_repository/pieces/SolarSimPiece
-COPY pieces/BatteryStrategyOptimizerPiece /home/domino/pieces_repository/pieces/BatteryStrategyOptimizerPiece
-COPY pieces/BatterySimPiece /home/domino/pieces_repository/pieces/BatterySimPiece
-COPY pieces/DashboardPiece /home/domino/pieces_repository/pieces/DashboardPiece
-COPY pieces/SomesConnectorsPiece /home/domino/pieces_repository/pieces/SomesConnectorsPiece
-COPY pieces/PriceForecastPiece /home/domino/pieces_repository/pieces/PriceForecastPiece
-COPY pieces/FlexibleLoadSchedulePiece /home/domino/pieces_repository/pieces/FlexibleLoadSchedulePiece
-COPY pieces/GridFeasibilityPiece /home/domino/pieces_repository/pieces/GridFeasibilityPiece
-COPY pieces/EmsBemsOutputPiece /home/domino/pieces_repository/pieces/EmsBemsOutputPiece
-COPY pieces/PreprocessEnergyDataPiece /home/domino/pieces_repository/pieces/PreprocessEnergyDataPiece
-COPY pieces/TrainModelPiece /home/domino/pieces_repository/pieces/TrainModelPiece
-COPY pieces/ModelMonitoringPiece /home/domino/pieces_repository/pieces/ModelMonitoringPiece
-COPY pieces/FetchEnergyDataPiece /home/domino/pieces_repository/pieces/FetchEnergyDataPiece
-COPY pieces/ForecastHorizonPiece /home/domino/pieces_repository/pieces/ForecastHorizonPiece
-COPY pieces/IncrementalTrainPiece /home/domino/pieces_repository/pieces/IncrementalTrainPiece
-COPY pieces/SimulatePiece /home/domino/pieces_repository/pieces/SimulatePiece
-COPY pieces/PredictPiece /home/domino/pieces_repository/pieces/PredictPiece
+COPY pieces /home/domino/pieces_repository/pieces
+COPY dependencies/requirements_0.txt /home/domino/pieces_repository/dependencies/requirements_0.txt
 
-RUN pip install --no-cache-dir "scipy>=1.11" "fsspec>=2023.9" "onedatafilerestclient>=25.0.0"
+RUN pip install --no-cache-dir -r /home/domino/pieces_repository/dependencies/requirements_0.txt
 
 ENV PYTHONPATH=/home/domino/pieces_repository
 ENV SOMES_DISABLE_ONEDATA=0

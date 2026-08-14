@@ -1,0 +1,26 @@
+{
+  "name": "EvaluateMLModelPiece",
+  "description": "Template piece for evaluating a trained ML model and producing metrics/artifacts.",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 1024
+    }
+  },
+  "tags": [
+    "Template",
+    "Model",
+    "Evaluation"
+  ],
+  "style": {
+    "node_label": "Evaluate ML Model",
+    "icon_class_name": "fa-solid:clipboard-check"
+  }
+}

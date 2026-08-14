@@ -149,11 +149,10 @@ class SolarSimPiece(BasePiece):
             yield_kwp = float(pv.get("yield_kwh_per_kwp_year", 1000.0))
             df = sim.load_consumption_csv(csv_path)
 
-            solargis = Path(
-                input_data.solargis_csv
-                or os.environ.get("SOMES_SOLARGIS_CSV")
-                or repo_root / "tests" / "SolarSimulationPiece_Inputs" / "SolarGIS_2025.csv"
-            )
+            # SolarGIS is optional and must be explicit. Never fall back to bundled
+            # tests/SolarGIS files — ops sites (e.g. SAV/UMMS) use measured PV + weather.
+            solargis_raw = (input_data.solargis_csv or os.environ.get("SOMES_SOLARGIS_CSV") or "").strip()
+            solargis = Path(solargis_raw) if solargis_raw else None
             train_csv = repo_root / "seed_inputs" / "pvout_train.csv"
             model_dir = out_dir / "pvout_model"
             model_path, meta = ensure_pvout_model(
@@ -161,7 +160,7 @@ class SolarSimPiece(BasePiece):
                 installed_kwp=max(installed_kwp, 1.0),
                 yield_kwh_per_kwp_year=yield_kwp,
                 train_csv=train_csv if train_csv.is_file() else None,
-                solargis_csv=solargis if solargis.is_file() else None,
+                solargis_csv=solargis if (solargis is not None and solargis.is_file()) else None,
             )
             _log(
                 f"PVOUT AI trained source={meta.get('train_source')} "

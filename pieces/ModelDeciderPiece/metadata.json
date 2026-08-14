@@ -1,0 +1,26 @@
+{
+  "name": "ModelDeciderPiece",
+  "description": "Template piece for selecting a model/version based on context, data availability, or policies.",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "Template",
+    "Model",
+    "Routing"
+  ],
+  "style": {
+    "node_label": "Model Decider",
+    "icon_class_name": "fa-solid:code-branch"
+  }
+}

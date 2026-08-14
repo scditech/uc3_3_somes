@@ -1,0 +1,21 @@
+{
+  "name": "PvoutStagedInferenceSpecPiece",
+  "description": "Build InferencePiece.pvout_model stages: Open-Meteo baseline + UC3.4 error correction.",
+  "dependency": {
+    "dockerfile": null,
+    "requirements_file": "requirements_0.txt"
+  },
+  "tags": ["somes", "pv", "uc3.4-adapter"],
+  "style": {
+    "node_label": "PVOUT Staged Spec",
+    "node_type": "default",
+    "node_style": {
+      "backgroundColor": "#ebebeb"
+    },
+    "useIcon": true,
+    "icon_class_name": "fa-solid:diagram-project",
+    "iconStyle": {
+      "cursor": "pointer"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "PVOUTErrorCorrectionModelTrainPiece",
+  "description": "Template piece for training a PVOUT error-correction model.",
+  "dependency": {
+    "requirements_file": "requirements_1.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 200,
+      "memory": 256
+    },
+    "limits": {
+      "cpu": 1000,
+      "memory": 2048
+    }
+  },
+  "tags": [
+    "Template",
+    "Train",
+    "PVOUT",
+    "ErrorCorrection"
+  ],
+  "style": {
+    "node_label": "Train PVOUT Error Correction Model",
+    "icon_class_name": "fa-solid:sliders"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "SolarGISDataGeneratorPiece",
+  "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit SolarGIS-compatible columns (GHI/DNI/DIF/PVOUT/…) for UC3.4 preprocessing. No commercial SolarGIS license or files.",
+  "dependency": {
+    "dockerfile": null,
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "OpenMeteo",
+    "PVOUT",
+    "Generator"
+  ],
+  "style": {
+    "node_label": "Open-Meteo PV Data",
+    "icon_class_name": "fa-solid:bolt"
+  },
+  "dependencies_group": "0",
+  "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece"
+}

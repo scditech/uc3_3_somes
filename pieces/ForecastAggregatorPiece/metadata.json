@@ -1,0 +1,27 @@
+{
+  "name": "ForecastAggregatorPiece",
+  "description": "Aggregates per-model forecast CSVs (from InferencePiece) into one comparison CSV, joining on datetime + horizon and optionally adding the actual target column from a preprocessed dataset.",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 128
+    },
+    "limits": {
+      "cpu": 500,
+      "memory": 512
+    }
+  },
+  "tags": [
+    "Template",
+    "Forecast",
+    "Aggregator",
+    "Comparison"
+  ],
+  "style": {
+    "node_label": "Forecast Aggregator",
+    "icon_class_name": "fa-solid:table-columns"
+  }
+}
