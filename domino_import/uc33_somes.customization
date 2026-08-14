@@ -7123,8 +7123,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60,
-        "y": 60
+        "x": 60.0,
+        "y": 60.0
       }
     },
     {
@@ -7157,8 +7157,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290,
-        "y": 60
+        "x": 290.0,
+        "y": 60.0
       }
     },
     {
@@ -7191,8 +7191,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 520,
-        "y": 60
+        "x": 520.0,
+        "y": 60.0
       }
     },
     {
@@ -7225,8 +7225,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 750,
-        "y": 60
+        "x": 750.0,
+        "y": 60.0
       }
     },
     {
@@ -7259,8 +7259,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60,
-        "y": 320
+        "x": 60.0,
+        "y": 320.0
       }
     },
     {
@@ -7293,8 +7293,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290,
-        "y": 320
+        "x": 290.0,
+        "y": 320.0
       }
     },
     {
@@ -7327,8 +7327,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60,
-        "y": 190
+        "x": 60.0,
+        "y": 190.0
       }
     },
     {
@@ -7361,8 +7361,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290,
-        "y": 190
+        "x": 290.0,
+        "y": 190.0
       }
     },
     {
@@ -7395,8 +7395,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 520,
-        "y": 320
+        "x": 520.0,
+        "y": 320.0
       }
     },
     {
@@ -7429,8 +7429,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 750,
-        "y": 190
+        "x": 750.0,
+        "y": 190.0
       }
     },
     {
@@ -7463,8 +7463,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 980,
-        "y": 60
+        "x": 980.0,
+        "y": 60.0
       }
     },
     {
@@ -7497,8 +7497,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 980,
-        "y": 190
+        "x": 980.0,
+        "y": 190.0
       }
     },
     {
@@ -7531,8 +7531,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1210,
-        "y": 60
+        "x": 1210.0,
+        "y": 60.0
       }
     },
     {
@@ -7565,8 +7565,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1440,
-        "y": 60
+        "x": 1440.0,
+        "y": 60.0
       }
     },
     {
@@ -7599,8 +7599,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1670,
-        "y": 60
+        "x": 1670.0,
+        "y": 60.0
       }
     },
     {
@@ -7633,16 +7633,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1670,
-        "y": 190
+        "x": 1670.0,
+        "y": 190.0
       }
     },
     {
       "id": "SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 700.0,
-        "y": 80.0
+        "x": 60.0,
+        "y": 520.0
       },
       "data": {
         "name": "SolarGISDataGeneratorPiece",
@@ -7667,16 +7667,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 700.0,
-        "y": 80.0
+        "x": 60.0,
+        "y": 520.0
       }
     },
     {
       "id": "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 880.0,
-        "y": 80.0
+        "x": 290.0,
+        "y": 520.0
       },
       "data": {
         "name": "DataPreprocessingPiece",
@@ -7701,16 +7701,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 880.0,
-        "y": 80.0
+        "x": 290.0,
+        "y": 520.0
       }
     },
     {
       "id": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 1060.0,
-        "y": 80.0
+        "x": 520.0,
+        "y": 520.0
       },
       "data": {
         "name": "ModelDeciderPiece",
@@ -7735,16 +7735,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1060.0,
-        "y": 80.0
+        "x": 520.0,
+        "y": 520.0
       }
     },
     {
       "id": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 1240.0,
-        "y": 80.0
+        "x": 750.0,
+        "y": 520.0
       },
       "data": {
         "name": "DataNormalizationPiece",
@@ -7769,16 +7769,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1240.0,
-        "y": 80.0
+        "x": 750.0,
+        "y": 520.0
       }
     },
     {
       "id": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 1420.0,
-        "y": 80.0
+        "x": 980.0,
+        "y": 520.0
       },
       "data": {
         "name": "PvoutModelFeatureSelectPiece",
@@ -7803,16 +7803,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1420.0,
-        "y": 80.0
+        "x": 980.0,
+        "y": 520.0
       }
     },
     {
       "id": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 1600.0,
-        "y": 80.0
+        "x": 1210.0,
+        "y": 520.0
       },
       "data": {
         "name": "PVOUTPredictionModelTrainPiece",
@@ -7837,16 +7837,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1600.0,
-        "y": 80.0
+        "x": 1210.0,
+        "y": 520.0
       }
     },
     {
       "id": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 1780.0,
-        "y": 80.0
+        "x": 1440.0,
+        "y": 520.0
       },
       "data": {
         "name": "PVOUTErrorCorrectionModelTrainPiece",
@@ -7871,16 +7871,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1780.0,
-        "y": 80.0
+        "x": 1440.0,
+        "y": 520.0
       }
     },
     {
       "id": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 1960.0,
-        "y": 80.0
+        "x": 1670.0,
+        "y": 520.0
       },
       "data": {
         "name": "PvoutStagedInferenceSpecPiece",
@@ -7905,16 +7905,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1960.0,
-        "y": 80.0
+        "x": 1670.0,
+        "y": 520.0
       }
     },
     {
       "id": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 2140.0,
-        "y": 80.0
+        "x": 1900.0,
+        "y": 520.0
       },
       "data": {
         "name": "InferencePiece",
@@ -7939,16 +7939,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2140.0,
-        "y": 80.0
+        "x": 1900.0,
+        "y": 520.0
       }
     },
     {
       "id": "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 2320.0,
-        "y": -80.0
+        "x": 2130.0,
+        "y": 360.0
       },
       "data": {
         "name": "EvaluateMLModelPiece",
@@ -7973,16 +7973,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2320.0,
-        "y": -80.0
+        "x": 2130.0,
+        "y": 360.0
       }
     },
     {
       "id": "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 2320.0,
-        "y": 80.0
+        "x": 2130.0,
+        "y": 520.0
       },
       "data": {
         "name": "ExplainablePredictionPiece",
@@ -8007,16 +8007,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2320.0,
-        "y": 80.0
+        "x": 2130.0,
+        "y": 520.0
       }
     },
     {
       "id": "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 2320.0,
-        "y": 240.0
+        "x": 2130.0,
+        "y": 680.0
       },
       "data": {
         "name": "ForecastAggregatorPiece",
@@ -8041,16 +8041,16 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2320.0,
-        "y": 240.0
+        "x": 2130.0,
+        "y": 680.0
       }
     },
     {
       "id": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
-      "type": "default",
+      "type": "CustomNode",
       "position": {
-        "x": 2500.0,
-        "y": 80.0
+        "x": 2360.0,
+        "y": 520.0
       },
       "data": {
         "name": "PvoutToVirtualSolarPiece",
@@ -8075,8 +8075,8 @@
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2500.0,
-        "y": 80.0
+        "x": 2360.0,
+        "y": 520.0
       }
     }
   ],
