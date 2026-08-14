@@ -1,31 +1,46 @@
 {
     "group0": {
         "dependency": {
+            "dockerfile": null,
             "requirements_file": "requirements_0.txt"
         },
         "pieces": [
-            "FlexibleLoadSchedulePiece",
-            "DashboardPiece",
-            "SomesConnectorsPiece",
-            "BatterySimPiece",
-            "SolarSimPiece",
-            "ModelMonitoringPiece",
-            "IncrementalTrainPiece",
-            "PreprocessEnergyDataPiece",
+            "ForecastAggregatorPiece",
+            "SyntheticDataGeneratorPiece",
             "ForecastHorizonPiece",
-            "BatteryStrategyOptimizerPiece",
             "FetchEnergyDataPiece",
             "EmsBemsOutputPiece",
-            "GridFeasibilityPiece",
+            "SolarSimPiece",
             "TrainModelPiece",
+            "DashboardPiece",
+            "GridFeasibilityPiece",
+            "PvoutToVirtualSolarPiece",
+            "FlexibleLoadSchedulePiece",
+            "SomesConnectorsPiece",
+            "ModelDeciderPiece",
+            "ModelMonitoringPiece",
+            "PredictPiece",
+            "DataNormalizationPiece",
+            "ExplainablePredictionPiece",
+            "IncrementalTrainPiece",
+            "BatterySimPiece",
+            "SolarGISDataGeneratorPiece",
             "PriceForecastPiece",
+            "DataPreprocessingPiece",
+            "PVOUTErrorCorrectionModelTrainPiece",
+            "PvoutModelFeatureSelectPiece",
+            "EvaluateMLModelPiece",
+            "PvoutStagedInferenceSpecPiece",
+            "PVOUTPredictionModelTrainPiece",
             "SimulatePiece",
-            "PredictPiece"
+            "BatteryStrategyOptimizerPiece",
+            "PreprocessEnergyDataPiece",
+            "InferencePiece"
         ],
         "secrets": [
+            "onedata_token",
             "onedata_output_dir",
-            "onedata_onezone_host",
-            "onedata_token"
+            "onedata_onezone_host"
         ],
         "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.2-group0"
     }
