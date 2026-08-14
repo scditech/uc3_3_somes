@@ -4,7 +4,6 @@
       "name": "FetchEnergyDataPiece",
       "description": "Load and merge energy CSV files",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -136,7 +135,6 @@
       "name": "PreprocessEnergyDataPiece",
       "description": "Clean, resample and prepare energy data for training and prediction",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -302,7 +300,6 @@
       "name": "TrainModelPiece",
       "description": "Train XGBoost energy forecasting model",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -435,7 +432,6 @@
       "name": "PredictPiece",
       "description": "Run prediction using trained XGBoost model",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -596,7 +592,6 @@
       "name": "IncrementalTrainPiece",
       "description": "Train or incrementally update load models by department",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -755,7 +750,6 @@
       "name": "ForecastHorizonPiece",
       "description": "Forecast consumption by department for chosen horizon",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -913,7 +907,6 @@
       "name": "SomesConnectorsPiece",
       "description": "SoMES data connectors: weather, PV production, BESS telemetry, grid constraints, flexible loads",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1154,7 +1147,6 @@
       "name": "PriceForecastPiece",
       "description": "SoMES price/tariff forecast for the optimisation horizon",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1288,7 +1280,6 @@
       "name": "BatteryStrategyOptimizerPiece",
       "description": "Create battery dispatch strategy recommendation",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1415,7 +1406,6 @@
       "name": "BatterySimPiece",
       "description": "Generate battery SOC timeseries from load and PV profile",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1654,7 +1644,6 @@
       "name": "ModelMonitoringPiece",
       "description": "Monitor model quality and prediction drift",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1832,7 +1821,6 @@
       "name": "FlexibleLoadSchedulePiece",
       "description": "SoMES flexible load shifting schedule for the optimisation horizon",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1976,7 +1964,6 @@
       "name": "BatterySimPiece",
       "description": "Generate battery SOC timeseries from load and PV profile",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2215,7 +2202,6 @@
       "name": "GridFeasibilityPiece",
       "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2370,7 +2356,6 @@
       "name": "EmsBemsOutputPiece",
       "description": "SoMES Output API / EMS-BEMS integration interface",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2595,7 +2580,6 @@
       "name": "DashboardPiece",
       "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2929,7 +2913,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -3113,7 +3096,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataPreprocessingPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -3286,7 +3268,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelDeciderPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -3467,7 +3448,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataNormalizationPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -3565,7 +3545,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutModelFeatureSelectPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -3861,7 +3840,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTPredictionModelTrainPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -4183,7 +4161,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTErrorCorrectionModelTrainPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -4303,7 +4280,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutStagedInferenceSpecPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -4740,7 +4716,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/InferencePiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -4958,7 +4933,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EvaluateMLModelPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -5141,7 +5115,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ExplainablePredictionPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -5361,7 +5334,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastAggregatorPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -5425,7 +5397,6 @@
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutToVirtualSolarPiece",
       "dependency": {
-        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "dependencies_group": "0"
@@ -8333,6 +8304,5 @@
         "height": 20
       }
     }
-  ],
-  "workflow": {}
+  ]
 }
