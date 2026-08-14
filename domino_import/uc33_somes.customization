@@ -2793,17 +2793,18 @@
       "repository_id": 94
     },
     "SolarGIS_31893fea-590a-4592-b379-857968ac2c63": {
-      "id": 0,
+      "id": 1302,
       "name": "SolarGISDataGeneratorPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "SolarGIS Data Generator",
-        "node_type": "default",
-        "node_style": {
+        "module": "SolarGISDataGeneratorPiece",
+        "label": "SolarGIS Data Generator",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:bolt",
+        "iconClassName": "fa-solid:bolt",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2915,20 +2916,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def": {
-      "id": 0,
+      "id": 1303,
       "name": "DataPreprocessingPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Data Preprocessing",
-        "node_type": "default",
-        "node_style": {
+        "module": "DataPreprocessingPiece",
+        "label": "Data Preprocessing",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:filter",
+        "iconClassName": "fa-solid:filter",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3098,20 +3101,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac": {
-      "id": 0,
+      "id": 1304,
       "name": "ModelDeciderPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Model Decider",
-        "node_type": "default",
-        "node_style": {
+        "module": "ModelDeciderPiece",
+        "label": "Model Decider",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:code-branch",
+        "iconClassName": "fa-solid:code-branch",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3270,20 +3275,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091": {
-      "id": 0,
+      "id": 1305,
       "name": "DataNormalizationPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Data Normalization",
-        "node_type": "default",
-        "node_style": {
+        "module": "DataNormalizationPiece",
+        "label": "Data Normalization",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:scale-balanced",
+        "iconClassName": "fa-solid:scale-balanced",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3450,20 +3457,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a": {
-      "id": 0,
+      "id": 1306,
       "name": "PvoutModelFeatureSelectPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "PVOUT Feature Select",
-        "node_type": "default",
-        "node_style": {
+        "module": "PvoutModelFeatureSelectPiece",
+        "label": "PVOUT Feature Select",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:filter",
+        "iconClassName": "fa-solid:filter",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3547,20 +3556,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23": {
-      "id": 0,
+      "id": 1307,
       "name": "PVOUTPredictionModelTrainPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Train PVOUT Prediction Model",
-        "node_type": "default",
-        "node_style": {
+        "module": "PVOUTPredictionModelTrainPiece",
+        "label": "Train PVOUT Prediction Model",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:brain",
+        "iconClassName": "fa-solid:brain",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3842,20 +3853,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f": {
-      "id": 0,
+      "id": 1308,
       "name": "PVOUTErrorCorrectionModelTrainPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Train PVOUT Error Correction Model",
-        "node_type": "default",
-        "node_style": {
+        "module": "PVOUTErrorCorrectionModelTrainPiece",
+        "label": "Train PVOUT Error Correction Model",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:sliders",
+        "iconClassName": "fa-solid:sliders",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4163,20 +4176,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef": {
-      "id": 0,
+      "id": 1309,
       "name": "PvoutStagedInferenceSpecPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "PVOUT Staged Spec",
-        "node_type": "default",
-        "node_style": {
+        "module": "PvoutStagedInferenceSpecPiece",
+        "label": "PVOUT Staged Spec",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:diagram-project",
+        "iconClassName": "fa-solid:diagram-project",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4282,20 +4297,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1": {
-      "id": 0,
+      "id": 1310,
       "name": "InferencePiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Inference",
-        "node_type": "default",
-        "node_style": {
+        "module": "InferencePiece",
+        "label": "Inference",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:bolt",
+        "iconClassName": "fa-solid:bolt",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4718,20 +4735,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1": {
-      "id": 0,
+      "id": 1311,
       "name": "EvaluateMLModelPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Evaluate ML Model",
-        "node_type": "default",
-        "node_style": {
+        "module": "EvaluateMLModelPiece",
+        "label": "Evaluate ML Model",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:clipboard-check",
+        "iconClassName": "fa-solid:clipboard-check",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4935,20 +4954,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059": {
-      "id": 0,
+      "id": 1312,
       "name": "ExplainablePredictionPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Explainable Prediction",
-        "node_type": "default",
-        "node_style": {
+        "module": "ExplainablePredictionPiece",
+        "label": "Explainable Prediction",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:magnifying-glass-chart",
+        "iconClassName": "fa-solid:magnifying-glass-chart",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -5117,20 +5138,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a": {
-      "id": 0,
+      "id": 1313,
       "name": "ForecastAggregatorPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "Forecast Aggregator",
-        "node_type": "default",
-        "node_style": {
+        "module": "ForecastAggregatorPiece",
+        "label": "Forecast Aggregator",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:table-columns",
+        "iconClassName": "fa-solid:table-columns",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -5336,20 +5359,22 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     },
     "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4": {
-      "id": 0,
+      "id": 1314,
       "name": "PvoutToVirtualSolarPiece",
       "repository_id": 94,
       "style": {
-        "node_label": "PVOUT to Virtual Solar",
-        "node_type": "default",
-        "node_style": {
+        "module": "PvoutToVirtualSolarPiece",
+        "label": "PVOUT to Virtual Solar",
+        "nodeType": "default",
+        "nodeStyle": {
           "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "icon_class_name": "fa-solid:sun",
+        "iconClassName": "fa-solid:sun",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -5399,7 +5424,8 @@
       "dependency": {
         "requirements_file": "requirements_0.txt"
       },
-      "dependencies_group": "0"
+      "dependencies_group": "0",
+      "repository_url": "https://github.com/scditech/uc3_3_somes"
     }
   },
   "workflowPiecesData": {
@@ -7071,8 +7097,8 @@
       "id": "100_88d95778-1fb1-4516-addc-298a3a052669",
       "type": "CustomNode",
       "position": {
-        "x": 60,
-        "y": 60
+        "x": 60.0,
+        "y": 60.0
       },
       "data": {
         "name": "FetchEnergyDataPiece",
@@ -7105,8 +7131,8 @@
       "id": "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
       "type": "CustomNode",
       "position": {
-        "x": 290,
-        "y": 60
+        "x": 290.0,
+        "y": 60.0
       },
       "data": {
         "name": "PreprocessEnergyDataPiece",
@@ -7139,8 +7165,8 @@
       "id": "102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
       "type": "CustomNode",
       "position": {
-        "x": 520,
-        "y": 60
+        "x": 520.0,
+        "y": 60.0
       },
       "data": {
         "name": "TrainModelPiece",
@@ -7173,8 +7199,8 @@
       "id": "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
       "type": "CustomNode",
       "position": {
-        "x": 750,
-        "y": 60
+        "x": 750.0,
+        "y": 60.0
       },
       "data": {
         "name": "PredictPiece",
@@ -7207,8 +7233,8 @@
       "id": "104_f493a15c-2457-4e1c-9159-fa27c5237217",
       "type": "CustomNode",
       "position": {
-        "x": 60,
-        "y": 320
+        "x": 60.0,
+        "y": 320.0
       },
       "data": {
         "name": "IncrementalTrainPiece",
@@ -7241,8 +7267,8 @@
       "id": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
       "type": "CustomNode",
       "position": {
-        "x": 290,
-        "y": 320
+        "x": 290.0,
+        "y": 320.0
       },
       "data": {
         "name": "ForecastHorizonPiece",
@@ -7275,8 +7301,8 @@
       "id": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
       "type": "CustomNode",
       "position": {
-        "x": 60,
-        "y": 190
+        "x": 60.0,
+        "y": 190.0
       },
       "data": {
         "name": "SomesConnectorsPiece",
@@ -7309,8 +7335,8 @@
       "id": "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
       "type": "CustomNode",
       "position": {
-        "x": 290,
-        "y": 190
+        "x": 290.0,
+        "y": 190.0
       },
       "data": {
         "name": "PriceForecastPiece",
@@ -7343,8 +7369,8 @@
       "id": "108_1788a415-3315-4f28-b343-93cca3f8249f",
       "type": "CustomNode",
       "position": {
-        "x": 520,
-        "y": 320
+        "x": 520.0,
+        "y": 320.0
       },
       "data": {
         "name": "BatteryStrategyOptimizerPiece",
@@ -7377,8 +7403,8 @@
       "id": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
       "type": "CustomNode",
       "position": {
-        "x": 750,
-        "y": 190
+        "x": 750.0,
+        "y": 190.0
       },
       "data": {
         "name": "BatterySimPiece",
@@ -7411,8 +7437,8 @@
       "id": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
       "type": "CustomNode",
       "position": {
-        "x": 980,
-        "y": 60
+        "x": 980.0,
+        "y": 60.0
       },
       "data": {
         "name": "ModelMonitoringPiece",
@@ -7445,8 +7471,8 @@
       "id": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
       "type": "CustomNode",
       "position": {
-        "x": 980,
-        "y": 190
+        "x": 980.0,
+        "y": 190.0
       },
       "data": {
         "name": "FlexibleLoadSchedulePiece",
@@ -7479,8 +7505,8 @@
       "id": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
       "type": "CustomNode",
       "position": {
-        "x": 1210,
-        "y": 60
+        "x": 1210.0,
+        "y": 60.0
       },
       "data": {
         "name": "BatterySimPiece",
@@ -7513,8 +7539,8 @@
       "id": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
       "type": "CustomNode",
       "position": {
-        "x": 1440,
-        "y": 60
+        "x": 1440.0,
+        "y": 60.0
       },
       "data": {
         "name": "GridFeasibilityPiece",
@@ -7547,8 +7573,8 @@
       "id": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
       "type": "CustomNode",
       "position": {
-        "x": 1670,
-        "y": 60
+        "x": 1670.0,
+        "y": 60.0
       },
       "data": {
         "name": "EmsBemsOutputPiece",
@@ -7581,8 +7607,8 @@
       "id": "117_150eac84-e09a-46aa-8ed7-412913e37105",
       "type": "CustomNode",
       "position": {
-        "x": 1670,
-        "y": 190
+        "x": 1670.0,
+        "y": 190.0
       },
       "data": {
         "name": "DashboardPiece",
@@ -7619,7 +7645,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "SolarGISDataGeneratorPiece"
+        "name": "SolarGISDataGeneratorPiece",
+        "style": {
+          "module": "SolarGISDataGeneratorPiece",
+          "label": "SolarGIS Data Generator",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:bolt",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 700.0,
+        "y": 80.0
       }
     },
     {
@@ -7630,7 +7679,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "DataPreprocessingPiece"
+        "name": "DataPreprocessingPiece",
+        "style": {
+          "module": "DataPreprocessingPiece",
+          "label": "Data Preprocessing",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:filter",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 880.0,
+        "y": 80.0
       }
     },
     {
@@ -7641,7 +7713,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "ModelDeciderPiece"
+        "name": "ModelDeciderPiece",
+        "style": {
+          "module": "ModelDeciderPiece",
+          "label": "Model Decider",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:code-branch",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1060.0,
+        "y": 80.0
       }
     },
     {
@@ -7652,7 +7747,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "DataNormalizationPiece"
+        "name": "DataNormalizationPiece",
+        "style": {
+          "module": "DataNormalizationPiece",
+          "label": "Data Normalization",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:scale-balanced",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1240.0,
+        "y": 80.0
       }
     },
     {
@@ -7663,7 +7781,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "PvoutModelFeatureSelectPiece"
+        "name": "PvoutModelFeatureSelectPiece",
+        "style": {
+          "module": "PvoutModelFeatureSelectPiece",
+          "label": "PVOUT Feature Select",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:filter",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1420.0,
+        "y": 80.0
       }
     },
     {
@@ -7674,7 +7815,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "PVOUTPredictionModelTrainPiece"
+        "name": "PVOUTPredictionModelTrainPiece",
+        "style": {
+          "module": "PVOUTPredictionModelTrainPiece",
+          "label": "Train PVOUT Prediction Model",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:brain",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1600.0,
+        "y": 80.0
       }
     },
     {
@@ -7685,7 +7849,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "PVOUTErrorCorrectionModelTrainPiece"
+        "name": "PVOUTErrorCorrectionModelTrainPiece",
+        "style": {
+          "module": "PVOUTErrorCorrectionModelTrainPiece",
+          "label": "Train PVOUT Error Correction Model",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:sliders",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1780.0,
+        "y": 80.0
       }
     },
     {
@@ -7696,7 +7883,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "PvoutStagedInferenceSpecPiece"
+        "name": "PvoutStagedInferenceSpecPiece",
+        "style": {
+          "module": "PvoutStagedInferenceSpecPiece",
+          "label": "PVOUT Staged Spec",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:diagram-project",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 1960.0,
+        "y": 80.0
       }
     },
     {
@@ -7707,7 +7917,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "InferencePiece"
+        "name": "InferencePiece",
+        "style": {
+          "module": "InferencePiece",
+          "label": "Inference",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:bolt",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 2140.0,
+        "y": 80.0
       }
     },
     {
@@ -7718,7 +7951,30 @@
         "y": -80.0
       },
       "data": {
-        "label": "EvaluateMLModelPiece"
+        "name": "EvaluateMLModelPiece",
+        "style": {
+          "module": "EvaluateMLModelPiece",
+          "label": "Evaluate ML Model",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:clipboard-check",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 2320.0,
+        "y": -80.0
       }
     },
     {
@@ -7729,7 +7985,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "ExplainablePredictionPiece"
+        "name": "ExplainablePredictionPiece",
+        "style": {
+          "module": "ExplainablePredictionPiece",
+          "label": "Explainable Prediction",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:magnifying-glass-chart",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 2320.0,
+        "y": 80.0
       }
     },
     {
@@ -7740,7 +8019,30 @@
         "y": 240.0
       },
       "data": {
-        "label": "ForecastAggregatorPiece"
+        "name": "ForecastAggregatorPiece",
+        "style": {
+          "module": "ForecastAggregatorPiece",
+          "label": "Forecast Aggregator",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:table-columns",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 2320.0,
+        "y": 240.0
       }
     },
     {
@@ -7751,7 +8053,30 @@
         "y": 80.0
       },
       "data": {
-        "label": "PvoutToVirtualSolarPiece"
+        "name": "PvoutToVirtualSolarPiece",
+        "style": {
+          "module": "PvoutToVirtualSolarPiece",
+          "label": "PVOUT to Virtual Solar",
+          "nodeType": "default",
+          "nodeStyle": {
+            "backgroundColor": "#ebebeb"
+          },
+          "useIcon": true,
+          "iconClassName": "fa-solid:sun",
+          "iconStyle": {
+            "cursor": "pointer"
+          }
+        },
+        "validationError": false,
+        "orientation": "horizontal"
+      },
+      "width": 150,
+      "height": 70,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 2500.0,
+        "y": 80.0
       }
     }
   ],
@@ -8112,7 +8437,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
+      "targetHandle": "target-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def"
     },
     {
       "id": "e-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
@@ -8122,7 +8449,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
+      "targetHandle": "target-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac"
     },
     {
       "id": "e-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
@@ -8132,7 +8461,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+      "targetHandle": "target-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091"
     },
     {
       "id": "e-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
@@ -8142,7 +8473,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
+      "targetHandle": "target-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a"
     },
     {
       "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
@@ -8152,7 +8485,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+      "targetHandle": "target-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23"
     },
     {
       "id": "e-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
@@ -8162,7 +8497,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+      "targetHandle": "target-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23"
     },
     {
       "id": "e-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
@@ -8172,7 +8509,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+      "targetHandle": "target-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f"
     },
     {
       "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
@@ -8182,7 +8521,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+      "targetHandle": "target-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f"
     },
     {
       "id": "e-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
@@ -8192,7 +8533,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+      "targetHandle": "target-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef"
     },
     {
       "id": "e-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
@@ -8202,7 +8545,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
+      "targetHandle": "target-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef"
     },
     {
       "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
@@ -8212,7 +8557,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+      "targetHandle": "target-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef"
     },
     {
       "id": "e-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
@@ -8222,7 +8569,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+      "targetHandle": "target-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1"
     },
     {
       "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1",
@@ -8232,7 +8581,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+      "targetHandle": "target-Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1"
     },
     {
       "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059",
@@ -8242,7 +8593,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+      "targetHandle": "target-Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059"
     },
     {
       "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
@@ -8252,7 +8605,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+      "targetHandle": "target-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a"
     },
     {
       "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
@@ -8262,7 +8617,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+      "targetHandle": "target-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a"
     },
     {
       "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
@@ -8272,7 +8629,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+      "targetHandle": "target-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4"
     },
     {
       "id": "e-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
@@ -8282,7 +8641,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "targetHandle": "target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64"
     },
     {
       "id": "e-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
@@ -8292,7 +8653,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d"
     },
     {
       "id": "e-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
@@ -8302,7 +8665,9 @@
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      }
+      },
+      "sourceHandle": "source-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4"
     }
   ]
 }
