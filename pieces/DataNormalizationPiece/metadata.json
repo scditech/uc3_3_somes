@@ -22,5 +22,6 @@
   "style": {
     "node_label": "Data Normalization",
     "icon_class_name": "fa-solid:scale-balanced"
-  }
+  },
+  "dependencies_group": "0"
 }

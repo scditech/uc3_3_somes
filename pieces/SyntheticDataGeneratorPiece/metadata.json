@@ -2,7 +2,7 @@
   "name": "SyntheticDataGeneratorPiece",
   "description": "Generate synthetic tabular datasets for multiple smart-grid data domains in batch or realtime-like mode.",
   "dependency": {
-    "requirements_file": "requirements_4.txt"
+    "requirements_file": "requirements_0.txt"
   },
   "container_resources": {
     "requests": {
@@ -22,5 +22,6 @@
   "style": {
     "node_label": "Synthetic Data Generator",
     "icon_class_name": "fa-solid:database"
-  }
+  },
+  "dependencies_group": "0"
 }

@@ -2,7 +2,6 @@
   "name": "SolarGISDataGeneratorPiece",
   "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit SolarGIS-compatible columns (GHI/DNI/DIF/PVOUT/…) for UC3.4 preprocessing. No commercial SolarGIS license or files.",
   "dependency": {
-    "dockerfile": null,
     "requirements_file": "requirements_0.txt"
   },
   "container_resources": {

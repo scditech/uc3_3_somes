@@ -22,5 +22,6 @@
   "style": {
     "node_label": "Model Decider",
     "icon_class_name": "fa-solid:code-branch"
-  }
+  },
+  "dependencies_group": "0"
 }

@@ -22,5 +22,6 @@
   "style": {
     "node_label": "Data Preprocessing",
     "icon_class_name": "fa-solid:filter"
-  }
+  },
+  "dependencies_group": "0"
 }

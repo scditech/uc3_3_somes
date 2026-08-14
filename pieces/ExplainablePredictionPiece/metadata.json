@@ -2,7 +2,7 @@
   "name": "ExplainablePredictionPiece",
   "description": "Template piece for generating prediction explanations (e.g., feature attributions) alongside inference results.",
   "dependency": {
-    "requirements_file": "requirements_3.txt"
+    "requirements_file": "requirements_0.txt"
   },
   "container_resources": {
     "requests": {
@@ -22,5 +22,6 @@
   "style": {
     "node_label": "Explainable Prediction",
     "icon_class_name": "fa-solid:magnifying-glass-chart"
-  }
+  },
+  "dependencies_group": "0"
 }

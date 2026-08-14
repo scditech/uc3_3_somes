@@ -2,7 +2,6 @@
   "FlexibleLoadSchedulePiece": {
     "name": "FlexibleLoadSchedulePiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -131,7 +130,6 @@
   "DashboardPiece": {
     "name": "DashboardPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -333,7 +331,6 @@
   "SomesConnectorsPiece": {
     "name": "SomesConnectorsPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -559,7 +556,6 @@
   "BatterySimPiece": {
     "name": "BatterySimPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -783,7 +779,6 @@
   "SolarSimPiece": {
     "name": "SolarSimPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -919,7 +914,6 @@
   "ModelMonitoringPiece": {
     "name": "ModelMonitoringPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -1082,7 +1076,6 @@
   "IncrementalTrainPiece": {
     "name": "IncrementalTrainPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -1226,7 +1219,6 @@
   "PreprocessEnergyDataPiece": {
     "name": "PreprocessEnergyDataPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -1387,7 +1379,6 @@
   "ForecastHorizonPiece": {
     "name": "ForecastHorizonPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -1530,7 +1521,6 @@
   "BatteryStrategyOptimizerPiece": {
     "name": "BatteryStrategyOptimizerPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -1642,7 +1632,6 @@
   "FetchEnergyDataPiece": {
     "name": "FetchEnergyDataPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -1769,7 +1758,6 @@
   "EmsBemsOutputPiece": {
     "name": "EmsBemsOutputPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -1979,7 +1967,6 @@
   "GridFeasibilityPiece": {
     "name": "GridFeasibilityPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -2119,7 +2106,6 @@
   "TrainModelPiece": {
     "name": "TrainModelPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -2247,7 +2233,6 @@
   "PriceForecastPiece": {
     "name": "PriceForecastPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -2366,7 +2351,6 @@
   "SimulatePiece": {
     "name": "SimulatePiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -2464,7 +2448,6 @@
   "PredictPiece": {
     "name": "PredictPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [],
@@ -2610,7 +2593,6 @@
   "SolarGISDataGeneratorPiece": {
     "name": "SolarGISDataGeneratorPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -2748,7 +2730,6 @@
   "DataPreprocessingPiece": {
     "name": "DataPreprocessingPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -2944,7 +2925,6 @@
   "ModelDeciderPiece": {
     "name": "ModelDeciderPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -3129,7 +3109,6 @@
   "DataNormalizationPiece": {
     "name": "DataNormalizationPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -3322,7 +3301,6 @@
   "PVOUTPredictionModelTrainPiece": {
     "name": "PVOUTPredictionModelTrainPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -3631,7 +3609,6 @@
   "PVOUTErrorCorrectionModelTrainPiece": {
     "name": "PVOUTErrorCorrectionModelTrainPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -3966,7 +3943,6 @@
   "InferencePiece": {
     "name": "InferencePiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -4415,7 +4391,6 @@
   "EvaluateMLModelPiece": {
     "name": "EvaluateMLModelPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -4645,7 +4620,6 @@
   "ForecastAggregatorPiece": {
     "name": "ForecastAggregatorPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -4878,7 +4852,6 @@
   "ExplainablePredictionPiece": {
     "name": "ExplainablePredictionPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -5073,7 +5046,6 @@
   "SyntheticDataGeneratorPiece": {
     "name": "SyntheticDataGeneratorPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -5282,7 +5254,6 @@
   "PvoutToVirtualSolarPiece": {
     "name": "PvoutToVirtualSolarPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -5348,7 +5319,6 @@
   "PvoutModelFeatureSelectPiece": {
     "name": "PvoutModelFeatureSelectPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [
@@ -5448,7 +5418,6 @@
   "PvoutStagedInferenceSpecPiece": {
     "name": "PvoutStagedInferenceSpecPiece",
     "dependency": {
-      "dockerfile": null,
       "requirements_file": "requirements_0.txt"
     },
     "tags": [

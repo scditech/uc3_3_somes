@@ -23,5 +23,6 @@
   "style": {
     "node_label": "Forecast Aggregator",
     "icon_class_name": "fa-solid:table-columns"
-  }
+  },
+  "dependencies_group": "0"
 }

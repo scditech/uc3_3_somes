@@ -2,7 +2,7 @@
   "name": "PVOUTPredictionModelTrainPiece",
   "description": "Template piece for training a PVOUT prediction model.",
   "dependency": {
-    "requirements_file": "requirements_2.txt"
+    "requirements_file": "requirements_0.txt"
   },
   "container_resources": {
     "requests": {
@@ -23,5 +23,6 @@
   "style": {
     "node_label": "Train PVOUT Prediction Model",
     "icon_class_name": "fa-solid:brain"
-  }
+  },
+  "dependencies_group": "0"
 }
