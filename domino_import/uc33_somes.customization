@@ -118,10 +118,10 @@
         "label": "FetchEnergyDataPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:bolt",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -283,10 +283,10 @@
         "label": "PreprocessEnergyDataPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:filter",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -415,10 +415,10 @@
         "label": "TrainModelPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:brain",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -575,10 +575,10 @@
         "label": "PredictPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:chart-line",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -733,10 +733,10 @@
         "label": "IncrementalTrainPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:brain",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -890,10 +890,10 @@
         "label": "ForecastHorizonPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:clock",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -1130,10 +1130,10 @@
         "label": "SomesConnectorsPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:plug",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -1263,10 +1263,10 @@
         "label": "PriceForecastPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:chart-line",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -1389,10 +1389,10 @@
         "label": "Battery Strategy",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:sliders",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -1627,10 +1627,10 @@
         "label": "Battery Simulation",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:battery-half",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -1804,10 +1804,10 @@
         "label": "ModelMonitoringPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid fa-circle",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -1947,10 +1947,10 @@
         "label": "FlexibleLoadSchedulePiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:sliders",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2185,10 +2185,10 @@
         "label": "Battery Simulation",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:battery-half",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2339,10 +2339,10 @@
         "label": "GridFeasibilityPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:shield-halved",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2563,10 +2563,10 @@
         "label": "EmsBemsOutputPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:network-wired",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2779,10 +2779,10 @@
         "label": "Dashboard Data",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:chart-line",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2801,10 +2801,10 @@
         "label": "SolarGIS Data Generator",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:bolt",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -2928,10 +2928,10 @@
         "label": "Data Preprocessing",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:filter",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3113,10 +3113,10 @@
         "label": "Model Decider",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:code-branch",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3287,10 +3287,10 @@
         "label": "Data Normalization",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:scale-balanced",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3469,10 +3469,10 @@
         "label": "PVOUT Feature Select",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:filter",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3568,10 +3568,10 @@
         "label": "Train PVOUT Prediction Model",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:brain",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -3865,10 +3865,10 @@
         "label": "Train PVOUT Error Correction Model",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:sliders",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4188,10 +4188,10 @@
         "label": "PVOUT Staged Spec",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:diagram-project",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4309,10 +4309,10 @@
         "label": "Inference",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:bolt",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4747,10 +4747,10 @@
         "label": "Evaluate ML Model",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:clipboard-check",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -4966,10 +4966,10 @@
         "label": "Explainable Prediction",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:magnifying-glass-chart",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -5150,10 +5150,10 @@
         "label": "Forecast Aggregator",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:table-columns",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -5371,10 +5371,10 @@
         "label": "PVOUT to Virtual Solar",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#ebebeb"
+          "backgroundColor": "#b3cde8"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:sun",
+        "iconClassName": "fa-solid:circle",
         "iconStyle": {
           "cursor": "pointer"
         }
@@ -7097,8 +7097,8 @@
       "id": "100_88d95778-1fb1-4516-addc-298a3a052669",
       "type": "CustomNode",
       "position": {
-        "x": 60.0,
-        "y": 60.0
+        "x": 40.0,
+        "y": 40.0
       },
       "data": {
         "name": "FetchEnergyDataPiece",
@@ -7107,10 +7107,10 @@
           "label": "FetchEnergyDataPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:bolt",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7118,13 +7118,13 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60.0,
-        "y": 60.0
+        "x": 40.0,
+        "y": 40.0
       }
     },
     {
@@ -7132,7 +7132,7 @@
       "type": "CustomNode",
       "position": {
         "x": 290.0,
-        "y": 60.0
+        "y": 40.0
       },
       "data": {
         "name": "PreprocessEnergyDataPiece",
@@ -7141,10 +7141,10 @@
           "label": "PreprocessEnergyDataPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:filter",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7152,21 +7152,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
         "x": 290.0,
-        "y": 60.0
+        "y": 40.0
       }
     },
     {
       "id": "102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
       "type": "CustomNode",
       "position": {
-        "x": 520.0,
-        "y": 60.0
+        "x": 540.0,
+        "y": 40.0
       },
       "data": {
         "name": "TrainModelPiece",
@@ -7175,10 +7175,10 @@
           "label": "TrainModelPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:brain",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7186,21 +7186,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 520.0,
-        "y": 60.0
+        "x": 540.0,
+        "y": 40.0
       }
     },
     {
       "id": "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
       "type": "CustomNode",
       "position": {
-        "x": 750.0,
-        "y": 60.0
+        "x": 790.0,
+        "y": 40.0
       },
       "data": {
         "name": "PredictPiece",
@@ -7209,10 +7209,10 @@
           "label": "PredictPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:chart-line",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7220,21 +7220,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 750.0,
-        "y": 60.0
+        "x": 790.0,
+        "y": 40.0
       }
     },
     {
       "id": "104_f493a15c-2457-4e1c-9159-fa27c5237217",
       "type": "CustomNode",
       "position": {
-        "x": 60.0,
-        "y": 320.0
+        "x": 40.0,
+        "y": 340.0
       },
       "data": {
         "name": "IncrementalTrainPiece",
@@ -7243,10 +7243,10 @@
           "label": "IncrementalTrainPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:brain",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7254,13 +7254,13 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60.0,
-        "y": 320.0
+        "x": 40.0,
+        "y": 340.0
       }
     },
     {
@@ -7268,7 +7268,7 @@
       "type": "CustomNode",
       "position": {
         "x": 290.0,
-        "y": 320.0
+        "y": 340.0
       },
       "data": {
         "name": "ForecastHorizonPiece",
@@ -7277,10 +7277,10 @@
           "label": "ForecastHorizonPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:clock",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7288,20 +7288,20 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
         "x": 290.0,
-        "y": 320.0
+        "y": 340.0
       }
     },
     {
       "id": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
       "type": "CustomNode",
       "position": {
-        "x": 60.0,
+        "x": 40.0,
         "y": 190.0
       },
       "data": {
@@ -7311,10 +7311,10 @@
           "label": "SomesConnectorsPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:plug",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7322,12 +7322,12 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60.0,
+        "x": 40.0,
         "y": 190.0
       }
     },
@@ -7345,10 +7345,10 @@
           "label": "PriceForecastPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:chart-line",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7356,8 +7356,8 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
@@ -7369,8 +7369,8 @@
       "id": "108_1788a415-3315-4f28-b343-93cca3f8249f",
       "type": "CustomNode",
       "position": {
-        "x": 520.0,
-        "y": 320.0
+        "x": 540.0,
+        "y": 340.0
       },
       "data": {
         "name": "BatteryStrategyOptimizerPiece",
@@ -7379,10 +7379,10 @@
           "label": "Battery Strategy",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:sliders",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7390,21 +7390,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 520.0,
-        "y": 320.0
+        "x": 540.0,
+        "y": 340.0
       }
     },
     {
       "id": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
       "type": "CustomNode",
       "position": {
-        "x": 750.0,
-        "y": 190.0
+        "x": 1290.0,
+        "y": 40.0
       },
       "data": {
         "name": "BatterySimPiece",
@@ -7413,10 +7413,10 @@
           "label": "Battery Simulation",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:battery-half",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7424,21 +7424,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 750.0,
-        "y": 190.0
+        "x": 1290.0,
+        "y": 40.0
       }
     },
     {
       "id": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
       "type": "CustomNode",
       "position": {
-        "x": 980.0,
-        "y": 60.0
+        "x": 1040.0,
+        "y": 40.0
       },
       "data": {
         "name": "ModelMonitoringPiece",
@@ -7447,10 +7447,10 @@
           "label": "ModelMonitoringPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid fa-circle",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7458,20 +7458,20 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 980.0,
-        "y": 60.0
+        "x": 1040.0,
+        "y": 40.0
       }
     },
     {
       "id": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
       "type": "CustomNode",
       "position": {
-        "x": 980.0,
+        "x": 790.0,
         "y": 190.0
       },
       "data": {
@@ -7481,10 +7481,10 @@
           "label": "FlexibleLoadSchedulePiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:sliders",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7492,12 +7492,12 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 980.0,
+        "x": 790.0,
         "y": 190.0
       }
     },
@@ -7505,8 +7505,8 @@
       "id": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
       "type": "CustomNode",
       "position": {
-        "x": 1210.0,
-        "y": 60.0
+        "x": 540.0,
+        "y": 190.0
       },
       "data": {
         "name": "BatterySimPiece",
@@ -7515,10 +7515,10 @@
           "label": "Battery Simulation",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:battery-half",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7526,21 +7526,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1210.0,
-        "y": 60.0
+        "x": 540.0,
+        "y": 190.0
       }
     },
     {
       "id": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
       "type": "CustomNode",
       "position": {
-        "x": 1440.0,
-        "y": 60.0
+        "x": 1540.0,
+        "y": 40.0
       },
       "data": {
         "name": "GridFeasibilityPiece",
@@ -7549,10 +7549,10 @@
           "label": "GridFeasibilityPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:shield-halved",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7560,21 +7560,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1440.0,
-        "y": 60.0
+        "x": 1540.0,
+        "y": 40.0
       }
     },
     {
       "id": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
       "type": "CustomNode",
       "position": {
-        "x": 1670.0,
-        "y": 60.0
+        "x": 1790.0,
+        "y": 40.0
       },
       "data": {
         "name": "EmsBemsOutputPiece",
@@ -7583,10 +7583,10 @@
           "label": "EmsBemsOutputPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:network-wired",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7594,20 +7594,20 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1670.0,
-        "y": 60.0
+        "x": 1790.0,
+        "y": 40.0
       }
     },
     {
       "id": "117_150eac84-e09a-46aa-8ed7-412913e37105",
       "type": "CustomNode",
       "position": {
-        "x": 1670.0,
+        "x": 1540.0,
         "y": 190.0
       },
       "data": {
@@ -7617,10 +7617,10 @@
           "label": "Dashboard Data",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:chart-line",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7628,12 +7628,12 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1670.0,
+        "x": 1540.0,
         "y": 190.0
       }
     },
@@ -7641,8 +7641,8 @@
       "id": "SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
       "type": "CustomNode",
       "position": {
-        "x": 60.0,
-        "y": 520.0
+        "x": 40.0,
+        "y": 640.0
       },
       "data": {
         "name": "SolarGISDataGeneratorPiece",
@@ -7651,10 +7651,10 @@
           "label": "SolarGIS Data Generator",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:bolt",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7662,13 +7662,13 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 60.0,
-        "y": 520.0
+        "x": 40.0,
+        "y": 640.0
       }
     },
     {
@@ -7676,7 +7676,7 @@
       "type": "CustomNode",
       "position": {
         "x": 290.0,
-        "y": 520.0
+        "y": 640.0
       },
       "data": {
         "name": "DataPreprocessingPiece",
@@ -7685,10 +7685,10 @@
           "label": "Data Preprocessing",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:filter",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7696,21 +7696,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
         "x": 290.0,
-        "y": 520.0
+        "y": 640.0
       }
     },
     {
       "id": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
       "type": "CustomNode",
       "position": {
-        "x": 520.0,
-        "y": 520.0
+        "x": 540.0,
+        "y": 640.0
       },
       "data": {
         "name": "ModelDeciderPiece",
@@ -7719,10 +7719,10 @@
           "label": "Model Decider",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:code-branch",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7730,21 +7730,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 520.0,
-        "y": 520.0
+        "x": 540.0,
+        "y": 640.0
       }
     },
     {
       "id": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
       "type": "CustomNode",
       "position": {
-        "x": 750.0,
-        "y": 520.0
+        "x": 790.0,
+        "y": 640.0
       },
       "data": {
         "name": "DataNormalizationPiece",
@@ -7753,10 +7753,10 @@
           "label": "Data Normalization",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:scale-balanced",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7764,21 +7764,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 750.0,
-        "y": 520.0
+        "x": 790.0,
+        "y": 640.0
       }
     },
     {
       "id": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
       "type": "CustomNode",
       "position": {
-        "x": 980.0,
-        "y": 520.0
+        "x": 1040.0,
+        "y": 640.0
       },
       "data": {
         "name": "PvoutModelFeatureSelectPiece",
@@ -7787,10 +7787,10 @@
           "label": "PVOUT Feature Select",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:filter",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7798,21 +7798,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 980.0,
-        "y": 520.0
+        "x": 1040.0,
+        "y": 640.0
       }
     },
     {
       "id": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
       "type": "CustomNode",
       "position": {
-        "x": 1210.0,
-        "y": 520.0
+        "x": 1290.0,
+        "y": 640.0
       },
       "data": {
         "name": "PVOUTPredictionModelTrainPiece",
@@ -7821,10 +7821,10 @@
           "label": "Train PVOUT Prediction Model",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:brain",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7832,21 +7832,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1210.0,
-        "y": 520.0
+        "x": 1290.0,
+        "y": 640.0
       }
     },
     {
       "id": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
       "type": "CustomNode",
       "position": {
-        "x": 1440.0,
-        "y": 520.0
+        "x": 1540.0,
+        "y": 640.0
       },
       "data": {
         "name": "PVOUTErrorCorrectionModelTrainPiece",
@@ -7855,10 +7855,10 @@
           "label": "Train PVOUT Error Correction Model",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:sliders",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7866,21 +7866,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1440.0,
-        "y": 520.0
+        "x": 1540.0,
+        "y": 640.0
       }
     },
     {
       "id": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
       "type": "CustomNode",
       "position": {
-        "x": 1670.0,
-        "y": 520.0
+        "x": 1790.0,
+        "y": 640.0
       },
       "data": {
         "name": "PvoutStagedInferenceSpecPiece",
@@ -7889,10 +7889,10 @@
           "label": "PVOUT Staged Spec",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:diagram-project",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7900,21 +7900,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1670.0,
-        "y": 520.0
+        "x": 1790.0,
+        "y": 640.0
       }
     },
     {
       "id": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
       "type": "CustomNode",
       "position": {
-        "x": 1900.0,
-        "y": 520.0
+        "x": 2040.0,
+        "y": 640.0
       },
       "data": {
         "name": "InferencePiece",
@@ -7923,10 +7923,10 @@
           "label": "Inference",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:bolt",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7934,21 +7934,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1900.0,
-        "y": 520.0
+        "x": 2040.0,
+        "y": 640.0
       }
     },
     {
       "id": "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1",
       "type": "CustomNode",
       "position": {
-        "x": 2130.0,
-        "y": 360.0
+        "x": 2290.0,
+        "y": 490.0
       },
       "data": {
         "name": "EvaluateMLModelPiece",
@@ -7957,10 +7957,10 @@
           "label": "Evaluate ML Model",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:clipboard-check",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7968,21 +7968,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2130.0,
-        "y": 360.0
+        "x": 2290.0,
+        "y": 490.0
       }
     },
     {
       "id": "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059",
       "type": "CustomNode",
       "position": {
-        "x": 2130.0,
-        "y": 520.0
+        "x": 2290.0,
+        "y": 640.0
       },
       "data": {
         "name": "ExplainablePredictionPiece",
@@ -7991,10 +7991,10 @@
           "label": "Explainable Prediction",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:magnifying-glass-chart",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -8002,21 +8002,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2130.0,
-        "y": 520.0
+        "x": 2290.0,
+        "y": 640.0
       }
     },
     {
       "id": "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
       "type": "CustomNode",
       "position": {
-        "x": 2130.0,
-        "y": 680.0
+        "x": 2290.0,
+        "y": 790.0
       },
       "data": {
         "name": "ForecastAggregatorPiece",
@@ -8025,10 +8025,10 @@
           "label": "Forecast Aggregator",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:table-columns",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -8036,21 +8036,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2130.0,
-        "y": 680.0
+        "x": 2290.0,
+        "y": 790.0
       }
     },
     {
       "id": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
       "type": "CustomNode",
       "position": {
-        "x": 2360.0,
-        "y": 520.0
+        "x": 2540.0,
+        "y": 640.0
       },
       "data": {
         "name": "PvoutToVirtualSolarPiece",
@@ -8059,10 +8059,10 @@
           "label": "PVOUT to Virtual Solar",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#ebebeb"
+            "backgroundColor": "#b3cde8"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:sun",
+          "iconClassName": "fa-solid:circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -8070,13 +8070,13 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 150,
-      "height": 70,
+      "width": 220,
+      "height": 90,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2360.0,
-        "y": 520.0
+        "x": 2540.0,
+        "y": 640.0
       }
     }
   ],
