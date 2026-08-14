@@ -88,62 +88,76 @@ def preprocess_prediction(payload):
     keep_datetime = bool(payload.get("keep_datetime", False))
 
     def _read_supported_csv(path: str):
+        from pathlib import Path as _Path
+
+        if not path:
+            raise ValueError("Empty CSV path.")
+        if not _Path(path).is_file():
+            raise FileNotFoundError(
+                f"Input CSV not found at `{path}`. "
+                "Domino must use Shared Storage = Local so Open-Meteo output "
+                "is visible to Data Preprocessing."
+            )
         read_attempts = [
-            {"sep": ";", "skiprows": 58, "dayfirst": True},
             {"sep": ";", "skiprows": 0, "dayfirst": True},
+            {"sep": ",", "skiprows": 0, "dayfirst": True},
             {"sep": None, "engine": "python", "skiprows": 0, "dayfirst": True},
+            # Legacy commercial SolarGIS exports with a long header block.
+            {"sep": ";", "skiprows": 58, "dayfirst": True},
             {"sep": None, "engine": "python", "skiprows": 58, "dayfirst": True},
         ]
+        last_err: Exception | None = None
+        seen_cols: list[str] = []
         for kwargs in read_attempts:
             try:
                 candidate = pd.read_csv(path, **kwargs)
-            except Exception:
+            except Exception as exc:  # noqa: BLE001 - try next dialect
+                last_err = exc
                 continue
+            seen_cols = [str(c) for c in candidate.columns]
             if (
                 "datetime" in candidate.columns
                 or ("Date" in candidate.columns and "Time" in candidate.columns)
                 or "timestamp_utc" in candidate.columns
             ):
                 return candidate
+        detail = f" Last read error: {last_err}." if last_err else ""
         raise ValueError(
             "Unable to read input CSV with supported schemas. "
-            "Expected a `datetime`, `timestamp_utc`, or `Date`+`Time` column."
+            "Expected a `datetime`, `timestamp_utc`, or `Date`+`Time` column. "
+            f"Path=`{path}` columns={seen_cols}.{detail}"
         )
 
     target_col_input = payload.get("target_column")
     target_col = str(target_col_input) if target_col_input else "PVOUT"
 
-    # data_path is the back-compat alias for data_path_solargis.
-    solargis_path = data_path_solargis or data_path
+    # Prefer generic data_path (Open-Meteo). data_path_solargis remains as alias only.
+    weather_path = data_path or data_path_solargis
 
     if df is None:
-        if not solargis_path and not data_path_okte:
+        if not weather_path and not data_path_okte:
             raise ValueError(
                 "preprocessing_option='prediction' requires `payload['dataframe']`, "
-                "or `payload['data_path']` / `data_path_solargis`, or "
-                "`payload['data_path_okte']` (or both Solargis + OKTE for the merged shape)."
+                "or `payload['data_path']` (Open-Meteo CSV), or "
+                "`payload['data_path_okte']`."
             )
 
-        if solargis_path and data_path_okte:
-            # Dual-source: read both and inner-join on `datetime` so each row in the
-            # merged dataset has Solargis weather columns AND OKTE market columns.
-            solargis_df = _read_supported_csv(solargis_path)
-            solargis_df = ensure_datetime_column(solargis_df)
+        if weather_path and data_path_okte:
+            weather_df = _read_supported_csv(weather_path)
+            weather_df = ensure_datetime_column(weather_df)
 
             okte_df = _read_supported_csv(data_path_okte)
             okte_df = ensure_datetime_column(okte_df)
 
-            # Drop Date/Time from OKTE side after datetime is derived, to avoid
-            # collisions when the Solargis side doesn't have them.
             okte_drop = [
                 c for c in ("Date", "Time")
-                if c in okte_df.columns and c not in solargis_df.columns
+                if c in okte_df.columns and c not in weather_df.columns
             ]
             if okte_drop:
                 okte_df = okte_df.drop(columns=okte_drop)
 
             df = pd.merge(
-                solargis_df,
+                weather_df,
                 okte_df,
                 on="datetime",
                 how="inner",
@@ -151,12 +165,11 @@ def preprocess_prediction(payload):
             )
             if df.empty:
                 raise ValueError(
-                    "Inner-join on `datetime` produced 0 rows. Check that the Solargis "
-                    "and OKTE generators emit overlapping timestamps "
-                    "(same `time_step_minutes` and `records_count`)."
+                    "Inner-join on `datetime` produced 0 rows. Check that the Open-Meteo "
+                    "and OKTE generators emit overlapping timestamps."
                 )
-        elif solargis_path:
-            df = _read_supported_csv(solargis_path)
+        elif weather_path:
+            df = _read_supported_csv(weather_path)
         else:
             df = _read_supported_csv(data_path_okte)
 

@@ -1,9 +1,11 @@
 {
   "workflowPieces": {
     "100_88d95778-1fb1-4516-addc-298a3a052669": {
+      "id": 1336,
       "name": "FetchEnergyDataPiece",
       "description": "Load and merge energy CSV files",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -118,23 +120,24 @@
         "label": "FetchEnergyDataPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:bolt",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FetchEnergyDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1295,
-      "repository_id": 94
+      "repository_id": 96
     },
     "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb": {
+      "id": 1362,
       "name": "PreprocessEnergyDataPiece",
       "description": "Clean, resample and prepare energy data for training and prediction",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -283,23 +286,24 @@
         "label": "PreprocessEnergyDataPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:filter",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PreprocessEnergyDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1292,
-      "repository_id": 94
+      "repository_id": 96
     },
     "102_024b94c5-a535-4d65-a9a5-22c227eb23d8": {
+      "id": 1339,
       "name": "TrainModelPiece",
       "description": "Train XGBoost energy forecasting model",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -415,23 +419,24 @@
         "label": "TrainModelPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:brain",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/TrainModelPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1298,
-      "repository_id": 94
+      "repository_id": 96
     },
     "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c": {
+      "id": 1347,
       "name": "PredictPiece",
       "description": "Run prediction using trained XGBoost model",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -575,23 +580,24 @@
         "label": "PredictPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:chart-line",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PredictPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1301,
-      "repository_id": 94
+      "repository_id": 96
     },
     "104_f493a15c-2457-4e1c-9159-fa27c5237217": {
+      "id": 1350,
       "name": "IncrementalTrainPiece",
       "description": "Train or incrementally update load models by department",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -733,23 +739,24 @@
         "label": "IncrementalTrainPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:brain",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1291,
-      "repository_id": 94
+      "repository_id": 96
     },
     "105_cfd055f3-92b7-43a8-90a3-61965d222554": {
+      "id": 1335,
       "name": "ForecastHorizonPiece",
       "description": "Forecast consumption by department for chosen horizon",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -890,23 +897,24 @@
         "label": "ForecastHorizonPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:clock",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastHorizonPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1293,
-      "repository_id": 94
+      "repository_id": 96
     },
     "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67": {
+      "id": 1344,
       "name": "SomesConnectorsPiece",
       "description": "SoMES data connectors: weather, PV production, BESS telemetry, grid constraints, flexible loads",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1130,23 +1138,24 @@
         "label": "SomesConnectorsPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:plug",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SomesConnectorsPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1287,
-      "repository_id": 94
+      "repository_id": 96
     },
     "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb": {
+      "id": 1353,
       "name": "PriceForecastPiece",
       "description": "SoMES price/tariff forecast for the optimisation horizon",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1263,23 +1272,24 @@
         "label": "PriceForecastPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:chart-line",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PriceForecastPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1299,
-      "repository_id": 94
+      "repository_id": 96
     },
     "108_1788a415-3315-4f28-b343-93cca3f8249f": {
+      "id": 1361,
       "name": "BatteryStrategyOptimizerPiece",
       "description": "Create battery dispatch strategy recommendation",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1389,23 +1399,24 @@
         "label": "Battery Strategy",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:sliders",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatteryStrategyOptimizerPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1294,
-      "repository_id": 94
+      "repository_id": 96
     },
     "110_e1e3398a-8c76-4a43-a567-1f86061f2c64": {
+      "id": 1351,
       "name": "BatterySimPiece",
       "description": "Generate battery SOC timeseries from load and PV profile",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1627,23 +1638,24 @@
         "label": "Battery Simulation",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:battery-half",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1288,
-      "repository_id": 94
+      "repository_id": 96
     },
     "111_ab44d9b0-f21e-41b5-9929-922db54b90e4": {
+      "id": 1346,
       "name": "ModelMonitoringPiece",
       "description": "Monitor model quality and prediction drift",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1804,23 +1816,24 @@
         "label": "ModelMonitoringPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid fa-circle",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelMonitoringPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1290,
-      "repository_id": 94
+      "repository_id": 96
     },
     "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33": {
+      "id": 1343,
       "name": "FlexibleLoadSchedulePiece",
       "description": "SoMES flexible load shifting schedule for the optimisation horizon",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -1947,23 +1960,24 @@
         "label": "FlexibleLoadSchedulePiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:sliders",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FlexibleLoadSchedulePiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1285,
-      "repository_id": 94
+      "repository_id": 96
     },
     "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d": {
+      "id": 1351,
       "name": "BatterySimPiece",
       "description": "Generate battery SOC timeseries from load and PV profile",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2185,23 +2199,24 @@
         "label": "Battery Simulation",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:battery-half",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1288,
-      "repository_id": 94
+      "repository_id": 96
     },
     "115_acc05ac3-51bf-455d-a8e0-009a70c149ad": {
+      "id": 1341,
       "name": "GridFeasibilityPiece",
       "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2339,23 +2354,24 @@
         "label": "GridFeasibilityPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:shield-halved",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/GridFeasibilityPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1297,
-      "repository_id": 94
+      "repository_id": 96
     },
     "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d": {
+      "id": 1337,
       "name": "EmsBemsOutputPiece",
       "description": "SoMES Output API / EMS-BEMS integration interface",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2563,23 +2579,24 @@
         "label": "EmsBemsOutputPiece",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:network-wired",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EmsBemsOutputPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1296,
-      "repository_id": 94
+      "repository_id": 96
     },
     "117_150eac84-e09a-46aa-8ed7-412913e37105": {
+      "id": 1340,
       "name": "DashboardPiece",
       "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
       "dependency": {
+        "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
       "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
@@ -2779,37 +2796,27 @@
         "label": "Dashboard Data",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:chart-line",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DashboardPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "id": 1286,
-      "repository_id": 94
+      "repository_id": 96
     },
-    "SolarGIS_31893fea-590a-4592-b379-857968ac2c63": {
-      "id": 1302,
+    "200_198c7643-e8a9-4782-9755-5401ed175920": {
+      "id": 1352,
       "name": "SolarGISDataGeneratorPiece",
-      "repository_id": 94,
-      "style": {
-        "module": "SolarGISDataGeneratorPiece",
-        "label": "SolarGIS Data Generator",
-        "nodeType": "default",
-        "nodeStyle": {
-          "backgroundColor": "#b3cde8"
-        },
-        "useIcon": true,
-        "iconClassName": "fa-solid:circle",
-        "iconStyle": {
-          "cursor": "pointer"
-        }
+      "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit SolarGIS-compatible columns (GHI/DNI/DIF/PVOUT/…) for UC3.4 preprocessing. No commercial SolarGIS license or files.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
       },
-      "description": "Generate synthetic SolarGIS solar radiation data (global horizontal irradiation, direct normal irradiation, diffuse horizontal irradiation) in batch or realtime-like mode.",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -2876,7 +2883,7 @@
             "title": "Output Format"
           }
         },
-        "title": "InputModel",
+        "title": "SolarGISDataGeneratorPiece",
         "type": "object"
       },
       "output_schema": {
@@ -2911,32 +2918,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def": {
-      "id": 1303,
-      "name": "DataPreprocessingPiece",
-      "repository_id": 94,
+      "tags": [
+        "OpenMeteo",
+        "PVOUT",
+        "Generator"
+      ],
       "style": {
-        "module": "DataPreprocessingPiece",
-        "label": "Data Preprocessing",
+        "module": "SolarGISDataGeneratorPiece",
+        "label": "Open-Meteo PV Data",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:bolt",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "201_feb3638d-ebff-4c13-94b0-649523fc41f5": {
+      "id": 1354,
+      "name": "DataPreprocessingPiece",
       "description": "Template piece for cleaning, validating, and preprocessing input data prior to feature engineering or training.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3045,7 +3068,7 @@
             "title": "Target Column"
           }
         },
-        "title": "InputModel",
+        "title": "DataPreprocessingPiece",
         "type": "object"
       },
       "output_schema": {
@@ -3083,7 +3106,6 @@
             "type": "string"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "Optional outputs (e.g., cleaned dataset URI, dropped rows stats).",
             "title": "Artifacts",
             "type": "object"
@@ -3096,32 +3118,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataPreprocessingPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac": {
-      "id": 1304,
-      "name": "ModelDeciderPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Data",
+        "Preprocessing"
+      ],
       "style": {
-        "module": "ModelDeciderPiece",
-        "label": "Model Decider",
+        "module": "DataPreprocessingPiece",
+        "label": "Data Preprocessing",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:filter",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataPreprocessingPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a": {
+      "id": 1345,
+      "name": "ModelDeciderPiece",
       "description": "Template piece for selecting a model/version based on context, data availability, or policies.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3194,7 +3232,7 @@
             "title": "Data Path"
           }
         },
-        "title": "InputModel",
+        "title": "ModelDeciderPiece",
         "type": "object"
       },
       "output_schema": {
@@ -3257,7 +3295,6 @@
             "title": "Decision Path"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "Optional outputs (e.g., selected model id/version, decision rationale).",
             "title": "Artifacts",
             "type": "object"
@@ -3270,32 +3307,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelDeciderPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091": {
-      "id": 1305,
-      "name": "DataNormalizationPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Model",
+        "Routing"
+      ],
       "style": {
-        "module": "DataNormalizationPiece",
-        "label": "Data Normalization",
+        "module": "ModelDeciderPiece",
+        "label": "Model Decider",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:code-branch",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelDeciderPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "203_971b4a08-36d8-4edb-8669-081ec12c49b8": {
+      "id": 1348,
+      "name": "DataNormalizationPiece",
       "description": "Template piece for normalizing raw smart-grid data into a consistent scale and schema.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3381,7 +3434,7 @@
             "title": "Model Type"
           }
         },
-        "title": "InputModel",
+        "title": "DataNormalizationPiece",
         "type": "object"
       },
       "output_schema": {
@@ -3439,7 +3492,6 @@
             "type": "string"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "Optional outputs (e.g., normalized dataset URI, fitted scaler params).",
             "title": "Artifacts",
             "type": "object"
@@ -3452,32 +3504,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataNormalizationPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a": {
-      "id": 1306,
-      "name": "PvoutModelFeatureSelectPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Data",
+        "Normalization"
+      ],
       "style": {
-        "module": "PvoutModelFeatureSelectPiece",
-        "label": "PVOUT Feature Select",
+        "module": "DataNormalizationPiece",
+        "label": "Data Normalization",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:scale-balanced",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataNormalizationPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "204_00df596b-efe6-440c-bd64-5283c7f88f2b": {
+      "id": 1356,
+      "name": "PvoutModelFeatureSelectPiece",
       "description": "Split UC3.4 feature_columns into model features + datetime_column without removing datetime from CSV.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -3503,7 +3571,7 @@
         "required": [
           "data_path"
         ],
-        "title": "InputModel",
+        "title": "PvoutModelFeatureSelectPiece",
         "type": "object"
       },
       "output_schema": {
@@ -3545,38 +3613,49 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {
-        "title": "SecretsModel",
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
+      "secrets_schema": {},
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "use_gpu": false
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutModelFeatureSelectPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
-      },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23": {
-      "id": 1307,
-      "name": "PVOUTPredictionModelTrainPiece",
-      "repository_id": 94,
+      "tags": [
+        "somes",
+        "pv",
+        "uc3.4-adapter"
+      ],
       "style": {
-        "module": "PVOUTPredictionModelTrainPiece",
-        "label": "Train PVOUT Prediction Model",
+        "module": "PvoutModelFeatureSelectPiece",
+        "label": "PVOUT Feature Select",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:filter",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutModelFeatureSelectPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a": {
+      "id": 1359,
+      "name": "PVOUTPredictionModelTrainPiece",
       "description": "Template piece for training a PVOUT prediction model.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3654,7 +3733,7 @@
             "title": "Checkpoint Dir"
           }
         },
-        "title": "InputModel",
+        "title": "PVOUTPredictionModelTrainPiece",
         "type": "object"
       },
       "output_schema": {
@@ -3835,7 +3914,6 @@
             "title": "Model Spec"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "Optional outputs (e.g., trained model URI, training metrics).",
             "title": "Artifacts",
             "type": "object"
@@ -3848,32 +3926,49 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTPredictionModelTrainPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 200,
+          "memory": 256
+        },
+        "limits": {
+          "cpu": 1000,
+          "memory": 2048
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f": {
-      "id": 1308,
-      "name": "PVOUTErrorCorrectionModelTrainPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Train",
+        "PVOUT",
+        "Prediction"
+      ],
       "style": {
-        "module": "PVOUTErrorCorrectionModelTrainPiece",
-        "label": "Train PVOUT Error Correction Model",
+        "module": "PVOUTPredictionModelTrainPiece",
+        "label": "Train PVOUT Prediction Model",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:brain",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTPredictionModelTrainPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "206_51509837-c9bc-43f5-8885-2391ae4fdce3": {
+      "id": 1355,
+      "name": "PVOUTErrorCorrectionModelTrainPiece",
       "description": "Template piece for training a PVOUT error-correction model.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3964,7 +4059,7 @@
             "title": "Checkpoint Dir"
           }
         },
-        "title": "InputModel",
+        "title": "PVOUTErrorCorrectionModelTrainPiece",
         "type": "object"
       },
       "output_schema": {
@@ -4158,7 +4253,6 @@
             "title": "Model Spec"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "Optional outputs (e.g., trained corrector URI, evaluation metrics).",
             "title": "Artifacts",
             "type": "object"
@@ -4171,32 +4265,49 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTErrorCorrectionModelTrainPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 200,
+          "memory": 256
+        },
+        "limits": {
+          "cpu": 1000,
+          "memory": 2048
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef": {
-      "id": 1309,
-      "name": "PvoutStagedInferenceSpecPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Train",
+        "PVOUT",
+        "ErrorCorrection"
+      ],
       "style": {
-        "module": "PvoutStagedInferenceSpecPiece",
-        "label": "PVOUT Staged Spec",
+        "module": "PVOUTErrorCorrectionModelTrainPiece",
+        "label": "Train PVOUT Error Correction Model",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:sliders",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTErrorCorrectionModelTrainPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "207_de033d3f-acd2-415c-b506-b2dad198f458": {
+      "id": 1358,
+      "name": "PvoutStagedInferenceSpecPiece",
       "description": "Build InferencePiece.pvout_model stages: Open-Meteo baseline + UC3.4 error correction.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "properties": {
           "baseline_model_path": {
@@ -4244,7 +4355,7 @@
           "correction_model_path",
           "data_path"
         ],
-        "title": "InputModel",
+        "title": "PvoutStagedInferenceSpecPiece",
         "type": "object"
       },
       "output_schema": {
@@ -4254,7 +4365,7 @@
             "type": "string"
           },
           "pvout_model": {
-            "description": "Ready-to-bind InferencePiece.pvout_model with baseline→correction stages.",
+            "description": "Ready-to-bind InferencePiece.pvout_model entry with stages: baseline (price_level) → inject PVOUT_PRED → error correction.",
             "items": {
               "type": "object"
             },
@@ -4286,38 +4397,49 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {
-        "title": "SecretsModel",
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
+      "secrets_schema": {},
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "use_gpu": false
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutStagedInferenceSpecPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
-      },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1": {
-      "id": 1310,
-      "name": "InferencePiece",
-      "repository_id": 94,
+      "tags": [
+        "somes",
+        "pv",
+        "uc3.4-adapter"
+      ],
       "style": {
-        "module": "InferencePiece",
-        "label": "Inference",
+        "module": "PvoutStagedInferenceSpecPiece",
+        "label": "PVOUT Staged Spec",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:diagram-project",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutStagedInferenceSpecPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817": {
+      "id": 1363,
+      "name": "InferencePiece",
       "description": "Runs inference on prepared features: pvout_correction or price_ahead (base + model correction).",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "$defs": {
           "ModelSpec": {
@@ -4466,7 +4588,6 @@
                 "anyOf": [
                   {
                     "items": {
-                      "additionalProperties": true,
                       "type": "object"
                     },
                     "type": "array"
@@ -4558,7 +4679,7 @@
             "title": "Max Horizon"
           }
         },
-        "title": "InputModel",
+        "title": "InferencePiece",
         "type": "object"
       },
       "output_schema": {
@@ -4717,7 +4838,6 @@
             "type": "string"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "`input_payload` on no-op; `per_model` mapping `{model_id: {forecast, per_horizon, metadata, debug?}}` plus aggregate `stage_summaries` when stages are used.",
             "title": "Artifacts",
             "type": "object"
@@ -4730,32 +4850,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/InferencePiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1": {
-      "id": 1311,
-      "name": "EvaluateMLModelPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Model",
+        "Inference"
+      ],
       "style": {
-        "module": "EvaluateMLModelPiece",
-        "label": "Evaluate ML Model",
+        "module": "InferencePiece",
+        "label": "Inference",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:bolt",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/InferencePiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "209_8180582c-ed2a-49ec-90cf-e034416259dd": {
+      "id": 1357,
+      "name": "EvaluateMLModelPiece",
       "description": "Template piece for evaluating a trained ML model and producing metrics/artifacts.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "$defs": {
           "ForecastBinding": {
@@ -4883,7 +5019,7 @@
             "type": "boolean"
           }
         },
-        "title": "InputModel",
+        "title": "EvaluateMLModelPiece",
         "type": "object"
       },
       "output_schema": {
@@ -4906,7 +5042,6 @@
                 "type": "string"
               },
               "metrics": {
-                "additionalProperties": true,
                 "description": "Computed metrics for this entry.",
                 "title": "Metrics",
                 "type": "object"
@@ -4936,7 +5071,6 @@
             "type": "array"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "`input_payload` on no-op. On run: aggregated `per_model = {model_id: metrics}` plus first-entry `metrics`, `metrics_path`, `evaluation_option` at top level for back-compat.",
             "title": "Artifacts",
             "type": "object"
@@ -4949,32 +5083,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EvaluateMLModelPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 1024
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059": {
-      "id": 1312,
-      "name": "ExplainablePredictionPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Model",
+        "Evaluation"
+      ],
       "style": {
-        "module": "ExplainablePredictionPiece",
-        "label": "Explainable Prediction",
+        "module": "EvaluateMLModelPiece",
+        "label": "Evaluate ML Model",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:clipboard-check",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EvaluateMLModelPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "210_f543a398-f49f-457f-9265-3752235c7456": {
+      "id": 1349,
+      "name": "ExplainablePredictionPiece",
       "description": "Template piece for generating prediction explanations (e.g., feature attributions) alongside inference results.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "$defs": {
           "ForecastBinding": {
@@ -5109,7 +5259,7 @@
             "type": "boolean"
           }
         },
-        "title": "InputModel",
+        "title": "ExplainablePredictionPiece",
         "type": "object"
       },
       "output_schema": {
@@ -5120,7 +5270,6 @@
             "type": "string"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "`input_payload` on no-op. On run: aggregated `per_model = {model_id: {...}}` plus first-entry top-level keys for back-compat.",
             "title": "Artifacts",
             "type": "object"
@@ -5133,32 +5282,48 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ExplainablePredictionPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 1024
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a": {
-      "id": 1313,
-      "name": "ForecastAggregatorPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Model",
+        "Explainability"
+      ],
       "style": {
-        "module": "ForecastAggregatorPiece",
-        "label": "Forecast Aggregator",
+        "module": "ExplainablePredictionPiece",
+        "label": "Explainable Prediction",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:magnifying-glass-chart",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ExplainablePredictionPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "211_25acd5cc-0faa-4950-94f6-0e0ce3b49ced": {
+      "id": 1333,
+      "name": "ForecastAggregatorPiece",
       "description": "Aggregates per-model forecast CSVs (from InferencePiece) into one comparison CSV, joining on datetime + horizon and optionally adding the actual target column from a preprocessed dataset.",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "$defs": {
           "ForecastEntry": {
@@ -5303,7 +5468,7 @@
             "type": "string"
           }
         },
-        "title": "InputModel",
+        "title": "ForecastAggregatorPiece",
         "type": "object"
       },
       "output_schema": {
@@ -5341,7 +5506,6 @@
             "type": "integer"
           },
           "artifacts": {
-            "additionalProperties": true,
             "description": "`input_payload` on no-op; otherwise `{columns, model_ids, n_rows}`.",
             "title": "Artifacts",
             "type": "object"
@@ -5354,32 +5518,49 @@
         "type": "object"
       },
       "secrets_schema": {},
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastAggregatorPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 500,
+          "memory": 512
+        },
+        "use_gpu": false
       },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
-    },
-    "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4": {
-      "id": 1314,
-      "name": "PvoutToVirtualSolarPiece",
-      "repository_id": 94,
+      "tags": [
+        "Template",
+        "Forecast",
+        "Aggregator",
+        "Comparison"
+      ],
       "style": {
-        "module": "PvoutToVirtualSolarPiece",
-        "label": "PVOUT to Virtual Solar",
+        "module": "ForecastAggregatorPiece",
+        "label": "Forecast Aggregator",
         "nodeType": "default",
         "nodeStyle": {
-          "backgroundColor": "#b3cde8"
+          "backgroundColor": "#ebebeb"
         },
         "useIcon": true,
-        "iconClassName": "fa-solid:circle",
+        "iconClassName": "fa-solid:table-columns",
         "iconStyle": {
           "cursor": "pointer"
         }
       },
-      "description": "Adapter: UC3.4 Inference forecast CSV to SoMES virtual_solar.csv",
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastAggregatorPiece",
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
+    },
+    "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846": {
+      "id": 1342,
+      "name": "PvoutToVirtualSolarPiece",
+      "description": "Adapter: UC3.4 Inference forecast CSV → SoMES virtual_solar.csv (datetime, pv_kw).",
+      "dependency": {
+        "dockerfile": null,
+        "requirements_file": "requirements_0.txt"
+      },
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
       "input_schema": {
         "properties": {
           "forecast_csv_path": {
@@ -5391,7 +5572,7 @@
         "required": [
           "forecast_csv_path"
         ],
-        "title": "InputModel",
+        "title": "PvoutToVirtualSolarPiece",
         "type": "object"
       },
       "output_schema": {
@@ -5413,19 +5594,39 @@
         "title": "OutputModel",
         "type": "object"
       },
-      "secrets_schema": {
-        "title": "SecretsModel",
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
+      "secrets_schema": {},
+      "container_resources": {
+        "requests": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "limits": {
+          "cpu": 100,
+          "memory": 128
+        },
+        "use_gpu": false
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.3-group0",
+      "tags": [
+        "somes",
+        "pv",
+        "uc3.4-adapter"
+      ],
+      "style": {
+        "module": "PvoutToVirtualSolarPiece",
+        "label": "PVOUT → Virtual Solar",
+        "nodeType": "default",
+        "nodeStyle": {
+          "backgroundColor": "#ebebeb"
+        },
+        "useIcon": true,
+        "iconClassName": "fa-solid:sun",
+        "iconStyle": {
+          "cursor": "pointer"
+        }
+      },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutToVirtualSolarPiece",
-      "dependency": {
-        "requirements_file": "requirements_0.txt"
-      },
-      "dependencies_group": "0",
-      "repository_url": "https://github.com/scditech/uc3_3_somes"
+      "repository_url": "https://github.com/scditech/uc3_3_somes",
+      "repository_id": 96
     }
   },
   "workflowPiecesData": {
@@ -5848,7 +6049,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario_umms_multiasset.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "run_id": {
           "fromUpstream": false,
@@ -5881,14 +6082,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario_umms_multiasset.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "virtual_solar_csv": {
           "fromUpstream": true,
-          "upstreamId": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+          "upstreamId": "PvoutToVir_c16cdd4d658e41eba6ba676ed60f6846",
           "upstreamArgument": "virtual_solar_csv",
           "upstreamValue": "PvoutToVirtualSolarPiece - Virtual Solar Csv",
-          "value": null
+          "value": ""
         },
         "battery_strategy_json": {
           "fromUpstream": true,
@@ -5995,10 +6196,10 @@
         },
         "pv_forecast_csv": {
           "fromUpstream": true,
-          "upstreamId": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+          "upstreamId": "PvoutToVir_c16cdd4d658e41eba6ba676ed60f6846",
           "upstreamArgument": "virtual_solar_csv",
           "upstreamValue": "PvoutToVirtualSolarPiece - Virtual Solar Csv",
-          "value": null
+          "value": ""
         },
         "pv_actual_csv": {
           "fromUpstream": true,
@@ -6080,7 +6281,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario_umms_multiasset.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "run_id": {
           "fromUpstream": false,
@@ -6113,14 +6314,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario_umms_multiasset.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "virtual_solar_csv": {
           "fromUpstream": true,
-          "upstreamId": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+          "upstreamId": "PvoutToVir_c16cdd4d658e41eba6ba676ed60f6846",
           "upstreamArgument": "virtual_solar_csv",
           "upstreamValue": "PvoutToVirtualSolarPiece - Virtual Solar Csv",
-          "value": null
+          "value": ""
         },
         "battery_strategy_json": {
           "fromUpstream": true,
@@ -6230,7 +6431,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario_umms_multiasset.yaml"
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         },
         "grid_constraints_json": {
           "fromUpstream": true,
@@ -6461,7 +6662,15 @@
         }
       }
     },
-    "SolarGIS_31893fea-590a-4592-b379-857968ac2c63": {
+    "200_198c7643-e8a9-4782-9755-5401ed175920": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
       "inputs": {
         "latitude": {
           "fromUpstream": false,
@@ -6519,14 +6728,17 @@
           "upstreamValue": "",
           "value": "csv"
         }
+      }
+    },
+    "201_feb3638d-ebff-4c13-94b0-649523fc41f5": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
       },
       "containerResources": {
         "cpu": 500,
         "memory": 2048,
         "useGpu": false
-      }
-    },
-    "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def": {
+      },
       "inputs": {
         "preprocessing_option": {
           "fromUpstream": false,
@@ -6544,7 +6756,7 @@
         },
         "data_path_solargis": {
           "fromUpstream": true,
-          "upstreamId": "SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
+          "upstreamId": "SolarGISDa_198c7643e8a9478297555401ed175920",
           "upstreamArgument": "file_path",
           "upstreamValue": "SolarGISDataGeneratorPiece - File Path",
           "value": null
@@ -6584,14 +6796,17 @@
           "upstreamValue": "",
           "value": "PVOUT"
         }
-      },
-      "containerResources": {
-        "cpu": 500,
-        "memory": 2048,
-        "useGpu": false
       }
     },
-    "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac": {
+    "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 200,
+        "memory": 512,
+        "useGpu": false
+      },
       "inputs": {
         "problem_type": {
           "fromUpstream": false,
@@ -6613,15 +6828,21 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": [
-            "xgb_regressor_model"
+            {
+              "fromUpstream": false,
+              "upstreamId": "",
+              "upstreamArgument": "",
+              "upstreamValue": "",
+              "value": "xgb_regressor_model"
+            }
           ]
         },
         "feature_columns": {
           "fromUpstream": true,
-          "upstreamId": "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
+          "upstreamId": "DataPrepro_feb3638debff4c1394b0649523fc41f5",
           "upstreamArgument": "feature_columns",
           "upstreamValue": "DataPreprocessingPiece - Feature Columns",
-          "value": null
+          "value": []
         },
         "target_column": {
           "fromUpstream": false,
@@ -6632,23 +6853,26 @@
         },
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
+          "upstreamId": "DataPrepro_feb3638debff4c1394b0649523fc41f5",
           "upstreamArgument": "data_path",
           "upstreamValue": "DataPreprocessingPiece - Data Path",
           "value": null
         }
-      },
-      "containerResources": {
-        "cpu": 200,
-        "memory": 512,
-        "useGpu": false
       }
     },
-    "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091": {
+    "203_971b4a08-36d8-4edb-8669-081ec12c49b8": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
       "inputs": {
         "normalization_type": {
           "fromUpstream": true,
-          "upstreamId": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+          "upstreamId": "ModelDecid_a9bd8cc5808f4a3386f55e905ba1683a",
           "upstreamArgument": "normalization_type",
           "upstreamValue": "ModelDeciderPiece - Normalization Type",
           "value": null
@@ -6658,11 +6882,11 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": ""
+          "value": []
         },
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+          "upstreamId": "ModelDecid_a9bd8cc5808f4a3386f55e905ba1683a",
           "upstreamArgument": "data_path",
           "upstreamValue": "ModelDeciderPiece - Data Path",
           "value": null
@@ -6676,10 +6900,10 @@
         },
         "feature_columns": {
           "fromUpstream": true,
-          "upstreamId": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+          "upstreamId": "ModelDecid_a9bd8cc5808f4a3386f55e905ba1683a",
           "upstreamArgument": "feature_columns",
           "upstreamValue": "ModelDeciderPiece - Feature Columns",
-          "value": null
+          "value": []
         },
         "target_column": {
           "fromUpstream": false,
@@ -6695,28 +6919,31 @@
           "upstreamValue": "",
           "value": null
         }
-      },
-      "containerResources": {
-        "cpu": 500,
-        "memory": 2048,
-        "useGpu": false
       }
     },
-    "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a": {
+    "204_00df596b-efe6-440c-bd64-5283c7f88f2b": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 100,
+        "memory": 256,
+        "useGpu": false
+      },
       "inputs": {
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
+          "upstreamId": "DataNormal_971b4a0836d84edb8669081ec12c49b8",
           "upstreamArgument": "data_path",
           "upstreamValue": "DataNormalizationPiece - Data Path",
           "value": null
         },
         "feature_columns": {
           "fromUpstream": true,
-          "upstreamId": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
+          "upstreamId": "DataNormal_971b4a0836d84edb8669081ec12c49b8",
           "upstreamArgument": "feature_columns",
           "upstreamValue": "DataNormalizationPiece - Feature Columns",
-          "value": null
+          "value": []
         },
         "target_column": {
           "fromUpstream": false,
@@ -6725,25 +6952,28 @@
           "upstreamValue": "",
           "value": "PVOUT"
         }
-      },
-      "containerResources": {
-        "cpu": 100,
-        "memory": 256,
-        "useGpu": false
       }
     },
-    "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23": {
+    "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 1000,
+        "memory": 4096,
+        "useGpu": false
+      },
       "inputs": {
         "model_type": {
           "fromUpstream": true,
-          "upstreamId": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+          "upstreamId": "ModelDecid_a9bd8cc5808f4a3386f55e905ba1683a",
           "upstreamArgument": "model_type",
           "upstreamValue": "ModelDeciderPiece - Model Type",
           "value": null
         },
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "data_path",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Data Path",
           "value": null
@@ -6757,10 +6987,10 @@
         },
         "feature_columns": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "feature_columns",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Feature Columns",
-          "value": null
+          "value": []
         },
         "target_column": {
           "fromUpstream": false,
@@ -6776,14 +7006,17 @@
           "upstreamValue": "",
           "value": null
         }
+      }
+    },
+    "206_51509837-c9bc-43f5-8885-2391ae4fdce3": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
       },
       "containerResources": {
         "cpu": 1000,
         "memory": 4096,
         "useGpu": false
-      }
-    },
-    "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f": {
+      },
       "inputs": {
         "model_type": {
           "fromUpstream": false,
@@ -6794,7 +7027,7 @@
         },
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "data_path",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Data Path",
           "value": null
@@ -6808,17 +7041,17 @@
         },
         "baseline_model_path": {
           "fromUpstream": true,
-          "upstreamId": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+          "upstreamId": "PVOUTPredi_c137a070a5d94ceea7ef315a7f7e0b1a",
           "upstreamArgument": "model_path",
           "upstreamValue": "PVOUTPredictionModelTrainPiece - Model Path",
           "value": null
         },
         "feature_columns": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "feature_columns",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Feature Columns",
-          "value": null
+          "value": []
         },
         "target_column": {
           "fromUpstream": false,
@@ -6834,46 +7067,49 @@
           "upstreamValue": "",
           "value": null
         }
-      },
-      "containerResources": {
-        "cpu": 1000,
-        "memory": 4096,
-        "useGpu": false
       }
     },
-    "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef": {
+    "207_de033d3f-acd2-415c-b506-b2dad198f458": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 100,
+        "memory": 256,
+        "useGpu": false
+      },
       "inputs": {
         "baseline_model_path": {
           "fromUpstream": true,
-          "upstreamId": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+          "upstreamId": "PVOUTPredi_c137a070a5d94ceea7ef315a7f7e0b1a",
           "upstreamArgument": "model_path",
           "upstreamValue": "PVOUTPredictionModelTrainPiece - Model Path",
           "value": null
         },
         "correction_model_path": {
           "fromUpstream": true,
-          "upstreamId": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
+          "upstreamId": "PVOUTError_51509837c9bc43f588852391ae4fdce3",
           "upstreamArgument": "model_path",
           "upstreamValue": "PVOUTErrorCorrectionModelTrainPiece - Model Path",
           "value": null
         },
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "data_path",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Data Path",
           "value": null
         },
         "feature_columns": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "feature_columns",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Feature Columns",
-          "value": null
+          "value": []
         },
         "datetime_column": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "datetime_column",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Datetime Column",
           "value": null
@@ -6892,32 +7128,35 @@
           "upstreamValue": "",
           "value": "PVOUT_PRED"
         }
-      },
-      "containerResources": {
-        "cpu": 100,
-        "memory": 256,
-        "useGpu": false
       }
     },
-    "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1": {
+    "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 500,
+        "memory": 2048,
+        "useGpu": false
+      },
       "inputs": {
         "pvout_model": {
           "fromUpstream": true,
-          "upstreamId": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+          "upstreamId": "PvoutStage_de033d3facd2415cb506b2dad198f458",
           "upstreamArgument": "pvout_model",
           "upstreamValue": "PvoutStagedInferenceSpecPiece - Pvout Model",
-          "value": null
+          "value": []
         },
         "price_model": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": null
+          "value": []
         },
         "datetime_column": {
           "fromUpstream": true,
-          "upstreamId": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+          "upstreamId": "PvoutStage_de033d3facd2415cb506b2dad198f458",
           "upstreamArgument": "datetime_column",
           "upstreamValue": "PvoutStagedInferenceSpecPiece - Datetime Column",
           "value": null
@@ -6936,21 +7175,24 @@
           "upstreamValue": "",
           "value": null
         }
+      }
+    },
+    "209_8180582c-ed2a-49ec-90cf-e034416259dd": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
       },
       "containerResources": {
         "cpu": 500,
         "memory": 2048,
         "useGpu": false
-      }
-    },
-    "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1": {
+      },
       "inputs": {
         "forecasts": {
           "fromUpstream": true,
-          "upstreamId": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+          "upstreamId": "InferenceP_4abd69dcfe47404f8f1c0d48a8ab6817",
           "upstreamArgument": "forecasts",
           "upstreamValue": "InferencePiece - Forecasts",
-          "value": null
+          "value": []
         },
         "evaluation_option": {
           "fromUpstream": false,
@@ -6973,21 +7215,24 @@
           "upstreamValue": "",
           "value": false
         }
-      },
-      "containerResources": {
-        "cpu": 500,
-        "memory": 2048,
-        "useGpu": false
       }
     },
-    "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059": {
+    "210_f543a398-f49f-457f-9265-3752235c7456": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 1000,
+        "memory": 4096,
+        "useGpu": false
+      },
       "inputs": {
         "forecasts": {
           "fromUpstream": true,
-          "upstreamId": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+          "upstreamId": "InferenceP_4abd69dcfe47404f8f1c0d48a8ab6817",
           "upstreamArgument": "forecasts",
           "upstreamValue": "InferencePiece - Forecasts",
-          "value": null
+          "value": []
         },
         "explain": {
           "fromUpstream": false,
@@ -7010,32 +7255,35 @@
           "upstreamValue": "",
           "value": false
         }
-      },
-      "containerResources": {
-        "cpu": 1000,
-        "memory": 4096,
-        "useGpu": false
       }
     },
-    "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a": {
+    "211_25acd5cc-0faa-4950-94f6-0e0ce3b49ced": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
+      },
+      "containerResources": {
+        "cpu": 300,
+        "memory": 1024,
+        "useGpu": false
+      },
       "inputs": {
         "forecasts": {
           "fromUpstream": true,
-          "upstreamId": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+          "upstreamId": "InferenceP_4abd69dcfe47404f8f1c0d48a8ab6817",
           "upstreamArgument": "forecasts",
           "upstreamValue": "InferencePiece - Forecasts",
-          "value": null
+          "value": []
         },
         "actual_csv_path": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "data_path",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Data Path",
           "value": null
         },
         "datetime_column": {
           "fromUpstream": true,
-          "upstreamId": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
           "upstreamArgument": "datetime_column",
           "upstreamValue": "PvoutModelFeatureSelectPiece - Datetime Column",
           "value": null
@@ -7068,27 +7316,25 @@
           "upstreamValue": "",
           "value": "aggregated_forecast.csv"
         }
-      },
-      "containerResources": {
-        "cpu": 300,
-        "memory": 1024,
-        "useGpu": false
       }
     },
-    "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4": {
-      "inputs": {
-        "forecast_csv_path": {
-          "fromUpstream": true,
-          "upstreamId": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-          "upstreamArgument": "forecast_csv_path",
-          "upstreamValue": "InferencePiece - Forecast Csv Path",
-          "value": null
-        }
+    "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846": {
+      "storage": {
+        "storageAccessMode": "Read/Write"
       },
       "containerResources": {
         "cpu": 200,
         "memory": 512,
         "useGpu": false
+      },
+      "inputs": {
+        "forecast_csv_path": {
+          "fromUpstream": true,
+          "upstreamId": "InferenceP_4abd69dcfe47404f8f1c0d48a8ab6817",
+          "upstreamArgument": "forecast_csv_path",
+          "upstreamValue": "InferencePiece - Forecast Csv Path",
+          "value": null
+        }
       }
     }
   },
@@ -7097,8 +7343,8 @@
       "id": "100_88d95778-1fb1-4516-addc-298a3a052669",
       "type": "CustomNode",
       "position": {
-        "x": 40.0,
-        "y": 40.0
+        "x": 60,
+        "y": 60
       },
       "data": {
         "name": "FetchEnergyDataPiece",
@@ -7107,10 +7353,10 @@
           "label": "FetchEnergyDataPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:bolt",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7118,21 +7364,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 40.0,
-        "y": 40.0
+        "x": 60,
+        "y": 60
       }
     },
     {
       "id": "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb",
       "type": "CustomNode",
       "position": {
-        "x": 290.0,
-        "y": 40.0
+        "x": 290,
+        "y": 60
       },
       "data": {
         "name": "PreprocessEnergyDataPiece",
@@ -7141,10 +7387,10 @@
           "label": "PreprocessEnergyDataPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:filter",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7152,21 +7398,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290.0,
-        "y": 40.0
+        "x": 290,
+        "y": 60
       }
     },
     {
       "id": "102_024b94c5-a535-4d65-a9a5-22c227eb23d8",
       "type": "CustomNode",
       "position": {
-        "x": 540.0,
-        "y": 40.0
+        "x": 520,
+        "y": 60
       },
       "data": {
         "name": "TrainModelPiece",
@@ -7175,10 +7421,10 @@
           "label": "TrainModelPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:brain",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7186,21 +7432,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 540.0,
-        "y": 40.0
+        "x": 520,
+        "y": 60
       }
     },
     {
       "id": "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c",
       "type": "CustomNode",
       "position": {
-        "x": 790.0,
-        "y": 40.0
+        "x": 750,
+        "y": 60
       },
       "data": {
         "name": "PredictPiece",
@@ -7209,10 +7455,10 @@
           "label": "PredictPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:chart-line",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7220,21 +7466,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 790.0,
-        "y": 40.0
+        "x": 750,
+        "y": 60
       }
     },
     {
       "id": "104_f493a15c-2457-4e1c-9159-fa27c5237217",
       "type": "CustomNode",
       "position": {
-        "x": 40.0,
-        "y": 340.0
+        "x": 60,
+        "y": 320
       },
       "data": {
         "name": "IncrementalTrainPiece",
@@ -7243,10 +7489,10 @@
           "label": "IncrementalTrainPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:brain",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7254,21 +7500,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 40.0,
-        "y": 340.0
+        "x": 60,
+        "y": 320
       }
     },
     {
       "id": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
       "type": "CustomNode",
       "position": {
-        "x": 290.0,
-        "y": 340.0
+        "x": 290,
+        "y": 320
       },
       "data": {
         "name": "ForecastHorizonPiece",
@@ -7277,10 +7523,10 @@
           "label": "ForecastHorizonPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:clock",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7288,21 +7534,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290.0,
-        "y": 340.0
+        "x": 290,
+        "y": 320
       }
     },
     {
       "id": "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67",
       "type": "CustomNode",
       "position": {
-        "x": 40.0,
-        "y": 190.0
+        "x": 60,
+        "y": 190
       },
       "data": {
         "name": "SomesConnectorsPiece",
@@ -7311,10 +7557,10 @@
           "label": "SomesConnectorsPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:plug",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7322,21 +7568,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 40.0,
-        "y": 190.0
+        "x": 60,
+        "y": 190
       }
     },
     {
       "id": "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb",
       "type": "CustomNode",
       "position": {
-        "x": 290.0,
-        "y": 190.0
+        "x": 290,
+        "y": 190
       },
       "data": {
         "name": "PriceForecastPiece",
@@ -7345,10 +7591,10 @@
           "label": "PriceForecastPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:chart-line",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7356,21 +7602,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290.0,
-        "y": 190.0
+        "x": 290,
+        "y": 190
       }
     },
     {
       "id": "108_1788a415-3315-4f28-b343-93cca3f8249f",
       "type": "CustomNode",
       "position": {
-        "x": 540.0,
-        "y": 340.0
+        "x": 520,
+        "y": 320
       },
       "data": {
         "name": "BatteryStrategyOptimizerPiece",
@@ -7379,10 +7625,10 @@
           "label": "Battery Strategy",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:sliders",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7390,21 +7636,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 540.0,
-        "y": 340.0
+        "x": 520,
+        "y": 320
       }
     },
     {
       "id": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
       "type": "CustomNode",
       "position": {
-        "x": 1290.0,
-        "y": 40.0
+        "x": 750,
+        "y": 190
       },
       "data": {
         "name": "BatterySimPiece",
@@ -7413,10 +7659,10 @@
           "label": "Battery Simulation",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:battery-half",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7424,21 +7670,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1290.0,
-        "y": 40.0
+        "x": 750,
+        "y": 190
       }
     },
     {
       "id": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
       "type": "CustomNode",
       "position": {
-        "x": 1040.0,
-        "y": 40.0
+        "x": 980,
+        "y": 60
       },
       "data": {
         "name": "ModelMonitoringPiece",
@@ -7447,10 +7693,10 @@
           "label": "ModelMonitoringPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid fa-circle",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7458,21 +7704,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1040.0,
-        "y": 40.0
+        "x": 980,
+        "y": 60
       }
     },
     {
       "id": "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33",
       "type": "CustomNode",
       "position": {
-        "x": 790.0,
-        "y": 190.0
+        "x": 980,
+        "y": 190
       },
       "data": {
         "name": "FlexibleLoadSchedulePiece",
@@ -7481,10 +7727,10 @@
           "label": "FlexibleLoadSchedulePiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:sliders",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7492,21 +7738,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 790.0,
-        "y": 190.0
+        "x": 980,
+        "y": 190
       }
     },
     {
       "id": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
       "type": "CustomNode",
       "position": {
-        "x": 540.0,
-        "y": 190.0
+        "x": 1210,
+        "y": 60
       },
       "data": {
         "name": "BatterySimPiece",
@@ -7515,10 +7761,10 @@
           "label": "Battery Simulation",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:battery-half",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7526,21 +7772,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 540.0,
-        "y": 190.0
+        "x": 1210,
+        "y": 60
       }
     },
     {
       "id": "115_acc05ac3-51bf-455d-a8e0-009a70c149ad",
       "type": "CustomNode",
       "position": {
-        "x": 1540.0,
-        "y": 40.0
+        "x": 1440,
+        "y": 60
       },
       "data": {
         "name": "GridFeasibilityPiece",
@@ -7549,10 +7795,10 @@
           "label": "GridFeasibilityPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:shield-halved",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7560,21 +7806,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1540.0,
-        "y": 40.0
+        "x": 1440,
+        "y": 60
       }
     },
     {
       "id": "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d",
       "type": "CustomNode",
       "position": {
-        "x": 1790.0,
-        "y": 40.0
+        "x": 1670,
+        "y": 60
       },
       "data": {
         "name": "EmsBemsOutputPiece",
@@ -7583,10 +7829,10 @@
           "label": "EmsBemsOutputPiece",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:network-wired",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7594,21 +7840,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1790.0,
-        "y": 40.0
+        "x": 1670,
+        "y": 60
       }
     },
     {
       "id": "117_150eac84-e09a-46aa-8ed7-412913e37105",
       "type": "CustomNode",
       "position": {
-        "x": 1540.0,
-        "y": 190.0
+        "x": 1670,
+        "y": 190
       },
       "data": {
         "name": "DashboardPiece",
@@ -7617,10 +7863,10 @@
           "label": "Dashboard Data",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:chart-line",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7628,33 +7874,33 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1540.0,
-        "y": 190.0
+        "x": 1670,
+        "y": 190
       }
     },
     {
-      "id": "SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
+      "id": "200_198c7643-e8a9-4782-9755-5401ed175920",
       "type": "CustomNode",
       "position": {
-        "x": 40.0,
-        "y": 640.0
+        "x": 60,
+        "y": 420
       },
       "data": {
         "name": "SolarGISDataGeneratorPiece",
         "style": {
           "module": "SolarGISDataGeneratorPiece",
-          "label": "SolarGIS Data Generator",
+          "label": "Open-Meteo PV Data",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:bolt",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7662,21 +7908,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 40.0,
-        "y": 640.0
+        "x": 60,
+        "y": 420
       }
     },
     {
-      "id": "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
+      "id": "201_feb3638d-ebff-4c13-94b0-649523fc41f5",
       "type": "CustomNode",
       "position": {
-        "x": 290.0,
-        "y": 640.0
+        "x": 240,
+        "y": 420
       },
       "data": {
         "name": "DataPreprocessingPiece",
@@ -7685,10 +7931,10 @@
           "label": "Data Preprocessing",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:filter",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7696,21 +7942,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 290.0,
-        "y": 640.0
+        "x": 240,
+        "y": 420
       }
     },
     {
-      "id": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+      "id": "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
       "type": "CustomNode",
       "position": {
-        "x": 540.0,
-        "y": 640.0
+        "x": 420,
+        "y": 420
       },
       "data": {
         "name": "ModelDeciderPiece",
@@ -7719,10 +7965,10 @@
           "label": "Model Decider",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:code-branch",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7730,21 +7976,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 540.0,
-        "y": 640.0
+        "x": 420,
+        "y": 420
       }
     },
     {
-      "id": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
+      "id": "203_971b4a08-36d8-4edb-8669-081ec12c49b8",
       "type": "CustomNode",
       "position": {
-        "x": 790.0,
-        "y": 640.0
+        "x": 600,
+        "y": 420
       },
       "data": {
         "name": "DataNormalizationPiece",
@@ -7753,10 +7999,10 @@
           "label": "Data Normalization",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:scale-balanced",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7764,21 +8010,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 790.0,
-        "y": 640.0
+        "x": 600,
+        "y": 420
       }
     },
     {
-      "id": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+      "id": "204_00df596b-efe6-440c-bd64-5283c7f88f2b",
       "type": "CustomNode",
       "position": {
-        "x": 1040.0,
-        "y": 640.0
+        "x": 780,
+        "y": 420
       },
       "data": {
         "name": "PvoutModelFeatureSelectPiece",
@@ -7787,10 +8033,10 @@
           "label": "PVOUT Feature Select",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:filter",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7798,21 +8044,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1040.0,
-        "y": 640.0
+        "x": 780,
+        "y": 420
       }
     },
     {
-      "id": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+      "id": "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
       "type": "CustomNode",
       "position": {
-        "x": 1290.0,
-        "y": 640.0
+        "x": 960,
+        "y": 420
       },
       "data": {
         "name": "PVOUTPredictionModelTrainPiece",
@@ -7821,10 +8067,10 @@
           "label": "Train PVOUT Prediction Model",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:brain",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7832,21 +8078,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1290.0,
-        "y": 640.0
+        "x": 960,
+        "y": 420
       }
     },
     {
-      "id": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
+      "id": "206_51509837-c9bc-43f5-8885-2391ae4fdce3",
       "type": "CustomNode",
       "position": {
-        "x": 1540.0,
-        "y": 640.0
+        "x": 1140,
+        "y": 420
       },
       "data": {
         "name": "PVOUTErrorCorrectionModelTrainPiece",
@@ -7855,10 +8101,10 @@
           "label": "Train PVOUT Error Correction Model",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:sliders",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7866,21 +8112,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1540.0,
-        "y": 640.0
+        "x": 1140,
+        "y": 420
       }
     },
     {
-      "id": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+      "id": "207_de033d3f-acd2-415c-b506-b2dad198f458",
       "type": "CustomNode",
       "position": {
-        "x": 1790.0,
-        "y": 640.0
+        "x": 1320,
+        "y": 420
       },
       "data": {
         "name": "PvoutStagedInferenceSpecPiece",
@@ -7889,10 +8135,10 @@
           "label": "PVOUT Staged Spec",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:diagram-project",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7900,21 +8146,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 1790.0,
-        "y": 640.0
+        "x": 1320,
+        "y": 420
       }
     },
     {
-      "id": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+      "id": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
       "type": "CustomNode",
       "position": {
-        "x": 2040.0,
-        "y": 640.0
+        "x": 1500,
+        "y": 420
       },
       "data": {
         "name": "InferencePiece",
@@ -7923,10 +8169,10 @@
           "label": "Inference",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:bolt",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7934,21 +8180,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2040.0,
-        "y": 640.0
+        "x": 1500,
+        "y": 420
       }
     },
     {
-      "id": "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1",
+      "id": "209_8180582c-ed2a-49ec-90cf-e034416259dd",
       "type": "CustomNode",
       "position": {
-        "x": 2290.0,
-        "y": 490.0
+        "x": 1680,
+        "y": 280
       },
       "data": {
         "name": "EvaluateMLModelPiece",
@@ -7957,10 +8203,10 @@
           "label": "Evaluate ML Model",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:clipboard-check",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -7968,21 +8214,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2290.0,
-        "y": 490.0
+        "x": 1680,
+        "y": 280
       }
     },
     {
-      "id": "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059",
+      "id": "210_f543a398-f49f-457f-9265-3752235c7456",
       "type": "CustomNode",
       "position": {
-        "x": 2290.0,
-        "y": 640.0
+        "x": 1680,
+        "y": 420
       },
       "data": {
         "name": "ExplainablePredictionPiece",
@@ -7991,10 +8237,10 @@
           "label": "Explainable Prediction",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:magnifying-glass-chart",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -8002,21 +8248,21 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2290.0,
-        "y": 640.0
+        "x": 1680,
+        "y": 420
       }
     },
     {
-      "id": "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
+      "id": "211_25acd5cc-0faa-4950-94f6-0e0ce3b49ced",
       "type": "CustomNode",
       "position": {
-        "x": 2290.0,
-        "y": 790.0
+        "x": 1680,
+        "y": 560
       },
       "data": {
         "name": "ForecastAggregatorPiece",
@@ -8025,10 +8271,10 @@
           "label": "Forecast Aggregator",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:table-columns",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -8036,33 +8282,33 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2290.0,
-        "y": 790.0
+        "x": 1680,
+        "y": 560
       }
     },
     {
-      "id": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "id": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
       "type": "CustomNode",
       "position": {
-        "x": 2540.0,
-        "y": 640.0
+        "x": 1860,
+        "y": 420
       },
       "data": {
         "name": "PvoutToVirtualSolarPiece",
         "style": {
           "module": "PvoutToVirtualSolarPiece",
-          "label": "PVOUT to Virtual Solar",
+          "label": "PVOUT → Virtual Solar",
           "nodeType": "default",
           "nodeStyle": {
-            "backgroundColor": "#b3cde8"
+            "backgroundColor": "#ebebeb"
           },
           "useIcon": true,
-          "iconClassName": "fa-solid:circle",
+          "iconClassName": "fa-solid:sun",
           "iconStyle": {
             "cursor": "pointer"
           }
@@ -8070,13 +8316,13 @@
         "validationError": false,
         "orientation": "horizontal"
       },
-      "width": 220,
-      "height": 90,
+      "width": 150,
+      "height": 70,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
-        "x": 2540.0,
-        "y": 640.0
+        "x": 1860,
+        "y": 420
       }
     }
   ],
@@ -8430,244 +8676,232 @@
       }
     },
     {
-      "id": "e-SolarGIS_31893fea-590a-4592-b379-857968ac2c63-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
-      "source": "SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
-      "target": "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
+      "source": "200_198c7643-e8a9-4782-9755-5401ed175920",
+      "sourceHandle": "source-200_198c7643-e8a9-4782-9755-5401ed175920",
+      "target": "201_feb3638d-ebff-4c13-94b0-649523fc41f5",
+      "targetHandle": "target-201_feb3638d-ebff-4c13-94b0-649523fc41f5",
+      "id": "reactflow__edge-200_198c7643-e8a9-4782-9755-5401ed175920source-200_198c7643-e8a9-4782-9755-5401ed175920-201_feb3638d-ebff-4c13-94b0-649523fc41f5target-201_feb3638d-ebff-4c13-94b0-649523fc41f5",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-SolarGIS_31893fea-590a-4592-b379-857968ac2c63",
-      "targetHandle": "target-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def"
+      }
     },
     {
-      "id": "e-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
-      "source": "DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
-      "target": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
+      "source": "201_feb3638d-ebff-4c13-94b0-649523fc41f5",
+      "sourceHandle": "source-201_feb3638d-ebff-4c13-94b0-649523fc41f5",
+      "target": "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
+      "targetHandle": "target-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
+      "id": "reactflow__edge-201_feb3638d-ebff-4c13-94b0-649523fc41f5source-201_feb3638d-ebff-4c13-94b0-649523fc41f5-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683atarget-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-DataPre_4cc5abad-45ce-419e-9803-747c60bb0def",
-      "targetHandle": "target-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac"
+      }
     },
     {
-      "id": "e-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
-      "source": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
-      "target": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
+      "source": "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
+      "sourceHandle": "source-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
+      "target": "203_971b4a08-36d8-4edb-8669-081ec12c49b8",
+      "targetHandle": "target-203_971b4a08-36d8-4edb-8669-081ec12c49b8",
+      "id": "reactflow__edge-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683asource-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a-203_971b4a08-36d8-4edb-8669-081ec12c49b8target-203_971b4a08-36d8-4edb-8669-081ec12c49b8",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
-      "targetHandle": "target-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091"
+      }
     },
     {
-      "id": "e-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "source": "DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
-      "target": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
+      "source": "203_971b4a08-36d8-4edb-8669-081ec12c49b8",
+      "sourceHandle": "source-203_971b4a08-36d8-4edb-8669-081ec12c49b8",
+      "target": "204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "targetHandle": "target-204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "id": "reactflow__edge-203_971b4a08-36d8-4edb-8669-081ec12c49b8source-203_971b4a08-36d8-4edb-8669-081ec12c49b8-204_00df596b-efe6-440c-bd64-5283c7f88f2btarget-204_00df596b-efe6-440c-bd64-5283c7f88f2b",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-DataNorm_5e6c04e6-aa9d-4bfb-8abf-824c7be70091",
-      "targetHandle": "target-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a"
+      }
     },
     {
-      "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "source": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "target": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+      "source": "204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "sourceHandle": "source-204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "target": "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "targetHandle": "target-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "id": "reactflow__edge-204_00df596b-efe6-440c-bd64-5283c7f88f2bsource-204_00df596b-efe6-440c-bd64-5283c7f88f2b-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1atarget-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "targetHandle": "target-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23"
+      }
     },
     {
-      "id": "e-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "source": "ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
-      "target": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
+      "source": "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "sourceHandle": "source-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "target": "206_51509837-c9bc-43f5-8885-2391ae4fdce3",
+      "targetHandle": "target-206_51509837-c9bc-43f5-8885-2391ae4fdce3",
+      "id": "reactflow__edge-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1asource-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a-206_51509837-c9bc-43f5-8885-2391ae4fdce3target-206_51509837-c9bc-43f5-8885-2391ae4fdce3",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-ModelDec_ace3c5c3-1080-4ee1-86bd-27de025aafac",
-      "targetHandle": "target-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23"
+      }
     },
     {
-      "id": "e-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
-      "source": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "target": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
+      "source": "206_51509837-c9bc-43f5-8885-2391ae4fdce3",
+      "sourceHandle": "source-206_51509837-c9bc-43f5-8885-2391ae4fdce3",
+      "target": "207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "targetHandle": "target-207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "id": "reactflow__edge-206_51509837-c9bc-43f5-8885-2391ae4fdce3source-206_51509837-c9bc-43f5-8885-2391ae4fdce3-207_de033d3f-acd2-415c-b506-b2dad198f458target-207_de033d3f-acd2-415c-b506-b2dad198f458",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "targetHandle": "target-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f"
+      }
     },
     {
-      "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
-      "source": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "target": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
+      "source": "207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "sourceHandle": "source-207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "target": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "targetHandle": "target-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "id": "reactflow__edge-207_de033d3f-acd2-415c-b506-b2dad198f458source-207_de033d3f-acd2-415c-b506-b2dad198f458-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817target-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "targetHandle": "target-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f"
+      }
     },
     {
-      "id": "e-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
-      "source": "PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "target": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+      "source": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "sourceHandle": "source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "target": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+      "targetHandle": "target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+      "id": "reactflow__edge-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PVOUTTr_efd0beb7-1c55-4a7f-bf49-bc6c56924d23",
-      "targetHandle": "target-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef"
+      }
     },
     {
-      "id": "e-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
-      "source": "PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
-      "target": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+      "source": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "sourceHandle": "source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "target": "209_8180582c-ed2a-49ec-90cf-e034416259dd",
+      "targetHandle": "target-209_8180582c-ed2a-49ec-90cf-e034416259dd",
+      "id": "reactflow__edge-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817-209_8180582c-ed2a-49ec-90cf-e034416259ddtarget-209_8180582c-ed2a-49ec-90cf-e034416259dd",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PVOUTEr_64249064-c4df-48aa-8505-cb9fe007995f",
-      "targetHandle": "target-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef"
+      }
     },
     {
-      "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
-      "source": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "target": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
+      "source": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "sourceHandle": "source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "target": "210_f543a398-f49f-457f-9265-3752235c7456",
+      "targetHandle": "target-210_f543a398-f49f-457f-9265-3752235c7456",
+      "id": "reactflow__edge-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817-210_f543a398-f49f-457f-9265-3752235c7456target-210_f543a398-f49f-457f-9265-3752235c7456",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "targetHandle": "target-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef"
+      }
     },
     {
-      "id": "e-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "source": "PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
-      "target": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
+      "source": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "sourceHandle": "source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "target": "211_25acd5cc-0faa-4950-94f6-0e0ce3b49ced",
+      "targetHandle": "target-211_25acd5cc-0faa-4950-94f6-0e0ce3b49ced",
+      "id": "reactflow__edge-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817-211_25acd5cc-0faa-4950-94f6-0e0ce3b49cedtarget-211_25acd5cc-0faa-4950-94f6-0e0ce3b49ced",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutSt_414dd8e6-ed7b-4829-b573-ba5145c0d7ef",
-      "targetHandle": "target-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1"
+      }
     },
     {
-      "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1",
-      "source": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "target": "Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1",
+      "source": "204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "sourceHandle": "source-204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "target": "206_51509837-c9bc-43f5-8885-2391ae4fdce3",
+      "targetHandle": "target-206_51509837-c9bc-43f5-8885-2391ae4fdce3",
+      "id": "reactflow__edge-204_00df596b-efe6-440c-bd64-5283c7f88f2bsource-204_00df596b-efe6-440c-bd64-5283c7f88f2b-206_51509837-c9bc-43f5-8885-2391ae4fdce3target-206_51509837-c9bc-43f5-8885-2391ae4fdce3",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "targetHandle": "target-Evaluate_0234f487-4cb5-4773-9eb6-fcd69df17cb1"
+      }
     },
     {
-      "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059",
-      "source": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "target": "Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059",
+      "source": "204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "sourceHandle": "source-204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+      "target": "207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "targetHandle": "target-207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "id": "reactflow__edge-204_00df596b-efe6-440c-bd64-5283c7f88f2bsource-204_00df596b-efe6-440c-bd64-5283c7f88f2b-207_de033d3f-acd2-415c-b506-b2dad198f458target-207_de033d3f-acd2-415c-b506-b2dad198f458",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "targetHandle": "target-Explain_ddc91ee7-20f4-4d73-a633-b30a77a52059"
+      }
     },
     {
-      "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
-      "source": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "target": "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
+      "source": "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "sourceHandle": "source-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "target": "207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "targetHandle": "target-207_de033d3f-acd2-415c-b506-b2dad198f458",
+      "id": "reactflow__edge-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1asource-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a-207_de033d3f-acd2-415c-b506-b2dad198f458target-207_de033d3f-acd2-415c-b506-b2dad198f458",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "targetHandle": "target-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a"
+      }
     },
     {
-      "id": "e-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
-      "source": "PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "target": "Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a",
+      "source": "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
+      "sourceHandle": "source-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a",
+      "target": "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "targetHandle": "target-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
+      "id": "reactflow__edge-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683asource-202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1atarget-205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutFe_94027e7b-191a-4e88-b0fc-7fa8cc9e734a",
-      "targetHandle": "target-Forecast_0b30f966-2d47-4059-baf5-15b546dbcd3a"
+      }
     },
     {
-      "id": "e-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
-      "source": "Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "target": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
-      "markerEnd": {
-        "type": "arrowclosed",
-        "width": 20,
-        "height": 20
-      },
-      "sourceHandle": "source-Inferenc_5bfef614-0806-4840-9628-b1a089df40a1",
-      "targetHandle": "target-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4"
-    },
-    {
-      "id": "e-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
-      "source": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "source": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+      "sourceHandle": "source-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
       "target": "110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "targetHandle": "target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
+      "id": "reactflow__edge-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846source-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846-110_e1e3398a-8c76-4a43-a567-1f86061f2c64target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
-      "targetHandle": "target-110_e1e3398a-8c76-4a43-a567-1f86061f2c64"
+      }
     },
     {
-      "id": "e-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
-      "source": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "source": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+      "sourceHandle": "source-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
       "target": "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
+      "id": "reactflow__edge-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846source-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89dtarget-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
-      "targetHandle": "target-114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d"
+      }
     },
     {
-      "id": "e-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
-      "source": "PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
+      "source": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+      "sourceHandle": "source-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
       "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "reactflow__edge-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846source-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846-111_ab44d9b0-f21e-41b5-9929-922db54b90e4target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,
         "height": 20
-      },
-      "sourceHandle": "source-PvoutAd_b6e82f33-4d5e-40be-a813-b5f8100868e4",
-      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4"
+      }
     }
   ]
 }

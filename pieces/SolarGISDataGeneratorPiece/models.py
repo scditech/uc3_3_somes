@@ -8,7 +8,10 @@ OUTPUT_FORMAT_ALIASES: dict[str, str] = {
 
 TARGET_COLUMN = "PVOUT"
 
-SOLARGIS_CSV_FIELDNAMES = [
+# Open-Meteo CSV columns. `datetime` is the canonical timestamp for Domino
+# preprocessing; Date/Time remain for SolarGIS-shaped downstream tools.
+OPEN_METEO_CSV_FIELDNAMES = [
+    "datetime",
     "Date",
     "Time",
     "GHI",
@@ -27,6 +30,8 @@ SOLARGIS_CSV_FIELDNAMES = [
     "PVOUT_UNC_LOW",
     "PVOUT_UNC_HIGH",
 ]
+# Back-compat alias used by older imports/tests.
+SOLARGIS_CSV_FIELDNAMES = OPEN_METEO_CSV_FIELDNAMES
 
 # Open-Meteo archive endpoint — no API key required
 OPEN_METEO_ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"

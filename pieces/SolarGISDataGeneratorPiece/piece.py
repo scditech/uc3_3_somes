@@ -123,6 +123,7 @@ def _build_records(
         se, sa = _solar_position(dt, lat, lon)
 
         records.append({
+            "datetime": dt.strftime("%Y-%m-%d %H:%M:%S"),
             "Date": dt.strftime("%d.%m.%Y"),
             "Time": dt.strftime("%H:%M"),
             "GHI": round(ghi, 2),
@@ -194,7 +195,7 @@ class SolarGISDataGeneratorPiece(BasePiece):
                 return OutputModel(file_path=None)
 
             file_suffix = "stream" if output_mode == "realtime_stream" else "batch"
-            file_name = f"solargis_{file_suffix}.{output_format}"
+            file_name = f"open_meteo_{file_suffix}.{output_format}"
             file_path = str(Path(self.results_path) / file_name)
 
             if output_format == "json":
@@ -211,8 +212,8 @@ class SolarGISDataGeneratorPiece(BasePiece):
                     writer.writeheader()
                     writer.writerows(records)
 
-            self.logger.info("Dataset saved to %s", file_path)
-            self.display_result = {"file_type": "txt", "file_path": file_path}
+            self.logger.info("Open-Meteo dataset saved to %s", file_path)
+            self.display_result = {"file_type": "csv", "file_path": file_path}
 
             return OutputModel(
                 file_path=file_path,

@@ -11,25 +11,22 @@ class InputModel(BaseModel):
     data_path: str | None = Field(
         default=None,
         description=(
-            "Single-source input path (back-compat alias for `data_path_solargis`). "
-            "Use the more specific `data_path_solargis` / `data_path_okte` fields below "
-            "to merge Solargis + OKTE datasets into one preprocessed CSV."
+            "Path to Open-Meteo weather/PV CSV (columns include `datetime` or `Date`+`Time`). "
+            "Wire upstream from Open-Meteo PV Data `File Path`."
         ),
     )
     data_path_solargis: str | None = Field(
         default=None,
         description=(
-            "Path to Solargis-style CSV (weather / PVOUT). "
-            "Wire upstream from `SyntheticDataGeneratorPiece.File Path`."
+            "Deprecated alias for `data_path`. Prefer wiring `data_path` from Open-Meteo."
         ),
     )
     data_path_okte: str | None = Field(
         default=None,
         description=(
-            "Path to OKTE-style CSV (electricity market). "
-            "Wire upstream from `OKTEDataGeneratorPiece.File Path`. "
-            "When both Solargis and OKTE paths are provided, the piece inner-joins "
-            "them on `datetime` and emits one merged dataset with all features."
+            "Optional path to OKTE-style CSV (electricity market). "
+            "When both weather and OKTE paths are provided, the piece inner-joins "
+            "them on `datetime`."
         ),
     )
     save_data_path: str | None = Field(
@@ -41,8 +38,7 @@ class InputModel(BaseModel):
     )
     target_column: str | None = Field(
         default=None,
-        description="Target column for prediction mode. Defaults to `PVOUT` (SolarGIS). "
-        "Set to e.g. `spot_price_eur_mwh` for OKTE data.",
+        description="Target column for prediction mode. Defaults to `PVOUT`.",
     )
 
     @model_validator(mode="before")
