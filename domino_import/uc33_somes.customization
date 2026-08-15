@@ -7275,18 +7275,18 @@
           "value": []
         },
         "actual_csv_path": {
-          "fromUpstream": true,
-          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
-          "upstreamArgument": "data_path",
-          "upstreamValue": "PvoutModelFeatureSelectPiece - Data Path",
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
           "value": null
         },
         "datetime_column": {
-          "fromUpstream": true,
-          "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
-          "upstreamArgument": "datetime_column",
-          "upstreamValue": "PvoutModelFeatureSelectPiece - Datetime Column",
-          "value": null
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "datetime"
         },
         "horizon_column": {
           "fromUpstream": false,

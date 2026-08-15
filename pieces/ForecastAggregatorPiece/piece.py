@@ -124,9 +124,16 @@ class ForecastAggregatorPiece(BasePiece):
                 model_ids=model_ids,
             )
 
+        # Prefer explicit actual_csv_path; else reuse Inference forecast entry data_path
+        # (same rows used for predict) so Domino needs no extra non-adjacent edges.
         actual_csv_path = payload.get("actual_csv_path")
+        if not actual_csv_path:
+            for entry in forecasts_input:
+                if entry.get("data_path"):
+                    actual_csv_path = entry["data_path"]
+                    break
         if actual_csv_path and target_column:
-            actual_path = Path(actual_csv_path)
+            actual_path = Path(str(actual_csv_path))
             if actual_path.exists():
                 actual_df = pd.read_csv(actual_path)
                 if target_column in actual_df.columns and (
@@ -145,6 +152,11 @@ class ForecastAggregatorPiece(BasePiece):
                             .rename(columns={target_column: f"actual_{target_column}"})
                         )
                         merged = merged.merge(actual_slim, on=keep_cols, how="left")
+            else:
+                self.logger.warning(
+                    "actual CSV not found at %s — aggregating predictions only",
+                    actual_path,
+                )
 
         if include_diff and target_column:
             actual_col = f"actual_{target_column}"
