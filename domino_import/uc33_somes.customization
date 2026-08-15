@@ -1684,6 +1684,18 @@
             "title": "Pv Actual Csv",
             "type": "string"
           },
+          "pv_model_forecast_csv": {
+            "default": "",
+            "description": "Inference forecast CSV (final_forecast) for PVOUT model quality when measurements do not overlap",
+            "title": "Pv Model Forecast Csv",
+            "type": "string"
+          },
+          "pv_model_target_csv": {
+            "default": "",
+            "description": "Feature/normalized CSV with datetime+PVOUT used as reference for PVOUT model MAE/RMSE",
+            "title": "Pv Model Target Csv",
+            "type": "string"
+          },
           "planned_dispatch_csv": {
             "default": "",
             "description": "next_day_dispatch_plan.csv issued to the EMS",
@@ -1712,7 +1724,7 @@
         "required": [
           "predictions_csv"
         ],
-        "title": "ModelMonitoringPiece",
+        "title": "InputModel",
         "type": "object"
       },
       "output_schema": {
@@ -5573,6 +5585,20 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": ""
+        },
+        "pv_model_forecast_csv": {
+          "fromUpstream": true,
+          "upstreamId": "InferenceP_4abd69dcfe47404f8f1c0d48a8ab6817",
+          "upstreamArgument": "forecast_csv_path",
+          "upstreamValue": "InferencePiece - Forecast Csv Path",
+          "value": ""
+        },
+        "pv_model_target_csv": {
+          "fromUpstream": true,
+          "upstreamId": "DataNormal_971b4a0836d84edb8669081ec12c49b8",
+          "upstreamArgument": "data_path",
+          "upstreamValue": "DataNormalizationPiece - Data Path",
+          "value": ""
         }
       }
     },
@@ -7954,6 +7980,20 @@
         "width": 20,
         "height": 20
       }
+    },
+    {
+      "source": "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "sourceHandle": "source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817",
+      "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "reactflow__edge-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817source-208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817-111_ab44d9b0-f21e-41b5-9929-922db54b90e4target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4"
+    },
+    {
+      "source": "203_971b4a08-36d8-4edb-8669-081ec12c49b8",
+      "sourceHandle": "source-203_971b4a08-36d8-4edb-8669-081ec12c49b8",
+      "target": "111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "targetHandle": "target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4",
+      "id": "reactflow__edge-203_971b4a08-36d8-4edb-8669-081ec12c49b8source-203_971b4a08-36d8-4edb-8669-081ec12c49b8-111_ab44d9b0-f21e-41b5-9929-922db54b90e4target-111_ab44d9b0-f21e-41b5-9929-922db54b90e4"
     }
   ]
 }

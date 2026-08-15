@@ -201,6 +201,7 @@ class ModelMonitoringPiece(BasePiece):
                 build_feedback_bundle,
                 dispatch_plan_vs_actual,
                 pv_forecast_vs_actual,
+                pv_model_vs_target,
             )
 
             load_metrics = {
@@ -213,6 +214,14 @@ class ModelMonitoringPiece(BasePiece):
             pv_metrics = None
             if input_data.pv_forecast_csv and input_data.pv_actual_csv:
                 pv_metrics = pv_forecast_vs_actual(input_data.pv_forecast_csv, input_data.pv_actual_csv)
+            # Fallback: score PVOUT model vs labelled feature data (same timestamps).
+            if (not pv_metrics or not pv_metrics.get("available")) and (
+                input_data.pv_model_forecast_csv and input_data.pv_model_target_csv
+            ):
+                pv_metrics = pv_model_vs_target(
+                    input_data.pv_model_forecast_csv,
+                    input_data.pv_model_target_csv,
+                )
             dispatch_metrics = None
             if input_data.planned_dispatch_csv and input_data.bess_telemetry_csv:
                 dispatch_metrics = dispatch_plan_vs_actual(

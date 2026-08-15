@@ -13,6 +13,14 @@ class InputModel(RunIdInputMixin):
     predictions_csv: str = Field(description="CSV with prediction_load_kw and optionally load_kw")
     pv_forecast_csv: str = Field(default="", description="virtual_solar.csv with pv_kw forecast")
     pv_actual_csv: str = Field(default="", description="pv_production_measurements.csv with pv_kw_measured")
+    pv_model_forecast_csv: str = Field(
+        default="",
+        description="Inference forecast CSV (final_forecast) for PVOUT model quality when measurements do not overlap",
+    )
+    pv_model_target_csv: str = Field(
+        default="",
+        description="Feature/normalized CSV with datetime+PVOUT used as reference for PVOUT model MAE/RMSE",
+    )
     planned_dispatch_csv: str = Field(default="", description="next_day_dispatch_plan.csv issued to the EMS")
     bess_telemetry_csv: str = Field(default="", description="BESS telemetry with the executed battery power")
     timestep_hours: float = Field(default=0.25, description="Dispatch timestep used for energy totals")

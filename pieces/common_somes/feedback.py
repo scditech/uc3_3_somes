@@ -69,6 +69,58 @@ def pv_forecast_vs_actual(
     }
 
 
+def pv_model_vs_target(
+    forecast_csv: Path | str,
+    target_csv: Path | str,
+    *,
+    forecast_col: str = "final_forecast",
+    target_col: str = "PVOUT",
+) -> dict[str, Any]:
+    """Score PVOUT model forecast against the labelled feature dataset (same timestamps)."""
+    fpath, tpath = Path(forecast_csv), Path(target_csv)
+    if not fpath.is_file() or not tpath.is_file():
+        return {"available": False, "reason": "pv model forecast or target CSV missing"}
+    fdf = pd.read_csv(fpath)
+    tdf = pd.read_csv(tpath)
+    # Allow Inference CSV without final_forecast (use first available).
+    fcol = forecast_col if forecast_col in fdf.columns else None
+    if fcol is None:
+        for c in ("final_forecast", "PVOUT_PRED", "base_forecast", "pv_kw"):
+            if c in fdf.columns:
+                fcol = c
+                break
+    tcol = target_col if target_col in tdf.columns else None
+    if tcol is None:
+        for c in ("PVOUT", "pv_kw_measured", "pv_kw"):
+            if c in tdf.columns:
+                tcol = c
+                break
+    if not fcol or not tcol:
+        return {
+            "available": False,
+            "reason": f"missing columns forecast={fcol} target={tcol}",
+        }
+    merged = _align(fdf, tdf, fcol, tcol)
+    if merged.empty:
+        return {"available": False, "reason": "no overlapping timestamps between PV model forecast and target"}
+    metrics = error_metrics(merged[fcol].to_numpy(float), merged[tcol].to_numpy(float))
+    return {
+        "available": True,
+        "series": "pvout_model",
+        "source": "model_vs_labelled_target",
+        "forecast_column": fcol,
+        "target_column": tcol,
+        "overall": metrics,
+        "mae": metrics.get("mae"),
+        "rmse": metrics.get("rmse"),
+        "mape_pct": metrics.get("mape_pct"),
+        "retrain_recommended": bool(
+            metrics.get("nrmse_pct", 0) > 15.0
+            or abs(metrics.get("bias", 0.0)) > 0.05 * max(merged[tcol].mean(), 1e-9)
+        ),
+    }
+
+
 def dispatch_plan_vs_actual(
     planned_csv: Path | str,
     telemetry_csv: Path | str,

@@ -533,6 +533,89 @@ METRIC_LABELS = {
 }
 
 
+def _fmt_metric(val, *, suffix: str = "") -> str:
+    if val is None:
+        return "—"
+    try:
+        return f"{float(val):.2f}{suffix}"
+    except (TypeError, ValueError):
+        return "—"
+
+
+def _render_forecast_quality(feedback: dict) -> None:
+    """Show MAE/RMSE for load (consumption) and PV (production) forecasts."""
+    if not feedback:
+        return
+    load = feedback.get("load_forecast") or {}
+    pv = feedback.get("pv_forecast") or {}
+    # EvaluateML-style nested overall metrics
+    if isinstance(pv.get("overall"), dict):
+        pv_overall = pv["overall"]
+    else:
+        pv_overall = pv
+
+    st.subheader("Kvalita predikcie (MAE / RMSE)")
+    st.caption("Spotreba z ModelMonitoring (Predict vs actual). Výroba FVE z overlapping forecast vs meranie alebo vs PVOUT v tréningových dátach.")
+
+    c1, c2, c3 = st.columns(3)
+    render_kpi_metric(
+        c1,
+        "Spotreba MAE (kW)",
+        _fmt_metric(load.get("mae")),
+        "load_mae",
+        widget_key="fq_load_mae",
+    )
+    render_kpi_metric(
+        c2,
+        "Spotreba RMSE (kW)",
+        _fmt_metric(load.get("rmse")),
+        "load_rmse",
+        widget_key="fq_load_rmse",
+    )
+    render_kpi_metric(
+        c3,
+        "Spotreba MAPE",
+        _fmt_metric(load.get("mape_pct"), suffix=" %"),
+        "load_mape",
+        widget_key="fq_load_mape",
+    )
+
+    p1, p2, p3 = st.columns(3)
+    render_kpi_metric(
+        p1,
+        "Výroba MAE",
+        _fmt_metric(pv_overall.get("mae")),
+        "pv_mae",
+        widget_key="fq_pv_mae",
+    )
+    render_kpi_metric(
+        p2,
+        "Výroba RMSE",
+        _fmt_metric(pv_overall.get("rmse")),
+        "pv_rmse",
+        widget_key="fq_pv_rmse",
+    )
+    render_kpi_metric(
+        p3,
+        "Výroba MAPE",
+        _fmt_metric(pv_overall.get("mape_pct"), suffix=" %"),
+        "pv_mape",
+        widget_key="fq_pv_mape",
+    )
+
+    if load.get("available") is False:
+        st.info("Spotreba: metriky nie sú k dispozícii (chýba actual load v predictions).")
+    if pv.get("available") is False:
+        reason = pv.get("reason") or "výrobné metriky nie sú k dispozícii"
+        st.warning(f"Výroba FVE: {reason}")
+
+    actions = feedback.get("recommended_actions") or []
+    if actions:
+        st.markdown("**Odporúčané akcie**")
+        for a in actions:
+            st.write(f"- {a}")
+
+
 def render_timeseries_dashboard(payload: dict) -> None:
     """Renders the original financial/time-series dashboard from DashboardPiece JSON."""
     if not payload:
@@ -608,6 +691,8 @@ def render_timeseries_dashboard(payload: dict) -> None:
                 chart_df[name] = s.get("values") or []
             fig = px.line(chart_df, x="datetime", y=[c for c in chart_df.columns if c != "datetime"])
             st.plotly_chart(fig, use_container_width=True)
+
+        _render_forecast_quality(payload.get("forecast_vs_actual") or {})
         return
 
     preprocess_df = _records_to_df(datasets.get("preprocess_predict", []))
@@ -1044,6 +1129,9 @@ def load_unified_payload() -> dict | None:
 
 
 def get_timeseries_payload(raw: dict, *, allow_fallback: bool) -> dict | None:
+    # Operational SoMES dashboard is stored at the top level.
+    if isinstance(raw, dict) and raw.get("format") == "somes_ops_dashboard_v1":
+        return raw
     ts = raw.get("timeseries")
     if isinstance(ts, dict) and (
         ts.get("datasets") is not None
@@ -1051,6 +1139,7 @@ def get_timeseries_payload(raw: dict, *, allow_fallback: bool) -> dict | None:
         or ts.get("alerts_and_drift") is not None
         or ts.get("single_chart") is not None
         or ts.get("decision_kpis") is not None
+        or ts.get("forecast_vs_actual") is not None
     ):
         return ts
     if allow_fallback and TS_FALLBACK.is_file():
