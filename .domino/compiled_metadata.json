@@ -2172,6 +2172,18 @@
                     "title": "Pv Actual Csv",
                     "type": "string"
                 },
+                "pv_model_forecast_csv": {
+                    "default": "",
+                    "description": "Inference forecast CSV (final_forecast) for PVOUT model quality when measurements do not overlap",
+                    "title": "Pv Model Forecast Csv",
+                    "type": "string"
+                },
+                "pv_model_target_csv": {
+                    "default": "",
+                    "description": "Feature/normalized CSV with datetime+PVOUT used as reference for PVOUT model MAE/RMSE",
+                    "title": "Pv Model Target Csv",
+                    "type": "string"
+                },
                 "planned_dispatch_csv": {
                     "default": "",
                     "description": "next_day_dispatch_plan.csv issued to the EMS",
