@@ -175,7 +175,7 @@ class ForecastAggregatorPiece(BasePiece):
         results_path.mkdir(parents=True, exist_ok=True)
         out_path = results_path / output_csv_name
         merged.to_csv(out_path, index=False)
-        self.display_result = {"file_type": "txt", "file_path": str(out_path)}
+        self.display_result = {"file_type": "csv", "file_path": str(out_path)}
 
         return OutputModel(
             message=(
