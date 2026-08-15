@@ -932,6 +932,12 @@
             "title": "Connectors Dir",
             "type": "string"
           },
+          "scenario_yaml": {
+            "default": "",
+            "description": "Optional SoMES scenario.yaml. When set, site.latitude/longitude override the manual latitude/longitude fields.",
+            "title": "Scenario Yaml",
+            "type": "string"
+          },
           "weather_api_enabled": {
             "default": false,
             "description": "Pull live irradiance/temperature forecast from Open-Meteo",
@@ -940,13 +946,13 @@
           },
           "latitude": {
             "default": 48.148,
-            "description": "Site latitude for the weather pull",
+            "description": "Fallback site latitude if scenario_yaml has no site.latitude",
             "title": "Latitude",
             "type": "number"
           },
           "longitude": {
             "default": 17.107,
-            "description": "Site longitude for the weather pull",
+            "description": "Fallback site longitude if scenario_yaml has no site.longitude",
             "title": "Longitude",
             "type": "number"
           },
@@ -999,7 +1005,7 @@
             "type": "boolean"
           }
         },
-        "title": "SomesConnectorsPiece",
+        "title": "InputModel",
         "type": "object"
       },
       "output_schema": {
@@ -2823,7 +2829,7 @@
     "200_198c7643-e8a9-4782-9755-5401ed175920": {
       "id": 1383,
       "name": "SolarGISDataGeneratorPiece",
-      "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit GHI/DNI/DIF/PVOUT columns for UC3.4 preprocessing.",
+      "description": "Fetch Open-Meteo irradiance/weather. Prefer site/PV params from scenario.yaml.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
@@ -2832,15 +2838,28 @@
       "input_schema": {
         "additionalProperties": true,
         "properties": {
+          "scenario_yaml": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional SoMES scenario.yaml. When set, site.latitude/longitude and pv.installed_kwp / pv.tilt_deg override the manual fields below.",
+            "title": "Scenario YAML"
+          },
           "latitude": {
             "default": 48.15,
-            "description": "Location latitude in decimal degrees (e.g. 48.15 for Bratislava).",
+            "description": "Fallback latitude if scenario_yaml is missing site.latitude.",
             "title": "Latitude",
             "type": "number"
           },
           "longitude": {
             "default": 17.11,
-            "description": "Location longitude in decimal degrees (e.g. 17.11 for Bratislava).",
+            "description": "Fallback longitude if scenario_yaml is missing site.longitude.",
             "title": "Longitude",
             "type": "number"
           },
@@ -2858,13 +2877,13 @@
           },
           "pvout_peak_kw": {
             "default": 5.2,
-            "description": "Installed peak power of the PV system used to estimate PVOUT.",
+            "description": "Fallback kWp if scenario_yaml has no pv.installed_kwp / solar.capacity_kWp.",
             "title": "PV System Peak Power (kWp)",
             "type": "number"
           },
           "panel_tilt": {
             "default": 30.0,
-            "description": "Tilt of the PV panels in degrees from horizontal for GTI calculation.",
+            "description": "Fallback tilt if scenario_yaml has no pv.tilt_deg.",
             "title": "Panel Tilt (degrees)",
             "type": "number"
           },
@@ -2895,7 +2914,7 @@
             "title": "Output Format"
           }
         },
-        "title": "SolarGISDataGeneratorPiece",
+        "title": "InputModel",
         "type": "object"
       },
       "output_schema": {
@@ -5277,14 +5296,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": 48.148
+          "value": 48.170878
         },
         "longitude": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": 17.107
+          "value": 17.069268
         },
         "forecast_days": {
           "fromUpstream": false,
@@ -5334,6 +5353,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": ""
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         }
       }
     },
@@ -6084,6 +6110,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": "csv"
+        },
+        "scenario_yaml": {
+          "fromUpstream": false,
+          "upstreamId": "",
+          "upstreamArgument": "",
+          "upstreamValue": "",
+          "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
         }
       }
     },

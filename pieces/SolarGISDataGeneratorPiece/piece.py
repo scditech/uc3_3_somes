@@ -146,7 +146,21 @@ def _build_records(
 
 
 class SolarGISDataGeneratorPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
+    def piece_function(self, input_data: InputModel, secrets_data=None):
+        try:
+            from common import onedata_io as od
+        except ModuleNotFoundError:
+            try:
+                from pieces.common import onedata_io as od
+            except ModuleNotFoundError:
+                od = None
+        stage = None
+        if od is not None:
+            try:
+                input_data, stage = od.stage_inputs(input_data, secrets_data)
+            except Exception as exc:  # noqa: BLE001
+                self.logger.warning("OneData stage skipped: %s", exc)
+
         payload = input_data.to_payload_dict()
         extra = getattr(input_data, "model_extra", None) or {}
         if not payload.get("output_format"):
@@ -162,9 +176,25 @@ class SolarGISDataGeneratorPiece(BasePiece):
                 if val is not None and str(val).strip() != "":
                     payload["output_format"] = val
                     break
-        self.logger.info("Running SolarGISDataGeneratorPiece.")
+        self.logger.info("Running Open-Meteo PV Data.")
 
         try:
+            from pieces.common_somes.scenario_site import (
+                apply_scenario_site_to_mapping,
+                load_scenario_yaml,
+            )
+
+            cfg = load_scenario_yaml(payload.get("scenario_yaml"))
+            if cfg:
+                payload = apply_scenario_site_to_mapping(payload, cfg)
+                self.logger.info(
+                    "Applied site/PV from scenario_yaml: lat=%s lon=%s kwp=%s tilt=%s",
+                    payload.get("latitude"),
+                    payload.get("longitude"),
+                    payload.get("pvout_peak_kw"),
+                    payload.get("panel_tilt"),
+                )
+
             output_mode = str(payload.get("output_mode", "batch_sample")).strip().lower()
             if output_mode not in {"batch_sample", "realtime_stream"}:
                 raise ValueError("output_mode must be `batch_sample` or `realtime_stream`.")
@@ -182,7 +212,10 @@ class SolarGISDataGeneratorPiece(BasePiece):
 
             self.logger.info(
                 "Fetching Open-Meteo data for lat=%.4f lon=%.4f from %s to %s",
-                latitude, longitude, start_date, end_date,
+                latitude,
+                longitude,
+                start_date,
+                end_date,
             )
             response_json = _fetch_open_meteo(latitude, longitude, start_date, end_date)
             hourly = response_json.get("hourly", {})
@@ -192,6 +225,8 @@ class SolarGISDataGeneratorPiece(BasePiece):
 
             if not records:
                 self.logger.warning("No records returned for the requested date range.")
+                if stage is not None:
+                    stage.cleanup()
                 return OutputModel(file_path=None)
 
             file_suffix = "stream" if output_mode == "realtime_stream" else "batch"
@@ -215,12 +250,19 @@ class SolarGISDataGeneratorPiece(BasePiece):
             self.logger.info("Open-Meteo dataset saved to %s", file_path)
             self.display_result = {"file_type": "csv", "file_path": file_path}
 
+            if stage is not None:
+                stage.cleanup()
             return OutputModel(
                 file_path=file_path,
                 target_column=TARGET_COLUMN,
             )
         except Exception:
+            if stage is not None:
+                try:
+                    stage.cleanup()
+                except Exception:
+                    pass
             self.logger.exception(
-                "SolarGISDataGeneratorPiece failed. input_payload=%s", payload
+                "Open-Meteo PV Data failed. input_payload=%s", payload
             )
             raise

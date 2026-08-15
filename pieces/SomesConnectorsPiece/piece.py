@@ -76,6 +76,32 @@ class SomesConnectorsPiece(BasePiece):
                 f.write(text + "\n")
 
         try:
+            from pieces.common_somes.scenario_site import (
+                apply_scenario_site_to_mapping,
+                load_scenario_yaml,
+            )
+
+            cfg = load_scenario_yaml(getattr(input_data, "scenario_yaml", "") or "")
+            if cfg:
+                applied = apply_scenario_site_to_mapping(
+                    {
+                        "latitude": float(input_data.latitude),
+                        "longitude": float(input_data.longitude),
+                    },
+                    cfg,
+                    kwp_key=None,
+                    tilt_key=None,
+                )
+                try:
+                    input_data.latitude = float(applied["latitude"])
+                    input_data.longitude = float(applied["longitude"])
+                except Exception:
+                    object.__setattr__(input_data, "latitude", float(applied["latitude"]))
+                    object.__setattr__(input_data, "longitude", float(applied["longitude"]))
+                _log(
+                    f"Applied site from scenario_yaml: lat={input_data.latitude} lon={input_data.longitude}"
+                )
+
             weather_fetch = None
             if input_data.weather_api_enabled:
                 def weather_fetch():  # noqa: E306 - local closure keeps provider args together

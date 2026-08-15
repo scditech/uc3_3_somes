@@ -12,11 +12,24 @@ class InputModel(RunIdInputMixin):
         default="",
         description="Directory with SoMES connector files (created with demos if empty/missing)",
     )
+    scenario_yaml: str = Field(
+        default="",
+        description=(
+            "Optional SoMES scenario.yaml. When set, site.latitude/longitude override "
+            "the manual latitude/longitude fields."
+        ),
+    )
     weather_api_enabled: bool = Field(
         default=False, description="Pull live irradiance/temperature forecast from Open-Meteo"
     )
-    latitude: float = Field(default=48.148, description="Site latitude for the weather pull")
-    longitude: float = Field(default=17.107, description="Site longitude for the weather pull")
+    latitude: float = Field(
+        default=48.148,
+        description="Fallback site latitude if scenario_yaml has no site.latitude",
+    )
+    longitude: float = Field(
+        default=17.107,
+        description="Fallback site longitude if scenario_yaml has no site.longitude",
+    )
     forecast_days: int = Field(default=2, description="Weather forecast horizon in days")
     prices_api_enabled: bool = Field(
         default=False, description="Pull day-ahead spot prices from the OKTE ISOT public API"

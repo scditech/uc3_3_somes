@@ -40,15 +40,23 @@ OPEN_METEO_ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
 class InputModel(BaseModel):
     model_config = ConfigDict(extra="allow")
 
+    scenario_yaml: str | None = Field(
+        default=None,
+        title="Scenario YAML",
+        description=(
+            "Optional SoMES scenario.yaml. When set, site.latitude/longitude and "
+            "pv.installed_kwp / pv.tilt_deg override the manual fields below."
+        ),
+    )
     latitude: float = Field(
         default=48.15,
         title="Latitude",
-        description="Location latitude in decimal degrees (e.g. 48.15 for Bratislava).",
+        description="Fallback latitude if scenario_yaml is missing site.latitude.",
     )
     longitude: float = Field(
         default=17.11,
         title="Longitude",
-        description="Location longitude in decimal degrees (e.g. 17.11 for Bratislava).",
+        description="Fallback longitude if scenario_yaml is missing site.longitude.",
     )
     start_date: str = Field(
         default="2026-01-01",
@@ -63,12 +71,12 @@ class InputModel(BaseModel):
     pvout_peak_kw: float = Field(
         default=5.2,
         title="PV System Peak Power (kWp)",
-        description="Installed peak power of the PV system used to estimate PVOUT.",
+        description="Fallback kWp if scenario_yaml has no pv.installed_kwp / solar.capacity_kWp.",
     )
     panel_tilt: float = Field(
         default=30.0,
         title="Panel Tilt (degrees)",
-        description="Tilt of the PV panels in degrees from horizontal for GTI calculation.",
+        description="Fallback tilt if scenario_yaml has no pv.tilt_deg.",
     )
     output_mode: str | None = Field(
         default="batch_sample",
