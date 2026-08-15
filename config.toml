@@ -2,4 +2,4 @@
 REGISTRY_NAME = "scditech"
 REPOSITORY_NAME = "uc3_3_somes"
 REPOSITORY_LABEL = "UC3.3 SoMES Operational Optimisation"
-VERSION = "0.2.6"
+VERSION = "0.2.7"

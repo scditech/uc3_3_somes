@@ -137,6 +137,14 @@ class DashboardPiece(BasePiece):
             )
             out_json = write_json(out_dir / "dashboard_data.json", payload)
             _log(f"Wrote operational dashboard {out_json}")
+            try:
+                from .html_report import write_ops_dashboard_html
+            except ImportError:
+                from pieces.DashboardPiece.html_report import write_ops_dashboard_html
+
+            out_html = write_ops_dashboard_html(out_dir / "dashboard.html", payload)
+            _log(f"Wrote operational dashboard HTML {out_html}")
+            self.display_result = {"file_type": "html", "file_path": str(out_html)}
             _piece_out = OutputModel(dashboard_data_json=str(out_json))
             if od is not None:
                 if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
@@ -262,6 +270,8 @@ class DashboardPiece(BasePiece):
             out_json = out_dir / "dashboard_data.json"
             out_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote dashboard JSON: {out_json}; kpi_rows={len(kpi_df)}")
+            # Domino result pane: show JSON as downloadable text when ops HTML is unavailable.
+            self.display_result = {"file_type": "txt", "file_path": str(out_json)}
             _piece_out = OutputModel(dashboard_data_json=str(out_json))
             if od is not None:
                 if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):
