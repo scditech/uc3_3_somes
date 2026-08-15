@@ -16,9 +16,9 @@ def flag_each_day(df):
     return df
 
 
-def preprocess_solargis_data(data):
+def preprocess_irradiance_data(data):
     """
-    Drop rows with missing values and engineer a few CIS panel features.
+    Drop rows with missing values and engineer a few irradiance / panel features.
     """
     import numpy as np  # type: ignore
     import pandas as pd  # type: ignore
@@ -37,6 +37,10 @@ def preprocess_solargis_data(data):
 
     print(f"[INFO] Processed {len(data)} rows out of {original_rows} original rows")
     return data
+
+
+# Back-compat for older tests/imports.
+preprocess_solargis_data = preprocess_irradiance_data
 
 
 def ensure_datetime_column(data):

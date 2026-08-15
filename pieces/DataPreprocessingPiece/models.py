@@ -15,12 +15,6 @@ class InputModel(BaseModel):
             "Wire upstream from Open-Meteo PV Data `File Path`."
         ),
     )
-    data_path_solargis: str | None = Field(
-        default=None,
-        description=(
-            "Deprecated alias for `data_path`. Prefer wiring `data_path` from Open-Meteo."
-        ),
-    )
     data_path_okte: str | None = Field(
         default=None,
         description=(

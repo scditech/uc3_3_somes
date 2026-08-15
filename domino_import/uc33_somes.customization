@@ -1,14 +1,14 @@
 {
   "workflowPieces": {
     "100_88d95778-1fb1-4516-addc-298a3a052669": {
-      "id": 1367,
+      "id": 1398,
       "name": "FetchEnergyDataPiece",
       "description": "Load and merge energy CSV files",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -130,17 +130,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FetchEnergyDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "101_c6abd221-004b-45f5-bc50-aa3df1f3b4eb": {
-      "id": 1393,
+      "id": 1424,
       "name": "PreprocessEnergyDataPiece",
       "description": "Clean, resample and prepare energy data for training and prediction",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -296,17 +296,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PreprocessEnergyDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "102_024b94c5-a535-4d65-a9a5-22c227eb23d8": {
-      "id": 1370,
+      "id": 1401,
       "name": "TrainModelPiece",
       "description": "Train XGBoost energy forecasting model",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -429,17 +429,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/TrainModelPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "103_cec51656-3b31-4ea3-ad00-bbe8e62a857c": {
-      "id": 1378,
+      "id": 1409,
       "name": "PredictPiece",
       "description": "Run prediction using trained XGBoost model",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -590,17 +590,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PredictPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "104_f493a15c-2457-4e1c-9159-fa27c5237217": {
-      "id": 1381,
+      "id": 1412,
       "name": "IncrementalTrainPiece",
       "description": "Train or incrementally update load models by department",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -749,17 +749,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "105_cfd055f3-92b7-43a8-90a3-61965d222554": {
-      "id": 1366,
+      "id": 1397,
       "name": "ForecastHorizonPiece",
       "description": "Forecast consumption by department for chosen horizon",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -907,17 +907,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ForecastHorizonPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "106_6e9f8dc5-d244-4bb0-9a4b-b8424b9edf67": {
-      "id": 1375,
+      "id": 1406,
       "name": "SomesConnectorsPiece",
       "description": "SoMES data connectors: weather, PV production, BESS telemetry, grid constraints, flexible loads",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1005,7 +1005,7 @@
             "type": "boolean"
           }
         },
-        "title": "InputModel",
+        "title": "SomesConnectorsPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1154,17 +1154,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SomesConnectorsPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "107_c097b5eb-34c1-462b-abcf-2d2bc61fc4bb": {
-      "id": 1384,
+      "id": 1415,
       "name": "PriceForecastPiece",
       "description": "SoMES price/tariff forecast for the optimisation horizon",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1288,17 +1288,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PriceForecastPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "108_1788a415-3315-4f28-b343-93cca3f8249f": {
-      "id": 1392,
+      "id": 1423,
       "name": "BatteryStrategyOptimizerPiece",
       "description": "Create battery dispatch strategy recommendation",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1415,17 +1415,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatteryStrategyOptimizerPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "110_e1e3398a-8c76-4a43-a567-1f86061f2c64": {
-      "id": 1382,
+      "id": 1413,
       "name": "BatterySimPiece",
       "description": "Generate battery SOC timeseries from load and PV profile",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1654,17 +1654,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "111_ab44d9b0-f21e-41b5-9929-922db54b90e4": {
-      "id": 1377,
+      "id": 1408,
       "name": "ModelMonitoringPiece",
       "description": "Monitor model quality and prediction drift",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1730,7 +1730,7 @@
         "required": [
           "predictions_csv"
         ],
-        "title": "InputModel",
+        "title": "ModelMonitoringPiece",
         "type": "object"
       },
       "output_schema": {
@@ -1844,17 +1844,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelMonitoringPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "113_4b8ee3c5-f007-427b-8e4c-cfdbce2e6c33": {
-      "id": 1374,
+      "id": 1405,
       "name": "FlexibleLoadSchedulePiece",
       "description": "SoMES flexible load shifting schedule for the optimisation horizon",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -1988,17 +1988,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/FlexibleLoadSchedulePiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "114_bf99a4ed-dba6-42fb-87ef-93e5ac39b89d": {
-      "id": 1382,
+      "id": 1413,
       "name": "BatterySimPiece",
       "description": "Generate battery SOC timeseries from load and PV profile",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2227,17 +2227,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "115_acc05ac3-51bf-455d-a8e0-009a70c149ad": {
-      "id": 1372,
+      "id": 1403,
       "name": "GridFeasibilityPiece",
       "description": "SoMES technical validation: battery constraints, inverter/connection limits, grid feasibility",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2382,17 +2382,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/GridFeasibilityPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "116_b13038cc-8ec6-48fe-94bf-5271e7444c4d": {
-      "id": 1368,
+      "id": 1399,
       "name": "EmsBemsOutputPiece",
       "description": "SoMES Output API / EMS-BEMS integration interface",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2607,17 +2607,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/EmsBemsOutputPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "117_150eac84-e09a-46aa-8ed7-412913e37105": {
-      "id": 1371,
+      "id": 1402,
       "name": "DashboardPiece",
       "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "run_id": {
@@ -2824,17 +2824,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DashboardPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "200_198c7643-e8a9-4782-9755-5401ed175920": {
-      "id": 1383,
-      "name": "SolarGISDataGeneratorPiece",
-      "description": "Fetch Open-Meteo irradiance/weather. Prefer site/PV params from scenario.yaml.",
+      "id": 1414,
+      "name": "OpenMeteoPVDataPiece",
+      "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit PVOUT training CSV (GHI/DNI/DIF/PVOUT/…) for UC3.4 preprocessing. No commercial weather-data license.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -2914,7 +2914,7 @@
             "title": "Output Format"
           }
         },
-        "title": "InputModel",
+        "title": "OpenMeteoPVDataPiece",
         "type": "object"
       },
       "output_schema": {
@@ -2966,7 +2966,7 @@
         "Generator"
       ],
       "style": {
-        "module": "SolarGISDataGeneratorPiece",
+        "module": "OpenMeteoPVDataPiece",
         "label": "Open-Meteo PV Data",
         "nodeType": "default",
         "nodeStyle": {
@@ -2976,21 +2976,22 @@
         "iconClassName": "fa-solid:bolt",
         "iconStyle": {
           "cursor": "pointer"
-        }
+        },
+        "node_label": "Open-Meteo PV Data"
       },
-      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece",
+      "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/OpenMeteoPVDataPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "201_feb3638d-ebff-4c13-94b0-649523fc41f5": {
-      "id": 1385,
+      "id": 1416,
       "name": "DataPreprocessingPiece",
       "description": "Template piece for cleaning, validating, and preprocessing input data prior to feature engineering or training.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3019,19 +3020,6 @@
             "default": null,
             "description": "Path to Open-Meteo weather/PV CSV (columns include `datetime` or `Date`+`Time`). Wire upstream from Open-Meteo PV Data `File Path`.",
             "title": "Data Path"
-          },
-          "data_path_solargis": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "description": "Deprecated alias for `data_path`. Prefer wiring `data_path` from Open-Meteo.",
-            "title": "Data Path Solargis"
           },
           "data_path_okte": {
             "anyOf": [
@@ -3180,17 +3168,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataPreprocessingPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "202_a9bd8cc5-808f-4a33-86f5-5e905ba1683a": {
-      "id": 1376,
+      "id": 1407,
       "name": "ModelDeciderPiece",
       "description": "Template piece for selecting a model/version based on context, data availability, or policies.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3246,7 +3234,7 @@
               }
             ],
             "default": "PVOUT",
-            "description": "Target column name to forecast. Default `PVOUT` for solargis-style datasets.",
+            "description": "Target column name to forecast. Default `PVOUT` for irradiance datasets.",
             "title": "Target Column"
           },
           "data_path": {
@@ -3369,17 +3357,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ModelDeciderPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "203_971b4a08-36d8-4edb-8669-081ec12c49b8": {
-      "id": 1379,
+      "id": 1410,
       "name": "DataNormalizationPiece",
       "description": "Template piece for normalizing raw smart-grid data into a consistent scale and schema.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3566,17 +3554,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/DataNormalizationPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "204_00df596b-efe6-440c-bd64-5283c7f88f2b": {
-      "id": 1387,
+      "id": 1418,
       "name": "PvoutModelFeatureSelectPiece",
       "description": "Split UC3.4 feature_columns into model features + datetime_column without removing datetime from CSV.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -3676,17 +3664,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutModelFeatureSelectPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "205_c137a070-a5d9-4cee-a7ef-315a7f7e0b1a": {
-      "id": 1390,
+      "id": 1421,
       "name": "PVOUTPredictionModelTrainPiece",
       "description": "Template piece for training a PVOUT prediction model.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -3989,17 +3977,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTPredictionModelTrainPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "206_51509837-c9bc-43f5-8885-2391ae4fdce3": {
-      "id": 1386,
+      "id": 1417,
       "name": "PVOUTErrorCorrectionModelTrainPiece",
       "description": "Template piece for training a PVOUT error-correction model.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "additionalProperties": true,
         "properties": {
@@ -4328,17 +4316,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PVOUTErrorCorrectionModelTrainPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "207_de033d3f-acd2-415c-b506-b2dad198f458": {
-      "id": 1389,
+      "id": 1420,
       "name": "PvoutStagedInferenceSpecPiece",
       "description": "Build InferencePiece.pvout_model stages: Open-Meteo baseline + UC3.4 error correction.",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "baseline_model_path": {
@@ -4460,17 +4448,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutStagedInferenceSpecPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "208_4abd69dc-fe47-404f-8f1c-0d48a8ab6817": {
-      "id": 1394,
+      "id": 1425,
       "name": "InferencePiece",
       "description": "Runs inference on prepared features: pvout_correction or price_ahead (base + model correction).",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "$defs": {
           "ModelSpec": {
@@ -4912,17 +4900,17 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/InferencePiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     },
     "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846": {
-      "id": 1373,
+      "id": 1404,
       "name": "PvoutToVirtualSolarPiece",
       "description": "Adapter: UC3.4 Inference forecast CSV → SoMES virtual_solar.csv (datetime, pv_kw).",
       "dependency": {
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.4-group0",
+      "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.6-group0",
       "input_schema": {
         "properties": {
           "forecast_csv_path": {
@@ -4988,7 +4976,7 @@
       },
       "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/PvoutToVirtualSolarPiece",
       "repository_url": "https://github.com/scditech/uc3_3_somes",
-      "repository_id": 97
+      "repository_id": 98
     }
   },
   "workflowPiecesData": {
@@ -6139,16 +6127,9 @@
         },
         "data_path": {
           "fromUpstream": true,
-          "upstreamId": "SolarGISDa_198c7643e8a9478297555401ed175920",
+          "upstreamId": "OpenMeteoP_198c7643e8a9478297555401ed175920",
           "upstreamArgument": "file_path",
           "upstreamValue": "Open-Meteo PV Data - File Path",
-          "value": null
-        },
-        "data_path_solargis": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
           "value": null
         },
         "data_path_okte": {
@@ -7140,9 +7121,9 @@
         "y": 420
       },
       "data": {
-        "name": "SolarGISDataGeneratorPiece",
+        "name": "OpenMeteoPVDataPiece",
         "style": {
-          "module": "SolarGISDataGeneratorPiece",
+          "module": "OpenMeteoPVDataPiece",
           "label": "Open-Meteo PV Data",
           "nodeType": "default",
           "nodeStyle": {

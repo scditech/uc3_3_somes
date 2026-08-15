@@ -24,7 +24,7 @@
             "ExplainablePredictionPiece",
             "IncrementalTrainPiece",
             "BatterySimPiece",
-            "SolarGISDataGeneratorPiece",
+            "OpenMeteoPVDataPiece",
             "PriceForecastPiece",
             "DataPreprocessingPiece",
             "PVOUTErrorCorrectionModelTrainPiece",

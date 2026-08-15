@@ -1,6 +1,6 @@
 {
-  "name": "SolarGISDataGeneratorPiece",
-  "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit SolarGIS-compatible columns (GHI/DNI/DIF/PVOUT/…) for UC3.4 preprocessing. No commercial SolarGIS license or files.",
+  "name": "OpenMeteoPVDataPiece",
+  "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit PVOUT training CSV (GHI/DNI/DIF/PVOUT/…) for UC3.4 preprocessing. No commercial weather-data license.",
   "dependency": {
     "requirements_file": "requirements_0.txt"
   },
@@ -24,5 +24,5 @@
     "icon_class_name": "fa-solid:bolt"
   },
   "dependencies_group": "0",
-  "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece"
+  "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/OpenMeteoPVDataPiece"
 }

@@ -75,13 +75,12 @@ def preprocess_prediction(payload):
     from .preprocessor_utils import (
         ensure_datetime_column,
         flag_each_day,
-        preprocess_solargis_data,
+        preprocess_irradiance_data,
     )
     from .serialization import to_jsonable_df
 
     df = _read_input_dataframe(payload)
     data_path = payload.get("data_path")
-    data_path_solargis = payload.get("data_path_solargis")
     data_path_okte = payload.get("data_path_okte")
     save_data_path = payload.get("save_data_path")
     flag_each_day_enabled = bool(payload.get("flag_each_day", False))
@@ -102,7 +101,7 @@ def preprocess_prediction(payload):
             {"sep": ";", "skiprows": 0, "dayfirst": True},
             {"sep": ",", "skiprows": 0, "dayfirst": True},
             {"sep": None, "engine": "python", "skiprows": 0, "dayfirst": True},
-            # Legacy commercial SolarGIS exports with a long header block.
+            # Legacy exports with a long header block.
             {"sep": ";", "skiprows": 58, "dayfirst": True},
             {"sep": None, "engine": "python", "skiprows": 58, "dayfirst": True},
         ]
@@ -131,8 +130,7 @@ def preprocess_prediction(payload):
     target_col_input = payload.get("target_column")
     target_col = str(target_col_input) if target_col_input else "PVOUT"
 
-    # Prefer generic data_path (Open-Meteo). data_path_solargis remains as alias only.
-    weather_path = data_path or data_path_solargis
+    weather_path = data_path
 
     if df is None:
         if not weather_path and not data_path_okte:
@@ -178,9 +176,9 @@ def preprocess_prediction(payload):
     if flag_each_day_enabled:
         data = flag_each_day(data)
 
-    # SolarGIS-specific preprocessing only when the dataset has the expected columns.
+    # Irradiance preprocessing only when the dataset has the expected columns.
     if all(col in data.columns for col in ("GHI", "DIF", "SE")):
-        data = preprocess_solargis_data(data)
+        data = preprocess_irradiance_data(data)
     else:
         data = data.dropna()
 
@@ -237,7 +235,7 @@ def preprocess_correction(payload):
     from .preprocessor_utils import (
         ensure_datetime_column,
         flag_each_day,
-        preprocess_solargis_data,
+        preprocess_irradiance_data,
     )
     from .serialization import to_jsonable_df
 
@@ -249,7 +247,7 @@ def preprocess_correction(payload):
     load_all_data = bool(payload.get("load_all_data", False))
 
     def _load_single(path: str):
-        # Special handling for PVOD-derived Solargis-like CSV.
+        # Special handling for PVOD-derived irradiance CSV.
         if os.path.basename(path).startswith("error_correction_pvod"):
             data = pd.read_csv(path)
             data = ensure_datetime_column(data)
@@ -302,8 +300,8 @@ def preprocess_correction(payload):
     pred_sequence_one = pred_sequence_one.dropna(subset=["true_pvout"])
 
     # Preprocess data
-    pred_sequence_one = preprocess_solargis_data(pred_sequence_one)
-    true_sequence_one = preprocess_solargis_data(true_sequence_one)
+    pred_sequence_one = preprocess_irradiance_data(pred_sequence_one)
+    true_sequence_one = preprocess_irradiance_data(true_sequence_one)
 
     if save_data_path:
         # Derive two output paths: *_pred.csv and *_true.csv

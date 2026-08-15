@@ -42,7 +42,7 @@ class InputModel(BaseModel):
     target_column: str | None = Field(
         default="PVOUT",
         title="Target Column",
-        description="Target column name to forecast. Default `PVOUT` for solargis-style datasets.",
+        description="Target column name to forecast. Default `PVOUT` for irradiance datasets.",
     )
     data_path: str | None = Field(
         default=None,

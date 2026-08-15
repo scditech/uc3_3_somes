@@ -1,5 +1,6 @@
 import math
 import csv
+import sys
 from datetime import datetime
 from typing import Any
 from pathlib import Path
@@ -11,7 +12,7 @@ from .models import (
     InputModel,
     OutputModel,
     TARGET_COLUMN,
-    SOLARGIS_CSV_FIELDNAMES,
+    OPEN_METEO_CSV_FIELDNAMES,
     OPEN_METEO_ARCHIVE_URL,
 )
 
@@ -145,7 +146,7 @@ def _build_records(
     return records
 
 
-class SolarGISDataGeneratorPiece(BasePiece):
+class OpenMeteoPVDataPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None):
         try:
             from common import onedata_io as od
@@ -179,6 +180,9 @@ class SolarGISDataGeneratorPiece(BasePiece):
         self.logger.info("Running Open-Meteo PV Data.")
 
         try:
+            repo_root = Path(__file__).resolve().parents[2]
+            if str(repo_root) not in sys.path:
+                sys.path.insert(0, str(repo_root))
             from pieces.common_somes.scenario_site import (
                 apply_scenario_site_to_mapping,
                 load_scenario_yaml,
@@ -240,7 +244,7 @@ class SolarGISDataGeneratorPiece(BasePiece):
                 with open(file_path, "w", encoding="utf-8", newline="") as csvfile:
                     writer = csv.DictWriter(
                         csvfile,
-                        fieldnames=SOLARGIS_CSV_FIELDNAMES,
+                        fieldnames=OPEN_METEO_CSV_FIELDNAMES,
                         delimiter=";",
                         extrasaction="ignore",
                     )
