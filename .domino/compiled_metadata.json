@@ -2038,7 +2038,7 @@
                         }
                     ],
                     "default": "PVOUT",
-                    "description": "Target column name to forecast. Default `PVOUT` for solargis-style datasets.",
+                    "description": "Target column name to forecast. Default `PVOUT` for irradiance datasets.",
                     "title": "Target Column"
                 },
                 "data_path": {
@@ -2983,6 +2983,157 @@
         },
         "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/IncrementalTrainPiece"
     },
+    "OpenMeteoPVDataPiece": {
+        "name": "OpenMeteoPVDataPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [
+            "OpenMeteo",
+            "PVOUT",
+            "Generator"
+        ],
+        "style": {
+            "node_label": "Open-Meteo PV Data",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:bolt",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit PVOUT training CSV (GHI/DNI/DIF/PVOUT/\u2026) for UC3.4 preprocessing. No commercial weather-data license.",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "dependencies_group": "0",
+        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/OpenMeteoPVDataPiece",
+        "input_schema": {
+            "additionalProperties": true,
+            "properties": {
+                "scenario_yaml": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Optional SoMES scenario.yaml. When set, site.latitude/longitude and pv.installed_kwp / pv.tilt_deg override the manual fields below.",
+                    "title": "Scenario YAML"
+                },
+                "latitude": {
+                    "default": 48.15,
+                    "description": "Fallback latitude if scenario_yaml is missing site.latitude.",
+                    "title": "Latitude",
+                    "type": "number"
+                },
+                "longitude": {
+                    "default": 17.11,
+                    "description": "Fallback longitude if scenario_yaml is missing site.longitude.",
+                    "title": "Longitude",
+                    "type": "number"
+                },
+                "start_date": {
+                    "default": "2026-01-01",
+                    "description": "First day of the requested period in YYYY-MM-DD format.",
+                    "title": "Start Date",
+                    "type": "string"
+                },
+                "end_date": {
+                    "default": "2026-01-07",
+                    "description": "Last day of the requested period in YYYY-MM-DD format.",
+                    "title": "End Date",
+                    "type": "string"
+                },
+                "pvout_peak_kw": {
+                    "default": 5.2,
+                    "description": "Fallback kWp if scenario_yaml has no pv.installed_kwp / solar.capacity_kWp.",
+                    "title": "PV System Peak Power (kWp)",
+                    "type": "number"
+                },
+                "panel_tilt": {
+                    "default": 30.0,
+                    "description": "Fallback tilt if scenario_yaml has no pv.tilt_deg.",
+                    "title": "Panel Tilt (degrees)",
+                    "type": "number"
+                },
+                "output_mode": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": "batch_sample",
+                    "description": "One of: `batch_sample`, `realtime_stream`.",
+                    "title": "Output Mode"
+                },
+                "output_format": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "One of: `json`, `csv`.",
+                    "title": "Output Format"
+                }
+            },
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "file_path": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Dataset file path"
+                },
+                "target_column": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Suggested target column for the generated dataset (pass downstream via fromUpstream).",
+                    "title": "Target column"
+                }
+            },
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null
+    },
     "BatterySimPiece": {
         "name": "BatterySimPiece",
         "dependency": {
@@ -3207,157 +3358,6 @@
         },
         "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/BatterySimPiece"
     },
-    "SolarGISDataGeneratorPiece": {
-        "name": "SolarGISDataGeneratorPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [
-            "OpenMeteo",
-            "PVOUT",
-            "Generator"
-        ],
-        "style": {
-            "node_label": "Open-Meteo PV Data",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:bolt",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Fetch Open-Meteo irradiance/weather for any latitude/longitude and emit SolarGIS-compatible columns (GHI/DNI/DIF/PVOUT/\u2026) for UC3.4 preprocessing. No commercial SolarGIS license or files.",
-        "container_resources": {
-            "requests": {
-                "cpu": 100,
-                "memory": 128
-            },
-            "limits": {
-                "cpu": 500,
-                "memory": 512
-            }
-        },
-        "dependencies_group": "0",
-        "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/SolarGISDataGeneratorPiece",
-        "input_schema": {
-            "additionalProperties": true,
-            "properties": {
-                "scenario_yaml": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Optional SoMES scenario.yaml. When set, site.latitude/longitude and pv.installed_kwp / pv.tilt_deg override the manual fields below.",
-                    "title": "Scenario YAML"
-                },
-                "latitude": {
-                    "default": 48.15,
-                    "description": "Fallback latitude if scenario_yaml is missing site.latitude.",
-                    "title": "Latitude",
-                    "type": "number"
-                },
-                "longitude": {
-                    "default": 17.11,
-                    "description": "Fallback longitude if scenario_yaml is missing site.longitude.",
-                    "title": "Longitude",
-                    "type": "number"
-                },
-                "start_date": {
-                    "default": "2026-01-01",
-                    "description": "First day of the requested period in YYYY-MM-DD format.",
-                    "title": "Start Date",
-                    "type": "string"
-                },
-                "end_date": {
-                    "default": "2026-01-07",
-                    "description": "Last day of the requested period in YYYY-MM-DD format.",
-                    "title": "End Date",
-                    "type": "string"
-                },
-                "pvout_peak_kw": {
-                    "default": 5.2,
-                    "description": "Fallback kWp if scenario_yaml has no pv.installed_kwp / solar.capacity_kWp.",
-                    "title": "PV System Peak Power (kWp)",
-                    "type": "number"
-                },
-                "panel_tilt": {
-                    "default": 30.0,
-                    "description": "Fallback tilt if scenario_yaml has no pv.tilt_deg.",
-                    "title": "Panel Tilt (degrees)",
-                    "type": "number"
-                },
-                "output_mode": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": "batch_sample",
-                    "description": "One of: `batch_sample`, `realtime_stream`.",
-                    "title": "Output Mode"
-                },
-                "output_format": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "One of: `json`, `csv`.",
-                    "title": "Output Format"
-                }
-            },
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "file_path": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "title": "Dataset file path"
-                },
-                "target_column": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Suggested target column for the generated dataset (pass downstream via fromUpstream).",
-                    "title": "Target column"
-                }
-            },
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null
-    },
     "PriceForecastPiece": {
         "name": "PriceForecastPiece",
         "dependency": {
@@ -3540,19 +3540,6 @@
                     "default": null,
                     "description": "Path to Open-Meteo weather/PV CSV (columns include `datetime` or `Date`+`Time`). Wire upstream from Open-Meteo PV Data `File Path`.",
                     "title": "Data Path"
-                },
-                "data_path_solargis": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Deprecated alias for `data_path`. Prefer wiring `data_path` from Open-Meteo.",
-                    "title": "Data Path Solargis"
                 },
                 "data_path_okte": {
                     "anyOf": [
