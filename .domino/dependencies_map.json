@@ -34,10 +34,8 @@
             "PVOUTErrorCorrectionModelTrainPiece",
             "ModelMonitoringPiece",
             "BatteryStrategyOptimizerPiece",
-            "ShmuCalibrationPiece",
             "PvoutModelFeatureSelectPiece",
-            "TrainModelPiece",
-            "UserInputPiece"
+            "TrainModelPiece"
         ],
         "secrets": [
             "onedata_output_dir",
