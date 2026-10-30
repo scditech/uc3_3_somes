@@ -30,8 +30,13 @@ OPEN_METEO_CSV_FIELDNAMES = [
     "PVOUT_UNC_HIGH",
 ]
 
-# Open-Meteo archive endpoint — no API key required
+# Open-Meteo endpoints — no API key required.
+# The archive (ERA5) only serves hourly data. The historical-forecast API serves
+# 15-minute data back to 2021, which is what a 15-minute load profile needs.
 OPEN_METEO_ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
+OPEN_METEO_HISTORICAL_FORECAST_URL = "https://historical-forecast-api.open-meteo.com/v1/forecast"
+
+TIME_RESOLUTIONS = ("15min", "hourly", "auto")
 
 
 class InputModel(BaseModel):
@@ -55,6 +60,16 @@ class InputModel(BaseModel):
         title="Longitude",
         description="Fallback longitude if scenario_yaml is missing site.longitude.",
     )
+    load_csv: str | None = Field(
+        default=None,
+        title="Load profile CSV",
+        description=(
+            "Metered load profile. When set, the weather window is taken from its "
+            "first and last timestamp, so production is modelled over exactly the "
+            "period the investment case is evaluated on, and start_date / end_date "
+            "below are ignored."
+        ),
+    )
     start_date: str = Field(
         default="2026-01-01",
         title="Start Date",
@@ -74,6 +89,15 @@ class InputModel(BaseModel):
         default=30.0,
         title="Panel Tilt (degrees)",
         description="Fallback tilt if scenario_yaml has no pv.tilt_deg.",
+    )
+    time_resolution: str | None = Field(
+        default="15min",
+        title="Time Resolution",
+        description=(
+            "One of: `15min` (historical-forecast API, matches a 15-minute load "
+            "profile), `hourly` (ERA5 archive, longer history), or `auto` to try "
+            "15-minute first and fall back to hourly."
+        ),
     )
     output_mode: str | None = Field(
         default="batch_sample",
@@ -123,6 +147,19 @@ class InputModel(BaseModel):
         if output_mode is not None:
             data["output_mode"] = str(output_mode).strip().lower()
 
+        resolution = data.get("time_resolution")
+        if resolution is not None:
+            normalized = str(resolution).strip().lower().replace("_", "").replace("-", "")
+            data["time_resolution"] = {
+                "15min": "15min",
+                "15minutely": "15min",
+                "minutely15": "15min",
+                "quarterhourly": "15min",
+                "hourly": "hourly",
+                "1h": "hourly",
+                "auto": "auto",
+            }.get(normalized, normalized)
+
         output_format = data.get("output_format")
         if output_format is not None:
             normalized = str(output_format).strip().lower()
@@ -141,3 +178,14 @@ class OutputModel(BaseModel):
         title="Target column",
         description="Suggested target column for the generated dataset (pass downstream via fromUpstream).",
     )
+
+
+try:
+    from common.onedata_models import OneDataSecretsModel
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel
+
+
+class SecretsModel(OneDataSecretsModel):
+    """OneData secrets so the piece honours the repository secrets set in Domino
+    (output dir, host, token) instead of the built-in defaults."""

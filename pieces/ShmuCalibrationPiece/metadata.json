@@ -1,0 +1,35 @@
+{
+  "name": "ShmuCalibrationPiece",
+  "description": "Calibrate modelled Open-Meteo irradiance against measured SHMU global radiation for the nearest Slovak station, and emit a measurement-based training target for the PVOUT error-correction model.",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 200,
+      "memory": 256
+    },
+    "limits": {
+      "cpu": 1000,
+      "memory": 1024
+    }
+  },
+  "tags": [
+    "SHMU",
+    "Calibration",
+    "PVOUT"
+  ],
+  "style": {
+    "node_label": "SHMÚ Calibration",
+    "node_type": "default",
+    "node_style": {
+      "backgroundColor": "#ebebeb"
+    },
+    "useIcon": true,
+    "icon_class_name": "fa-solid:crosshairs",
+    "iconStyle": {
+      "cursor": "pointer"
+    }
+  }
+}

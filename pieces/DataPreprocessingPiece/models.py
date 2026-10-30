@@ -1,7 +1,13 @@
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
-class InputModel(BaseModel):
+try:
+    from common.onedata_models import RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import RunIdInputMixin
+
+
+class InputModel(RunIdInputMixin):
     model_config = ConfigDict(extra="allow")
 
     preprocessing_option: str | None = Field(
@@ -71,3 +77,14 @@ class OutputModel(BaseModel):
         default_factory=dict,
         description="Optional outputs (e.g., cleaned dataset URI, dropped rows stats).",
     )
+
+
+try:
+    from common.onedata_models import OneDataSecretsModel
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel
+
+
+class SecretsModel(OneDataSecretsModel):
+    """OneData secrets so the piece honours the repository secrets set in Domino
+    (output dir, host, token) instead of the built-in defaults."""

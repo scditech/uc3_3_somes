@@ -96,7 +96,10 @@ class DashboardPiece(BasePiece):
                 validation = json.loads(Path(input_data.technical_validation_json).read_text(encoding="utf-8"))
             alerts_block = {"summary": {"total": 0, "critical": 0, "warning": 0, "info": 0}, "latest": [], "drift": {}}
             if alerts_path and alerts_path.is_file():
-                alerts_df = pd.read_csv(alerts_path)
+                try:
+                    alerts_df = pd.read_csv(alerts_path)
+                except pd.errors.EmptyDataError:
+                    alerts_df = pd.DataFrame()
                 if not alerts_df.empty:
                     sev = alerts_df.get("severity", pd.Series([], dtype=str)).astype(str).str.lower()
                     alerts_block["summary"] = {
@@ -207,7 +210,10 @@ class DashboardPiece(BasePiece):
                 "drift": {},
             }
             if alerts_path and alerts_path.is_file():
-                alerts_df = pd.read_csv(alerts_path)
+                try:
+                    alerts_df = pd.read_csv(alerts_path)
+                except pd.errors.EmptyDataError:
+                    alerts_df = pd.DataFrame()
                 if not alerts_df.empty:
                     sev = alerts_df.get("severity", pd.Series([], dtype=str)).astype(str).str.lower()
                     alerts_block["summary"] = {

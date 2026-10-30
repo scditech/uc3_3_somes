@@ -127,8 +127,11 @@ class BatterySimPiece(BasePiece):
                 Path(input_data.grid_constraints_json) if input_data.grid_constraints_json else None,
                 cfg,
             )
-            import_limit = float(grid.get("import_limit_kw") or 0.0) or None
-            export_limit = float(grid.get("export_limit_kw") or 0.0) or None
+            # P4/G05: zachovať explicitnú 0 (zákaz exportu/importu); None = bez limitu.
+            _imp = grid.get("import_limit_kw")
+            import_limit = float(_imp) if _imp is not None else None
+            _exp = grid.get("export_limit_kw")
+            export_limit = float(_exp) if _exp is not None else None
 
             load_kw = df["load_kw"].astype(float).values.copy()
             if input_data.flexible_load_schedule_csv and Path(input_data.flexible_load_schedule_csv).is_file():
@@ -142,11 +145,30 @@ class BatterySimPiece(BasePiece):
                     load_kw = load_kw + add
                     _log(f"Applied flexible load schedule, extra energy={float(add.sum() * dt_h):.2f} kWh")
 
-            pv_kw = solar_df["pv_kw"].astype(float).values[: len(df)]
-            if len(pv_kw) < len(df):
-                pv_kw = np.pad(pv_kw, (0, len(df) - len(pv_kw)))
-            elif len(pv_kw) > len(df):
-                pv_kw = pv_kw[: len(df)]
+            # P1/G21: priraď FV predpoveď podľa času (datetime merge), nie podľa
+            # poradia riadkov — inak sa do plánu dostane nesprávny úsek profilu
+            # (napr. 1.1. namiesto plánovaného dňa).
+            if "datetime" in solar_df.columns:
+                _sol = solar_df.copy()
+                _sol["datetime"] = pd.to_datetime(_sol["datetime"], errors="coerce")
+                _merged_pv = df[["datetime"]].merge(
+                    _sol[["datetime", "pv_kw"]].drop_duplicates(subset=["datetime"], keep="last"),
+                    on="datetime",
+                    how="left",
+                )
+                _missing = int(_merged_pv["pv_kw"].isna().sum())
+                pv_kw = pd.to_numeric(_merged_pv["pv_kw"], errors="coerce").fillna(0.0).to_numpy(dtype=float)
+                if _missing:
+                    _log(
+                        f"PV forecast chýba pre {_missing}/{len(df)} krokov plánu — "
+                        f"doplnené 0 kW (over časové zarovnanie FV)"
+                    )
+            else:
+                pv_kw = solar_df["pv_kw"].astype(float).values[: len(df)]
+                if len(pv_kw) < len(df):
+                    pv_kw = np.pad(pv_kw, (0, len(df) - len(pv_kw)))
+                elif len(pv_kw) > len(df):
+                    pv_kw = pv_kw[: len(df)]
 
             bess_state = read_bess_state(
                 Path(input_data.bess_telemetry_csv) if input_data.bess_telemetry_csv else None,

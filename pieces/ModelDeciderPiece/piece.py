@@ -9,8 +9,15 @@ from .models import InputModel, OutputModel
 TREE_MODELS = {"xgb_regressor_model", "interval_xgb_regressor_model", "eda_rule_baseline"}
 
 
+try:
+    from common.piece_onedata import onedata_piece
+except ModuleNotFoundError:
+    from pieces.common.piece_onedata import onedata_piece
+
+
 class ModelDeciderPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
+    @onedata_piece("ModelDeciderPiece")
+    def piece_function(self, input_data: InputModel, secrets_data=None, run_id=None):
         self.logger.info("Running ModelDeciderPiece.")
 
         payload = input_data.payload_as_dict()
@@ -30,7 +37,7 @@ class ModelDeciderPiece(BasePiece):
 
         # Strip the chosen target_column from feature_columns so downstream pieces
         # never train with the target leaking in as a predictor. This matters when
-        # DataPreprocessing merges Solargis + OKTE into one dataset and two
+        # DataPreprocessing merges weather + price data into one dataset and two
         # ModelDecider nodes (one per target) fan out from it — each must echo a
         # feature list that excludes its own target.
         target_column_resolved = str(payload.get("target_column") or "PVOUT")

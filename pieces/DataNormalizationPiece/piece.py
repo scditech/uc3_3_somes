@@ -73,8 +73,15 @@ class Normalizations:
         return X
 
 
+try:
+    from common.piece_onedata import onedata_piece
+except ModuleNotFoundError:
+    from pieces.common.piece_onedata import onedata_piece
+
+
 class DataNormalizationPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
+    @onedata_piece("DataNormalizationPiece")
+    def piece_function(self, input_data: InputModel, secrets_data=None, run_id=None):
         def _to_serializable_dataframe_like(df_like):
             """
             Convert a dataframe-like object into a JSON-serializable dict.

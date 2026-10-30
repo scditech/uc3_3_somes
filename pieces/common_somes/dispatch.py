@@ -104,8 +104,10 @@ def lp_battery_dispatch(
     bounds = (
         [(0.0, float(max_charge_kw))] * n
         + [(0.0, float(max_discharge_kw))] * n
-        + [(0.0, float(import_limit_kw) if import_limit_kw else None)] * n
-        + [(0.0, float(export_limit_kw) if export_limit_kw else None)] * n
+        # P4/G05: None = bez limitu; číslo (vrátane 0) = tvrdý strop v kW,
+        # takže export_limit_kw=0 reálne zakáže export (bound (0, 0)).
+        + [(0.0, None if import_limit_kw is None else float(import_limit_kw))] * n
+        + [(0.0, None if export_limit_kw is None else float(export_limit_kw))] * n
         + [(0.0, big)] * n
         + [(0.0, big)] * n
         + [(0.0, None)]

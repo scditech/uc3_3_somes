@@ -57,11 +57,14 @@ def corrected_operating_plan(
     pmax = float(energy_kwh) * float(max_c_rate) if energy_kwh > 0 else 0.0
     inverter = float(grid.get("inverter_limit_kw") or 0.0)
     connection = float(grid.get("connection_capacity_kw") or 0.0)
-    import_limit = float(grid.get("import_limit_kw") or 0.0)
-    export_limit = float(grid.get("export_limit_kw") or 0.0)
+    _imp = grid.get("import_limit_kw")
+    import_limit = float(_imp) if _imp is not None else None
+    # P4/G05: None = bez limitu; 0 = tvrdý strop (export clip na 0).
+    _exp = grid.get("export_limit_kw")
+    export_limit = float(_exp) if _exp is not None else None
 
-    def _clip(column: str, limit: float, reason: str, *, symmetric: bool = False) -> None:
-        if column not in out.columns or limit <= 0:
+    def _clip(column: str, limit: float | None, reason: str, *, symmetric: bool = False) -> None:
+        if column not in out.columns or limit is None or limit < 0:
             return
         original = out[column].to_numpy(dtype=float)
         clipped = np.clip(original, -limit, limit) if symmetric else np.clip(original, 0.0, limit)
@@ -79,13 +82,21 @@ def corrected_operating_plan(
             )
         out[column] = clipped
 
-    _clip("battery_kw", pmax, "battery power limit (C-rate x usable energy)", symmetric=True)
-    _clip("grid_export_kw", min(v for v in (inverter, export_limit, connection) if v > 0) if any(
-        v > 0 for v in (inverter, export_limit, connection)
-    ) else 0.0, "inverter / export / connection limit")
-    _clip("grid_import_kw", min(v for v in (import_limit, connection) if v > 0) if any(
-        v > 0 for v in (import_limit, connection)
-    ) else 0.0, "import / connection limit")
+    def _tightest(*limits: float | None) -> float | None:
+        vals = [v for v in limits if v is not None and v >= 0]
+        return min(vals) if vals else None
+
+    _clip("battery_kw", pmax if pmax > 0 else None, "battery power limit (C-rate x usable energy)", symmetric=True)
+    _clip(
+        "grid_export_kw",
+        _tightest(inverter or None, export_limit, connection or None),
+        "inverter / export / connection limit",
+    )
+    _clip(
+        "grid_import_kw",
+        _tightest(import_limit, connection or None),
+        "import / connection limit",
+    )
 
     if "soc_pct" in out.columns:
         original = out["soc_pct"].to_numpy(dtype=float)
@@ -151,7 +162,9 @@ def validate_grid_feasibility(
         bad = plan.loc[plan["grid_import_kw"] > import_limit_kw + 1e-6]
         for _, row in bad.head(20).iterrows():
             violations.append(f"import {row['grid_import_kw']:.2f} > limit {import_limit_kw:.2f}")
-    if "grid_export_kw" in plan.columns and export_limit_kw > 0:
+    # P4/G05: validuj export aj pri limite 0 (zákaz exportu); `> 0` by nulový
+    # strop ignorovalo a tváril sa ako "bez limitu".
+    if "grid_export_kw" in plan.columns and export_limit_kw is not None:
         bad = plan.loc[plan["grid_export_kw"] > export_limit_kw + 1e-6]
         for _, row in bad.head(20).iterrows():
             violations.append(f"export {row['grid_export_kw']:.2f} > limit {export_limit_kw:.2f}")
@@ -313,9 +326,32 @@ def schedule_flexible_loads(
         e_min = e_h * 60 + e_m
         l_min = l_h * 60 + l_m
         mins = (idx.hour * 60 + idx.minute).astype(int)
-        eligible = [i for i in range(n - steps + 1) if e_min <= int(mins[i]) <= l_min]
+        # P5/SOM-E01-US14 (G11): celý beh flexibilnej záťaže musí ležať v okne
+        # [earliest_start, latest_end] — kontroluje sa začiatok aj koniec behu,
+        # nielen začiatok.
+        eligible = [
+            i
+            for i in range(n - steps + 1)
+            if e_min <= int(mins[i]) and int(mins[i + steps - 1]) <= l_min
+        ]
         if not eligible:
-            eligible = list(range(max(1, n - steps + 1)))
+            # Ak sa beh do povoleného okna nezmestí, záťaž sa NEnaplánuje a beh to
+            # oznámi (žiadne tiché ignorovanie okna).
+            rows.append(
+                {
+                    "load_id": load.get("load_id"),
+                    "name": load.get("name"),
+                    "flexible_kw": flex_kw,
+                    "start_datetime": None,
+                    "end_datetime": None,
+                    "duration_hours": duration_h,
+                    "mean_price_eur_kwh": None,
+                    "priority": load.get("priority"),
+                    "scheduled": False,
+                    "reason": f"beh {duration_h:.2f} h sa nezmestí do okna [{earliest}, {latest}]",
+                }
+            )
+            continue
         best_i = min(eligible, key=lambda i: float(np.mean(price[i : i + steps])))
         schedule_kw[best_i : best_i + steps] += flex_kw
         rows.append(
@@ -328,6 +364,8 @@ def schedule_flexible_loads(
                 "duration_hours": duration_h,
                 "mean_price_eur_kwh": float(np.mean(price[best_i : best_i + steps])),
                 "priority": load.get("priority"),
+                "scheduled": True,
+                "reason": "",
             }
         )
     plan = pd.DataFrame({"datetime": idx, "flexible_load_kw": schedule_kw})
@@ -371,7 +409,9 @@ def forecast_prices(history: pd.DataFrame, horizon_steps: int) -> pd.DataFrame:
             {
                 "datetime": dt,
                 "price_eur_kwh_forecast": round(base, 6),
-                "price_low_eur_kwh": round(max(0.0, base - 1.2816 * sigma), 6),
+                # P7/SOM-E01-US03: OKTE môže mať záporné ceny — zachovať ich vo
+                # všetkých scenároch (žiadne orezanie na 0).
+                "price_low_eur_kwh": round(base - 1.2816 * sigma, 6),
                 "price_high_eur_kwh": round(base + 1.2816 * sigma, 6),
                 "price_sigma_eur_kwh": round(sigma, 6),
                 "tariff_scenario": "base",

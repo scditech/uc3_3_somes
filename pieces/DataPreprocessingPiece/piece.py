@@ -6,8 +6,15 @@ from .models import InputModel, OutputModel
 from .utils.modes import preprocess_correction, preprocess_prediction
 
 
+try:
+    from common.piece_onedata import onedata_piece
+except ModuleNotFoundError:
+    from pieces.common.piece_onedata import onedata_piece
+
+
 class DataPreprocessingPiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
+    @onedata_piece("DataPreprocessingPiece")
+    def piece_function(self, input_data: InputModel, secrets_data=None, run_id=None):
         self.logger.info("Running DataPreprocessingPiece.")
 
         payload = input_data.payload_as_dict()

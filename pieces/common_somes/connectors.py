@@ -421,9 +421,17 @@ def load_grid_constraints(path: Path | None, scenario_cfg: dict[str, Any] | None
     scenario_cfg = scenario_cfg or {}
     grid = scenario_cfg.get("grid") or {}
     mrk = scenario_cfg.get("mrk") or {}
+    def _num(value: Any, default: float) -> float:
+        # P4/G05: zachovať explicitnú 0 (napr. zákaz exportu); len chýbajúca
+        # hodnota (None) sa nahradí predvolenou.
+        return float(value) if value is not None else float(default)
+
+    _import_cfg = mrk.get("contract_kw")
+    if _import_cfg is None:
+        _import_cfg = grid.get("import_limit_kw")
     defaults = {
-        "import_limit_kw": float(mrk.get("contract_kw") or grid.get("import_limit_kw") or 420.0),
-        "export_limit_kw": float(grid.get("export_limit_kw") or 350.0),
+        "import_limit_kw": _num(_import_cfg, 420.0),
+        "export_limit_kw": _num(grid.get("export_limit_kw"), 350.0),
         "inverter_limit_kw": float(
             grid.get("inverter_limit_kw") or (scenario_cfg.get("pv") or {}).get("installed_kwp") or 400.0
         ),

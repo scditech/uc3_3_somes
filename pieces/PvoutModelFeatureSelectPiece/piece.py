@@ -29,8 +29,15 @@ NON_MODEL_COLUMNS = {
 }
 
 
+try:
+    from common.piece_onedata import onedata_piece
+except ModuleNotFoundError:
+    from pieces.common.piece_onedata import onedata_piece
+
+
 class PvoutModelFeatureSelectPiece(BasePiece):
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+    @onedata_piece("PvoutModelFeatureSelectPiece")
+    def piece_function(self, input_data: InputModel, secrets_data=None, run_id=None) -> OutputModel:
         target = (input_data.target_column or "PVOUT").strip() or "PVOUT"
         raw = list(input_data.feature_columns or [])
         model_features = [

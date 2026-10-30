@@ -59,7 +59,13 @@ def _normalize_load_frame(raw: pd.DataFrame, source_name: str) -> pd.DataFrame:
         df = df.drop(columns=[dt_col])
 
     if "load_kw" in df.columns:
-        df["load_kw"] = _to_numeric_series(df["load_kw"]).fillna(0.0)
+        # P8/GEN-E01-US06: chýbajúce hodnoty spotreby NENAHRÁDZAME nulou — necháme
+        # NaN a nahlásime ich (ďalej rieši data-quality krok). Tiché nulovanie by
+        # skreslilo spotrebu a porušuje princíp "no silent defaults".
+        df["load_kw"] = _to_numeric_series(df["load_kw"])
+        _missing = int(df["load_kw"].isna().sum())
+        if _missing:
+            print(f"[WARN] {source_name}: {_missing} chýbajúcich hodnôt load_kw ponechaných ako NaN (nenulované)")
         if "department_id" not in df.columns:
             dept = source_name.replace("load_", "") or "default"
             df["department_id"] = dept if dept != "load" else "default"
@@ -77,7 +83,11 @@ def _normalize_load_frame(raw: pd.DataFrame, source_name: str) -> pd.DataFrame:
         value_name="load_kw",
     )
     long["department_id"] = long["department_id"].astype(str).str.strip().str.replace("prikon ", "", case=False)
-    long["load_kw"] = _to_numeric_series(long["load_kw"]).fillna(0.0)
+    # P8/GEN-E01-US06: nenulovať chýbajúce hodnoty — ponechať NaN a nahlásiť.
+    long["load_kw"] = _to_numeric_series(long["load_kw"])
+    _missing = int(long["load_kw"].isna().sum())
+    if _missing:
+        print(f"[WARN] {source_name}: {_missing} chýbajúcich hodnôt load_kw ponechaných ako NaN (nenulované)")
     return long[["datetime", "department_id", "load_kw"]]
 
 

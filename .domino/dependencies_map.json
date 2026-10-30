@@ -1,47 +1,49 @@
 {
-    "group0": {
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "pieces": [
-            "DataNormalizationPiece",
-            "IncrementalTrainPiece",
-            "DashboardPiece",
-            "PvoutStagedInferenceSpecPiece",
-            "PVOUTPredictionModelTrainPiece",
-            "ForecastHorizonPiece",
-            "GridFeasibilityPiece",
-            "FetchEnergyDataPiece",
-            "ForecastAggregatorPiece",
-            "OpenMeteoPVDataPiece",
-            "PredictPiece",
-            "FlexibleLoadSchedulePiece",
-            "SimulatePiece",
-            "EmsBemsOutputPiece",
-            "EvaluateMLModelPiece",
-            "SyntheticDataGeneratorPiece",
-            "PreprocessEnergyDataPiece",
-            "BatterySimPiece",
-            "DataPreprocessingPiece",
-            "ModelDeciderPiece",
-            "PriceForecastPiece",
-            "SomesConnectorsPiece",
-            "InferencePiece",
-            "PvoutToVirtualSolarPiece",
-            "SolarSimPiece",
-            "ExplainablePredictionPiece",
-            "PVOUTErrorCorrectionModelTrainPiece",
-            "ModelMonitoringPiece",
-            "BatteryStrategyOptimizerPiece",
-            "PvoutModelFeatureSelectPiece",
-            "TrainModelPiece"
-        ],
-        "secrets": [
-            "onedata_token",
-            "onedata_onezone_host",
-            "onedata_output_dir"
-        ],
-        "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.7-group0"
-    }
+ "group0": {
+  "dependency": {
+   "dockerfile": null,
+   "requirements_file": "requirements_0.txt"
+  },
+  "pieces": [
+   "DataNormalizationPiece",
+   "IncrementalTrainPiece",
+   "DashboardPiece",
+   "PvoutStagedInferenceSpecPiece",
+   "PVOUTPredictionModelTrainPiece",
+   "ForecastHorizonPiece",
+   "GridFeasibilityPiece",
+   "FetchEnergyDataPiece",
+   "ForecastAggregatorPiece",
+   "OpenMeteoPVDataPiece",
+   "PredictPiece",
+   "FlexibleLoadSchedulePiece",
+   "SimulatePiece",
+   "EmsBemsOutputPiece",
+   "EvaluateMLModelPiece",
+   "SyntheticDataGeneratorPiece",
+   "PreprocessEnergyDataPiece",
+   "BatterySimPiece",
+   "DataPreprocessingPiece",
+   "ModelDeciderPiece",
+   "PriceForecastPiece",
+   "SomesConnectorsPiece",
+   "InferencePiece",
+   "PvoutToVirtualSolarPiece",
+   "SolarSimPiece",
+   "ExplainablePredictionPiece",
+   "PVOUTErrorCorrectionModelTrainPiece",
+   "ModelMonitoringPiece",
+   "BatteryStrategyOptimizerPiece",
+   "PvoutModelFeatureSelectPiece",
+   "TrainModelPiece",
+   "AnomalyAlertPiece",
+   "ShmuCalibrationPiece"
+  ],
+  "secrets": [
+   "onedata_token",
+   "onedata_onezone_host",
+   "onedata_output_dir"
+  ],
+  "source_image": "ghcr.io/scditech/uc3_3_somes:0.2.7-group0"
+ }
 }

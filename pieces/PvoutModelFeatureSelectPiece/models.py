@@ -1,7 +1,13 @@
 from pydantic import BaseModel, Field
 
 
-class InputModel(BaseModel):
+try:
+    from common.onedata_models import RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import RunIdInputMixin
+
+
+class InputModel(RunIdInputMixin):
     data_path: str = Field(description="Passthrough preprocessed/normalized CSV path (keeps datetime column).")
     feature_columns: list[str] = Field(
         default_factory=list,
@@ -21,3 +27,14 @@ class OutputModel(BaseModel):
         description="Datetime column name for InferencePiece (still present in CSV).",
     )
     target_column: str = Field(default="PVOUT")
+
+
+try:
+    from common.onedata_models import OneDataSecretsModel
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel
+
+
+class SecretsModel(OneDataSecretsModel):
+    """OneData secrets so the piece honours the repository secrets set in Domino
+    (output dir, host, token) instead of the built-in defaults."""

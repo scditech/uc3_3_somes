@@ -21,7 +21,13 @@ class ModelSpec(BaseModel):
     base_forecast_column: str | None = Field(default=None)
 
 
-class InputModel(BaseModel):
+try:
+    from common.onedata_models import RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import RunIdInputMixin
+
+
+class InputModel(RunIdInputMixin):
     model_config = ConfigDict(extra="allow")
 
     model_type: str | None = Field(default=None, description="Training model type.")
@@ -111,3 +117,14 @@ class OutputModel(BaseModel):
         default_factory=dict,
         description="Optional outputs (e.g., trained corrector URI, evaluation metrics).",
     )
+
+
+try:
+    from common.onedata_models import OneDataSecretsModel
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel
+
+
+class SecretsModel(OneDataSecretsModel):
+    """OneData secrets so the piece honours the repository secrets set in Domino
+    (output dir, host, token) instead of the built-in defaults."""

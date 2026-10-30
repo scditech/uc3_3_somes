@@ -1,13 +1,14 @@
-"""Build InferencePiece.pvout_model with UC3.4 staged baseline→correction for Open-Meteo.
+"""Build InferencePiece.pvout_model with the UC3.4 staged baseline→correction spec.
 
-UC3.4 ErrorCorrection.model_spec uses mode=pvout_correction with base_forecast_column=PVOUT.
-That matches commercial SolarGIS correction CSVs (where PVOUT on pred rows is the baseline).
-Open-Meteo CSVs keep PVOUT as (synthetic) truth, so serving must:
+UC3.4 ErrorCorrection.model_spec uses mode=pvout_correction with
+base_forecast_column=PVOUT, i.e. it expects PVOUT on prediction rows to already
+hold the baseline forecast. In this workflow PVOUT is the physically modelled
+production from Open-Meteo weather, so serving must:
 
   1) run the baseline model absolutely (price_level) → inject as PVOUT_PRED
   2) run the corrector with base_forecast_column=PVOUT_PRED
 
-This SoMES glue does not change UC3.4 piece code.
+This glue piece does not change UC3.4 piece code.
 """
 from __future__ import annotations
 
@@ -19,8 +20,15 @@ except ModuleNotFoundError:
 from .models import InputModel, OutputModel
 
 
+try:
+    from common.piece_onedata import onedata_piece
+except ModuleNotFoundError:
+    from pieces.common.piece_onedata import onedata_piece
+
+
 class PvoutStagedInferenceSpecPiece(BasePiece):
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+    @onedata_piece("PvoutStagedInferenceSpecPiece")
+    def piece_function(self, input_data: InputModel, secrets_data=None, run_id=None) -> OutputModel:
         feats = list(input_data.feature_columns or [])
         if not feats:
             raise ValueError("feature_columns is required for staged PVOUT inference.")

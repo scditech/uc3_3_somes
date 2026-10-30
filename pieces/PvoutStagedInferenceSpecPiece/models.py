@@ -1,7 +1,13 @@
 from pydantic import BaseModel, Field
 
 
-class InputModel(BaseModel):
+try:
+    from common.onedata_models import RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import RunIdInputMixin
+
+
+class InputModel(RunIdInputMixin):
     baseline_model_path: str = Field(
         description="PVOUTPredictionModelTrainPiece.model_path (absolute baseline).",
     )
@@ -32,3 +38,14 @@ class OutputModel(BaseModel):
     datetime_column: str = Field(default="datetime")
     data_path: str
     feature_columns: list[str] = Field(default_factory=list)
+
+
+try:
+    from common.onedata_models import OneDataSecretsModel
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel
+
+
+class SecretsModel(OneDataSecretsModel):
+    """OneData secrets so the piece honours the repository secrets set in Domino
+    (output dir, host, token) instead of the built-in defaults."""

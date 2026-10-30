@@ -8,15 +8,27 @@ import json
 
 from domino.base_piece import BasePiece
 
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+try:
+    from common_somes import pv_model
+    from common_somes.pv_model import ArraySpec
+except ModuleNotFoundError:
+    from pieces.common_somes import pv_model
+    from pieces.common_somes.pv_model import ArraySpec
+
 from .models import (
     InputModel,
     OutputModel,
     TARGET_COLUMN,
     OPEN_METEO_CSV_FIELDNAMES,
     OPEN_METEO_ARCHIVE_URL,
+    OPEN_METEO_HISTORICAL_FORECAST_URL,
 )
 
-_OPEN_METEO_HOURLY_VARS = ",".join([
+_OPEN_METEO_VARS = [
     "shortwave_radiation",
     "direct_normal_irradiance",
     "diffuse_radiation",
@@ -26,44 +38,12 @@ _OPEN_METEO_HOURLY_VARS = ",".join([
     "wind_gusts_10m",
     "wind_direction_10m",
     "surface_pressure",
-])
+]
 
-_PERFORMANCE_RATIO = 0.75  # typical real-world PV performance ratio
-
-
-def _solar_position(dt: datetime, lat: float, lon: float) -> tuple[float, float]:
-    """Return (elevation_deg, azimuth_deg) using simplified solar geometry."""
-    doy = dt.timetuple().tm_yday
-    B = math.radians((360.0 / 365.0) * (doy - 81))
-    decl = math.radians(23.45 * math.sin(B))
-    # Equation of time correction in minutes
-    eot = 9.87 * math.sin(2 * B) - 7.53 * math.cos(B) - 1.5 * math.sin(B)
-    solar_noon = 12.0 - lon / 15.0 - eot / 60.0
-    hour = dt.hour + dt.minute / 60.0
-    ha = math.radians(15.0 * (hour - solar_noon))
-    lat_r = math.radians(lat)
-
-    sin_el = (
-        math.sin(lat_r) * math.sin(decl)
-        + math.cos(lat_r) * math.cos(decl) * math.cos(ha)
-    )
-    elevation = math.degrees(math.asin(max(-1.0, min(1.0, sin_el))))
-    if elevation <= 0.0:
-        return 0.0, 0.0
-
-    cos_az = (math.sin(decl) * math.cos(lat_r) - math.cos(decl) * math.sin(lat_r) * math.cos(ha))
-    cos_az /= math.cos(math.radians(elevation)) + 1e-10
-    azimuth = math.degrees(math.acos(max(-1.0, min(1.0, cos_az))))
-    if ha > 0:
-        azimuth = 360.0 - azimuth
-
-    return round(elevation, 2), round(azimuth, 2)
-
-
-def _gti_from_ghi(ghi: float, panel_tilt: float) -> float:
-    """Approximate Global Tilted Irradiance from GHI for a south-facing panel."""
-    tilt_rad = math.radians(panel_tilt)
-    return max(0.0, ghi * (1.0 + math.sin(tilt_rad) * 0.07))
+# The archive (ERA5) exposes fewer 15-minute-capable variables than the
+# historical-forecast API, so each endpoint gets its own variable list.
+_ARCHIVE_VARS = ",".join(_OPEN_METEO_VARS)
+_MINUTELY_15_VARS = ",".join(_OPEN_METEO_VARS)
 
 
 def _fetch_open_meteo(
@@ -71,37 +51,93 @@ def _fetch_open_meteo(
     longitude: float,
     start_date: str,
     end_date: str,
-    timeout: int = 30,
-) -> dict[str, Any]:
-    
-    import requests 
+    resolution: str = "15min",
+    timeout: int = 90,
+) -> tuple[dict[str, Any], str]:
+    """Fetch weather for the period and return ``(series, resolution_used)``.
 
-    params = {
+    ``15min`` uses the historical-forecast API, whose ``minutely_15`` block lines
+    up with a 15-minute load profile. ``hourly`` uses the ERA5 archive, which
+    reaches further back. ``auto`` tries 15-minute first and falls back.
+    """
+    import requests
+
+    base = {
         "latitude": latitude,
         "longitude": longitude,
         "start_date": start_date,
         "end_date": end_date,
-        "hourly": _OPEN_METEO_HOURLY_VARS,
         "wind_speed_unit": "ms",
         "timezone": "auto",
     }
-    resp = requests.get(OPEN_METEO_ARCHIVE_URL, params=params, timeout=timeout)
-    resp.raise_for_status()
-    return resp.json()
+
+    def _try_15min() -> tuple[dict[str, Any], int] | None:
+        resp = requests.get(
+            OPEN_METEO_HISTORICAL_FORECAST_URL,
+            params={**base, "minutely_15": _MINUTELY_15_VARS},
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        body = resp.json()
+        block = body.get("minutely_15") or {}
+        if not block.get("time"):
+            return None
+        return block, int(body.get("utc_offset_seconds") or 0)
+
+    def _try_hourly() -> tuple[dict[str, Any], int]:
+        resp = requests.get(
+            OPEN_METEO_ARCHIVE_URL,
+            params={**base, "hourly": _ARCHIVE_VARS},
+            timeout=timeout,
+        )
+        resp.raise_for_status()
+        body = resp.json()
+        return body.get("hourly") or {}, int(body.get("utc_offset_seconds") or 0)
+
+    if resolution == "hourly":
+        block, offset = _try_hourly()
+        return {**block, "_utc_offset_seconds": offset}, "hourly"
+
+    if resolution == "auto":
+        try:
+            got = _try_15min()
+            if got:
+                block, offset = got
+                return {**block, "_utc_offset_seconds": offset}, "15min"
+        except Exception:
+            pass
+        block, offset = _try_hourly()
+        return {**block, "_utc_offset_seconds": offset}, "hourly"
+
+    got = _try_15min()
+    if not got:
+        raise RuntimeError(
+            "Open-Meteo returned no 15-minute data for the requested period. "
+            "Use time_resolution='hourly' or 'auto' for periods the "
+            "historical-forecast API does not cover."
+        )
+    block, offset = got
+    return {**block, "_utc_offset_seconds": offset}, "15min"
 
 
 def _build_records(
-    hourly: dict[str, Any],
+    series: dict[str, Any],
     lat: float,
     lon: float,
-    pvout_peak_kw: float,
-    panel_tilt: float,
+    spec: "ArraySpec",
 ) -> list[dict[str, Any]]:
-    times = hourly.get("time", [])
+    """Turn a raw Open-Meteo block into PVOUT training rows.
+
+    PVOUT is produced by the physical model in ``common_somes.pv_model`` rather
+    than by scaling GHI, so it carries information that the downstream model has
+    to learn from several weather variables at once.
+    """
+    times = series.get("time", [])
     n = len(times)
+    utc_offset = int(series.get("_utc_offset_seconds") or 0)
 
     def _col(key: str) -> list:
-        return hourly.get(key) or [None] * n
+        return series.get(key) or [None] * n
 
     ghi_col = _col("shortwave_radiation")
     dni_col = _col("direct_normal_irradiance")
@@ -117,33 +153,77 @@ def _build_records(
     for i, ts_str in enumerate(times):
         dt = datetime.fromisoformat(ts_str)
         ghi = max(0.0, ghi_col[i] or 0.0)
-        dni = max(0.0, dni_col[i] or 0.0)
-        dif = max(0.0, dif_col[i] or 0.0)
-        gti = _gti_from_ghi(ghi, panel_tilt)
-        pvout = max(0.0, pvout_peak_kw * (ghi / 1000.0) * _PERFORMANCE_RATIO)
-        se, sa = _solar_position(dt, lat, lon)
+        temp = temp_col[i] if temp_col[i] is not None else 15.0
+        wind = ws_col[i] if ws_col[i] is not None else 1.0
+
+        result = pv_model.ac_power_kw(
+            dt=dt,
+            ghi=ghi,
+            dni=dni_col[i],
+            dif=dif_col[i],
+            temp_c=float(temp),
+            wind_ms=float(wind),
+            lat=lat,
+            lon=lon,
+            spec=spec,
+            utc_offset_seconds=utc_offset,
+        )
+        pvout = result["pvout_kw"]
 
         records.append({
             "datetime": dt.strftime("%Y-%m-%d %H:%M:%S"),
             "Date": dt.strftime("%d.%m.%Y"),
             "Time": dt.strftime("%H:%M"),
             "GHI": round(ghi, 2),
-            "DNI": round(dni, 2),
-            "DIF": round(dif, 2),
-            "GTI": round(gti, 2),
-            "SE": se,
-            "SA": sa,
+            "DNI": round(result["dni"], 2),
+            "DIF": round(result["dif"], 2),
+            "GTI": round(result["gti"], 2),
+            "SE": round(result["elevation_deg"], 2),
+            "SA": round(result["azimuth_deg"], 2),
             "PVOUT": round(pvout, 3),
-            "TEMP": round(temp_col[i] or 0.0, 2),
-            "WS": round(ws_col[i] or 0.0, 2),
+            "TEMP": round(float(temp), 2),
+            "WS": round(float(wind), 2),
             "WG": round(wg_col[i] or 0.0, 2),
             "WD": round(wd_col[i] or 0.0, 2),
             "RH": round(rh_col[i] or 0.0, 2),
             "AP": round(ap_col[i] or 0.0, 2),
+            # Cell temperature, DC power and clipped power are deliberately not
+            # emitted: each is a near-deterministic function of PVOUT and would
+            # leak the target back into the feature set.
+            # Kept for schema compatibility with the UC3.4 preprocessing chain;
+            # PvoutModelFeatureSelectPiece excludes any PVOUT_UNC* column.
             "PVOUT_UNC_LOW": round(pvout * 0.92, 3),
             "PVOUT_UNC_HIGH": round(pvout * 1.08, 3),
         })
     return records
+
+
+def _window_from_load_csv(path: str | None) -> tuple[str, str] | None:
+    """Read the analysed period straight off the metered load profile.
+
+    Weather over a different period than the load would pair January production
+    with July consumption, which quietly destroys the self-consumption estimate
+    the whole investment case rests on. Returns None when the file is absent or
+    unreadable, leaving the explicit dates in charge.
+    """
+    if not path:
+        return None
+    p = Path(str(path))
+    if not p.is_file():
+        return None
+    try:
+        import pandas as pd
+
+        frame = pd.read_csv(p, sep=None, engine="python", encoding="utf-8-sig")
+        frame.columns = [c.strip().lower().replace(" ", "_") for c in frame.columns]
+        if "datetime" not in frame.columns:
+            return None
+        stamps = pd.to_datetime(frame["datetime"], errors="coerce").dropna()
+        if stamps.empty:
+            return None
+        return stamps.min().strftime("%Y-%m-%d"), stamps.max().strftime("%Y-%m-%d")
+    except Exception:
+        return None
 
 
 class OpenMeteoPVDataPiece(BasePiece):
@@ -207,24 +287,51 @@ class OpenMeteoPVDataPiece(BasePiece):
             if output_format not in {"json", "csv"}:
                 raise ValueError("output_format must be `json` or `csv`.")
 
-            latitude = float(payload["latitude"])
-            longitude = float(payload["longitude"])
-            start_date = str(payload["start_date"])
-            end_date = str(payload["end_date"])
-            pvout_peak_kw = float(payload.get("pvout_peak_kw", 5.2))
-            panel_tilt = float(payload.get("panel_tilt", 30.0))
+            # to_payload_dict() drops unset fields, so indexing it raises for any
+            # field the caller left on its default. Read through the validated
+            # model, which always carries one.
+            def _field(name: str):
+                return payload.get(name, getattr(input_data, name, None))
+
+            latitude = float(_field("latitude"))
+            longitude = float(_field("longitude"))
+            start_date = str(_field("start_date"))
+            end_date = str(_field("end_date"))
+
+            window = _window_from_load_csv(_field("load_csv"))
+            if window:
+                start_date, end_date = window
+                self.logger.info(
+                    "Weather window taken from the load profile: %s .. %s",
+                    start_date,
+                    end_date,
+                )
+            pvout_peak_kw = float(_field("pvout_peak_kw") or 5.2)
+            panel_tilt = float(_field("panel_tilt") or 30.0)
+
+            resolution = str(_field("time_resolution") or "15min").strip().lower()
+            if resolution not in {"15min", "hourly", "auto"}:
+                raise ValueError("time_resolution must be `15min`, `hourly` or `auto`.")
+
+            spec = pv_model.array_spec_from_scenario(
+                cfg or {}, installed_kwp=pvout_peak_kw, tilt_deg=panel_tilt
+            )
 
             self.logger.info(
-                "Fetching Open-Meteo data for lat=%.4f lon=%.4f from %s to %s",
+                "Fetching Open-Meteo data for lat=%.4f lon=%.4f from %s to %s at %s",
                 latitude,
                 longitude,
                 start_date,
                 end_date,
+                resolution,
             )
-            response_json = _fetch_open_meteo(latitude, longitude, start_date, end_date)
-            hourly = response_json.get("hourly", {})
+            series, resolution_used = _fetch_open_meteo(
+                latitude, longitude, start_date, end_date, resolution
+            )
+            self.logger.info("Open-Meteo returned %s resolution.", resolution_used)
+            self.logger.info("PV array model: %s", spec.describe())
 
-            records = _build_records(hourly, latitude, longitude, pvout_peak_kw, panel_tilt)
+            records = _build_records(series, latitude, longitude, spec)
             self.logger.info("Built %d records from API response.", len(records))
 
             if not records:
@@ -254,12 +361,19 @@ class OpenMeteoPVDataPiece(BasePiece):
             self.logger.info("Open-Meteo dataset saved to %s", file_path)
             self.display_result = {"file_type": "csv", "file_path": file_path}
 
-            if stage is not None:
-                stage.cleanup()
-            return OutputModel(
+            out = OutputModel(
                 file_path=file_path,
                 target_column=TARGET_COLUMN,
             )
+            if od is not None:
+                # Mirror to OneData so the next piece (own K8s pod) can stage the CSV.
+                run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+                return od.finish_piece(
+                    out, self.results_path, secrets_data, "OpenMeteoPVDataPiece", stage, run_id=run_id
+                )
+            if stage is not None:
+                stage.cleanup()
+            return out
         except Exception:
             if stage is not None:
                 try:

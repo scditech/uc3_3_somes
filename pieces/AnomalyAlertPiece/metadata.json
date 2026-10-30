@@ -1,0 +1,12 @@
+{
+  "name": "AnomalyAlertPiece",
+  "description": "Detect unexpected consumption behavior using robust residual patterns",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "AnomalyAlertPiece",
+    "icon_class_name": "fa-solid:triangle-exclamation"
+  }
+}

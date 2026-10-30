@@ -77,8 +77,15 @@ def _stage_payload_for(entry: dict, parent: dict) -> dict:
     return stage
 
 
+try:
+    from common.piece_onedata import onedata_piece
+except ModuleNotFoundError:
+    from pieces.common.piece_onedata import onedata_piece
+
+
 class InferencePiece(BasePiece):
-    def piece_function(self, input_data: InputModel):
+    @onedata_piece("InferencePiece")
+    def piece_function(self, input_data: InputModel, secrets_data=None, run_id=None):
         self.logger.info("Running InferencePiece.")
         payload = input_data.payload_as_dict()
 

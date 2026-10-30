@@ -56,7 +56,13 @@ class ModelSpec(BaseModel):
     )
 
 
-class InputModel(BaseModel):
+try:
+    from common.onedata_models import RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import RunIdInputMixin
+
+
+class InputModel(RunIdInputMixin):
     model_config = ConfigDict(extra="allow", protected_namespaces=())
 
     pvout_model: list[ModelSpec] | None = Field(
@@ -167,3 +173,14 @@ class OutputModel(BaseModel):
             "metadata, debug?}}` plus aggregate `stage_summaries` when stages are used."
         ),
     )
+
+
+try:
+    from common.onedata_models import OneDataSecretsModel
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel
+
+
+class SecretsModel(OneDataSecretsModel):
+    """OneData secrets so the piece honours the repository secrets set in Domino
+    (output dir, host, token) instead of the built-in defaults."""
