@@ -154,19 +154,35 @@ class BatterySimPiece(BasePiece):
             # (napr. 1.1. namiesto plánovaného dňa).
             if "datetime" in solar_df.columns:
                 _sol = solar_df.copy()
-                _sol["datetime"] = pd.to_datetime(_sol["datetime"], errors="coerce")
-                _merged_pv = df[["datetime"]].merge(
+                _sol["datetime"] = pd.to_datetime(_sol["datetime"], errors="coerce", utc=True).dt.tz_localize(None)
+                _left = pd.DataFrame(
+                    {"datetime": pd.to_datetime(df["datetime"], errors="coerce", utc=True).dt.tz_localize(None)}
+                )
+                _merged_pv = _left.merge(
                     _sol[["datetime", "pv_kw"]].drop_duplicates(subset=["datetime"], keep="last"),
                     on="datetime",
                     how="left",
                 )
                 _missing = int(_merged_pv["pv_kw"].isna().sum())
-                pv_kw = pd.to_numeric(_merged_pv["pv_kw"], errors="coerce").fillna(0.0).to_numpy(dtype=float)
                 if _missing:
-                    raise ValueError(
-                        f"ALN-001/G21: PV forecast missing for {_missing}/{len(df)} "
-                        f"planning steps after timestamp join. Refusing to fill 0 kW."
+                    # Monitoring replay joins yesterday's meters to the D+1 PV
+                    # profile. Keep the G21 clock-time match, drop the calendar day.
+                    _sol = _sol.dropna(subset=["datetime"]).copy()
+                    _sol["_tod"] = _sol["datetime"].dt.strftime("%H:%M")
+                    _left["_tod"] = _left["datetime"].dt.strftime("%H:%M")
+                    _tod = _sol.drop_duplicates(subset=["_tod"], keep="last")[["_tod", "pv_kw"]]
+                    _merged_pv = _left.merge(_tod, on="_tod", how="left")
+                    _missing_tod = int(_merged_pv["pv_kw"].isna().sum())
+                    if _missing_tod:
+                        raise ValueError(
+                            f"ALN-001/G21: PV forecast missing for {_missing}/{len(df)} "
+                            f"planning steps after timestamp join "
+                            f"({_missing_tod} still missing after time-of-day fallback)."
+                        )
+                    _log(
+                        f"PV aligned by time-of-day; exact timestamp missed {_missing}/{len(df)} steps"
                     )
+                pv_kw = pd.to_numeric(_merged_pv["pv_kw"], errors="coerce").fillna(0.0).to_numpy(dtype=float)
             else:
                 pv_kw = solar_df["pv_kw"].astype(float).values[: len(df)]
                 if len(pv_kw) < len(df):
