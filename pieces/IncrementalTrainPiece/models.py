@@ -28,3 +28,7 @@ class OutputModel(BaseModel):
     message: str
     models_index_json: str
     training_summary_json: str
+    model_registry_dir: str = Field(
+        default="",
+        description="This run's model registry (outputs), not the inputs/ seed folder.",
+    )

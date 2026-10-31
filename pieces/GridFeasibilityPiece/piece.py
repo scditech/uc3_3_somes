@@ -79,7 +79,6 @@ class GridFeasibilityPiece(BasePiece):
                 max_c_rate=max_c_rate,
                 grid=grid,
             )
-            out = write_json(out_dir / "technical_validation_bundle.json", bundle)
 
             corrected, recommendations = corrected_operating_plan(
                 plan, energy_kwh=energy_kwh, max_c_rate=max_c_rate, grid=grid
@@ -92,12 +91,31 @@ class GridFeasibilityPiece(BasePiece):
                 or [{"datetime": "", "variable": "", "original_kw": "", "corrected_kw": "", "limit_kw": "", "reason": "no correction required"}]
             ).to_csv(rec_path, index=False)
 
-            # An operator must never receive a schedule that breaches a hard limit,
-            # so the published plan is the corrected one when validation fails.
+            # G34: clip-only correction can break power balance / SOC continuity.
+            # Re-validate the corrected plan; status stays REJECTED if the original failed.
+            recheck = build_technical_validation_bundle(
+                corrected,
+                energy_kwh=energy_kwh,
+                max_c_rate=max_c_rate,
+                grid=grid,
+            )
+            bundle["corrected_revalidated_ok"] = bool(recheck.get("overall_ok"))
+            bundle["corrected_revalidation"] = {
+                "overall_ok": recheck.get("overall_ok"),
+                "n_violations_battery": recheck.get("battery_constraints_check", {}).get("n_violations"),
+                "n_violations_grid": recheck.get("grid_feasibility_check", {}).get("n_violations"),
+            }
+            if recommendations and not recheck.get("overall_ok"):
+                _log("G34: corrected plan still fails validation after column clip")
+            out = write_json(out_dir / "technical_validation_bundle.json", bundle)
+
             approved = out_dir / "approved_next_day_operating_plan.csv"
             (plan if bundle["overall_ok"] else corrected).to_csv(approved, index=False)
             status = "APPROVED" if bundle["overall_ok"] else "REJECTED"
-            _log(f"Validation {status}, corrections={len(recommendations)}")
+            _log(
+                f"Validation {status}, corrections={len(recommendations)}, "
+                f"corrected_revalidated_ok={bundle['corrected_revalidated_ok']}"
+            )
             _piece_out = OutputModel(
                 message=f"Technical validation {status}",
                 technical_validation_json=str(out),

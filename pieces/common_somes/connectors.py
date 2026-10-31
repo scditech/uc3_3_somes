@@ -75,11 +75,13 @@ def generate_demo_connectors(
     seed: int = 42,
     datetimes: pd.Series | None = None,
     overwrite_existing: bool = True,
+    allow_demo: bool = True,
 ) -> dict[str, Path]:
     """Create demo connector artefacts if missing (audit-safe local fixtures).
 
     With ``overwrite_existing=False`` files already delivered by a real source
     are left untouched, so a production input folder is never clobbered.
+    With ``allow_demo=False`` missing grid/flex files are not invented (G19).
     """
     out_dir = ensure_connector_dir(out_dir)
     synthesized: set[str] = set()
@@ -96,7 +98,7 @@ def generate_demo_connectors(
     # Refresh weather/PV/BESS when datetimes are provided so the fixtures align
     # with the horizon — unless the caller supplied real measurements.
     force = datetimes is not None and overwrite_existing
-    if force or not weather_path.is_file():
+    if (force or not weather_path.is_file()) and allow_demo:
         ghi = np.clip(900.0 * np.sin(np.pi * (hour - 6) / 12.0), 0.0, None)
         ghi = np.where((hour >= 6) & (hour <= 18), ghi, 0.0) * (0.85 + 0.15 * rng.random(n))
         pd.DataFrame(
@@ -109,20 +111,24 @@ def generate_demo_connectors(
             }
         ).to_csv(weather_path, index=False)
         synthesized.add("weather_forecast")
-    written["weather_forecast"] = weather_path
+        written["weather_forecast"] = weather_path
+    elif weather_path.is_file():
+        written["weather_forecast"] = weather_path
 
     pv_path = out_dir / CONNECTOR_FILES["pv_production"]
-    if force or not pv_path.is_file():
+    if (force or not pv_path.is_file()) and allow_demo:
         weather = pd.read_csv(weather_path, parse_dates=["datetime"])
         pv_kw = (weather["ghi_wm2"] / 1000.0) * 400.0 * 0.85
         pd.DataFrame({"datetime": weather["datetime"], "pv_kw_measured": np.round(pv_kw, 3)}).to_csv(
             pv_path, index=False
         )
         synthesized.add("pv_production")
-    written["pv_production"] = pv_path
+        written["pv_production"] = pv_path
+    elif pv_path.is_file():
+        written["pv_production"] = pv_path
 
     bess_path = out_dir / CONNECTOR_FILES["bess_telemetry"]
-    if force or not bess_path.is_file():
+    if (force or not bess_path.is_file()) and allow_demo:
         soc = 50.0 + np.cumsum(rng.normal(0, 0.8, n))
         soc = np.clip(soc, 15.0, 95.0)
         pd.DataFrame(
@@ -136,10 +142,14 @@ def generate_demo_connectors(
             }
         ).to_csv(bess_path, index=False)
         synthesized.add("bess_telemetry")
-    written["bess_telemetry"] = bess_path
+        written["bess_telemetry"] = bess_path
+    elif bess_path.is_file():
+        written["bess_telemetry"] = bess_path
 
     grid_path = out_dir / CONNECTOR_FILES["grid_constraints"]
-    if not grid_path.is_file():
+    if grid_path.is_file():
+        written["grid_constraints"] = grid_path
+    elif allow_demo:
         grid_path.write_text(
             json.dumps(
                 {
@@ -158,10 +168,13 @@ def generate_demo_connectors(
             ),
             encoding="utf-8",
         )
-    written["grid_constraints"] = grid_path
+        synthesized.add("grid_constraints")
+        written["grid_constraints"] = grid_path
 
     flex_path = out_dir / CONNECTOR_FILES["flexible_loads"]
-    if not flex_path.is_file():
+    if flex_path.is_file():
+        written["flexible_loads"] = flex_path
+    elif allow_demo:
         flex_path.write_text(
             json.dumps(
                 {
@@ -191,7 +204,8 @@ def generate_demo_connectors(
             ),
             encoding="utf-8",
         )
-    written["flexible_loads"] = flex_path
+        synthesized.add("flexible_loads")
+        written["flexible_loads"] = flex_path
 
     meta = {
         "format": "somes_connectors_manifest_v1",
@@ -273,9 +287,9 @@ def fetch_prices_okte(
 ) -> pd.DataFrame:
     """Day-ahead spot prices from the OKTE ISOT public API (keyless), EUR/MWh -> EUR/kWh.
 
-    Rows are stamped with the *end* of each delivery period in local site time,
-    which is the 15-min convention the rest of the pipeline uses. D+1 prices only
-    exist after the day-ahead auction is published (~12:45 CET).
+    Timestamps are UTC interval *start* (G30 / DD-04). Local site time is only
+    for choosing which calendar days to request. D+1 prices exist after the
+    day-ahead auction (~12:45 CET).
     """
     today = pd.Timestamp.now(tz=tz).date()
     day_from = today - timedelta(days=max(int(lookback_days), 0))
@@ -290,13 +304,20 @@ def fetch_prices_okte(
     if not rows:
         raise ValueError("OKTE returned no day-ahead results")
     raw = pd.DataFrame(rows)
-    if "price" not in raw.columns or "deliveryEnd" not in raw.columns:
-        raise ValueError("OKTE response is missing price/deliveryEnd fields")
+    if "price" not in raw.columns:
+        raise ValueError("OKTE response is missing price field")
     price_mwh = pd.to_numeric(raw["price"], errors="coerce")
-    end = pd.to_datetime(raw["deliveryEnd"], utc=True, errors="coerce").dt.tz_convert(tz).dt.tz_localize(None)
+    if "deliveryStart" in raw.columns:
+        start = pd.to_datetime(raw["deliveryStart"], utc=True, errors="coerce")
+    elif "deliveryEnd" in raw.columns:
+        end = pd.to_datetime(raw["deliveryEnd"], utc=True, errors="coerce")
+        start = end - pd.Timedelta(minutes=15)
+    else:
+        raise ValueError("OKTE response is missing deliveryStart/deliveryEnd fields")
+    utc_start = start.dt.tz_convert("UTC").dt.tz_localize(None)
     out = pd.DataFrame(
         {
-            "datetime": end,
+            "datetime": utc_start,
             "price_eur_per_kwh": (price_mwh / 1000.0).round(6),
             "price_eur_kwh": (price_mwh / 1000.0).round(6),
             "price_eur_mwh": price_mwh.round(3),
@@ -413,8 +434,24 @@ def read_bess_state(path: Path | None, *, scenario_battery: dict[str, Any] | Non
         age_h = (pd.Timestamp.utcnow().tz_localize(None) - pd.Timestamp(state["telemetry_timestamp"])).total_seconds() / 3600.0
         state["telemetry_age_hours"] = round(float(age_h), 2)
         if age_h > 24.0:
-            state["warnings"].append(f"telemetria je stará {age_h:.1f} h — overiť zber dát")
+            state["warnings"].append(f"telemetria je stará {age_h:.1f} h voči wall-clock")
     return state
+
+
+def assert_bess_fresh_for_plan(state: dict[str, Any], plan_start, *, max_age_h: float = 24.0) -> None:
+    """Stop when telemetry is too old relative to the planning day (G36)."""
+    stamp = state.get("telemetry_timestamp")
+    if not stamp:
+        return
+    start = pd.Timestamp(plan_start)
+    tele = pd.Timestamp(stamp)
+    age_h = (start - tele).total_seconds() / 3600.0
+    state["telemetry_age_vs_plan_hours"] = round(float(age_h), 2)
+    if age_h > float(max_age_h):
+        raise ValueError(
+            f"G36: BESS telemetry is {age_h:.1f} h older than the planning start "
+            f"({start}); max allowed is {max_age_h:.0f} h. Refresh connectors/bess_telemetry.csv."
+        )
 
 
 def load_grid_constraints(path: Path | None, scenario_cfg: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -444,11 +481,13 @@ def load_grid_constraints(path: Path | None, scenario_cfg: dict[str, Any] | None
     band = grid.get("voltage_band_pu") or [0.95, 1.05]
     if path and Path(path).is_file():
         raw = json.loads(Path(path).read_text(encoding="utf-8"))
+        nested = raw.get("grid") if isinstance(raw.get("grid"), dict) else {}
+        merged = {**nested, **{k: v for k, v in raw.items() if k != "grid"}}
         for k in defaults:
-            if raw.get(k) is not None:
-                defaults[k] = float(raw[k])
-        if raw.get("voltage_band_pu"):
-            band = raw["voltage_band_pu"]
+            if merged.get(k) is not None:
+                defaults[k] = float(merged[k])
+        if merged.get("voltage_band_pu"):
+            band = merged["voltage_band_pu"]
         defaults["source"] = str(path)
     else:
         defaults["source"] = "scenario_fallback"

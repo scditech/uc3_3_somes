@@ -447,6 +447,7 @@ def operational_kpis_from_dispatch(
     load_kw: np.ndarray | None = None,
     export_price_eur_kwh: float = 0.05,
     forecast_accuracy: dict[str, Any] | None = None,
+    energy_kwh: float = 0.0,
 ) -> dict[str, Any]:
     imp = plan["grid_import_kw"].to_numpy(dtype=float) if "grid_import_kw" in plan.columns else np.zeros(len(plan))
     exp = plan["grid_export_kw"].to_numpy(dtype=float) if "grid_export_kw" in plan.columns else np.zeros(len(plan))
@@ -458,8 +459,12 @@ def operational_kpis_from_dispatch(
     pv_sum = float(np.sum(pv_kw) * dt_h) if pv_kw is not None else 0.0
     load_sum = float(np.sum(load_kw) * dt_h) if load_kw is not None else 0.0
     self_cons = 0.0
-    if pv_sum > 1e-9 and load_kw is not None and pv_kw is not None:
-        self_cons = float(np.minimum(load_kw, pv_kw).sum() * dt_h / pv_sum)
+    if pv_sum > 1e-9:
+        # G35 / DD 5.5: (PV − export − curtail) / PV — includes PV stored in BESS.
+        cur_sum = 0.0
+        if "curtailed_pv_kw" in plan.columns:
+            cur_sum = float(plan["curtailed_pv_kw"].to_numpy(dtype=float).sum() * dt_h)
+        self_cons = float(max(0.0, pv_sum - float(exp.sum() * dt_h) - cur_sum) / pv_sum)
 
     savings = _cost_savings(
         optimized_cost=cost - revenue,
@@ -478,6 +483,11 @@ def operational_kpis_from_dispatch(
         "peak_export_kw": round(float(exp.max()) if len(exp) else 0.0, 3),
         "battery_charge_kwh": round(float(np.clip(-bat, 0, None).sum() * dt_h), 3),
         "battery_discharge_kwh": round(float(np.clip(bat, 0, None).sum() * dt_h), 3),
+        "battery_full_cycles": round(
+            float(np.clip(bat, 0, None).sum() * dt_h / max(float(energy_kwh or 0.0), 1e-9)), 4
+        )
+        if energy_kwh
+        else 0.0,
         "mean_soc_pct": round(float(soc.mean()) if len(soc) else 0.0, 2),
         "operating_cost_eur_period": round(cost - revenue, 2),
         "renewable_generation_kwh": round(pv_sum, 3),
@@ -644,6 +654,12 @@ def build_ops_dashboard(
             "battery_discharge_kwh": operational_kpis.get("battery_discharge_kwh"),
             "mean_soc_pct": operational_kpis.get("mean_soc_pct"),
             "dispatch_approved": technical_validation.get("approved_next_day_plan"),
+            "baseline_grid_only_cost_eur": operational_kpis.get("baseline_grid_only_cost_eur"),
+            "baseline_pv_no_battery_cost_eur": operational_kpis.get("baseline_pv_no_battery_cost_eur"),
+            "cost_savings_vs_grid_only_eur": operational_kpis.get("cost_savings_vs_grid_only_eur"),
+            "cost_savings_vs_grid_only_pct": operational_kpis.get("cost_savings_vs_grid_only_pct"),
+            "cost_savings_from_battery_eur": operational_kpis.get("cost_savings_from_battery_eur"),
+            "battery_full_cycles": operational_kpis.get("battery_full_cycles"),
         },
         "dispatch_status": {
             "approved": technical_validation.get("approved_next_day_plan"),

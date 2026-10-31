@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import traceback
 from pathlib import Path
 
@@ -36,9 +37,17 @@ def _features(df: pd.DataFrame) -> pd.DataFrame:
     for w in (4, 16, 96):
         out[f"roll_mean_{w}"] = prev.rolling(w).mean()
         out[f"roll_std_{w}"] = prev.rolling(w).std(ddof=0)
-    out["price_eur_kwh"] = pd.to_numeric(out.get("price_eur_kwh"), errors="coerce").interpolate(limit_direction="both")
+    if "price_eur_kwh" not in out.columns:
+        if "price_eur_per_kwh" in out.columns:
+            out["price_eur_kwh"] = out["price_eur_per_kwh"]
+        elif "price_eur_mwh" in out.columns:
+            out["price_eur_kwh"] = pd.to_numeric(out["price_eur_mwh"], errors="coerce") / 1000.0
+        else:
+            out["price_eur_kwh"] = 0.1
+    out["price_eur_kwh"] = pd.to_numeric(out["price_eur_kwh"], errors="coerce").interpolate(limit_direction="both")
     out["price_eur_kwh"] = out["price_eur_kwh"].fillna(0.1)
-    return out.dropna().reset_index(drop=True)
+    needed = ["datetime", "load_kw", *_fcols()]
+    return out.dropna(subset=[c for c in needed if c in out.columns]).reset_index(drop=True)
 
 
 def _fcols() -> list[str]:
@@ -84,9 +93,21 @@ class IncrementalTrainPiece(BasePiece):
         log_path = Path(self.results_path) / "incremental_train.log"
         err_path = Path(self.results_path) / "incremental_train_error.txt"
         try:
-            hist = pd.read_csv(input_data.history_csv, parse_dates=["datetime"])
-            model_dir = Path(input_data.model_registry_dir)
+            hist_path = Path(input_data.history_csv)
+            if hist_path.suffix.lower() == ".parquet":
+                hist = pd.read_parquet(hist_path)
+                hist["datetime"] = pd.to_datetime(hist["datetime"], errors="coerce")
+            else:
+                hist = pd.read_csv(hist_path, parse_dates=["datetime"])
+            # G33: never overwrite inputs/model_registry — write this run's models
+            # under results_path and only seed from the input dir when present.
+            model_dir = Path(self.results_path) / "model_registry"
             model_dir.mkdir(parents=True, exist_ok=True)
+            seed_dir = Path(input_data.model_registry_dir) if input_data.model_registry_dir else None
+            if seed_dir and seed_dir.is_dir() and seed_dir.resolve() != model_dir.resolve():
+                for src in seed_dir.iterdir():
+                    if src.is_file() and not (model_dir / src.name).exists():
+                        shutil.copy2(src, model_dir / src.name)
 
             models_index: dict[str, str] = {}
             summary: list[dict] = []
@@ -168,11 +189,19 @@ class IncrementalTrainPiece(BasePiece):
                 summary.append({"department_id": dept_id, "rows_used": int(len(X)), "mode": mode})
 
             if _reg_remote and _reg_local and od is not None:
-                od.upload_registry(_reg_local, _reg_remote)
-                # Point index entries at durable OneData registry files for downstream pieces.
-                models_index = {
-                    dept: f"{_reg_remote.rstrip('/')}/{fname}" for dept, fname in models_index.items()
-                }
+                remote = str(_reg_remote).replace("\\", "/")
+                if "/inputs/" in remote:
+                    _log_skip = (
+                        f"[INFO] skip upload to inputs registry ({remote}); "
+                        "models stay under this run's outputs (G33)\n"
+                    )
+                    with open(log_path, "a", encoding="utf-8") as f:
+                        f.write(_log_skip)
+                else:
+                    od.upload_registry(_reg_local, _reg_remote)
+                    models_index = {
+                        dept: f"{_reg_remote.rstrip('/')}/{fname}" for dept, fname in models_index.items()
+                    }
 
             out_dir = Path(self.results_path)
             out_dir.mkdir(parents=True, exist_ok=True)
@@ -186,6 +215,7 @@ class IncrementalTrainPiece(BasePiece):
                 message=f"Incremental training completed for {len(models_index)} departments",
                 models_index_json=str(idx_path),
                 training_summary_json=str(sum_path),
+                model_registry_dir=str(model_dir),
             )
             if od is not None:
                 if hasattr(_piece_out, 'run_id') and _run_id and not getattr(_piece_out, 'run_id', ''):

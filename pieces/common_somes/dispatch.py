@@ -62,12 +62,15 @@ def lp_battery_dispatch(
     tril = csr_matrix(np.tril(np.ones((n, n))))
     col0 = csr_matrix((n, 1))
 
+    # Tiny throughput cost on both grid directions so import+export circulation
+    # is never free (export_price can otherwise exceed the import price).
+    circulation_penalty = 1e-3
     cost = np.concatenate(
         [
             np.full(n, degradation_cost_eur_kwh * dt_h),
             np.full(n, degradation_cost_eur_kwh * dt_h),
-            price * dt_h,
-            -exp_price * dt_h,
+            price * dt_h + circulation_penalty * dt_h,
+            -exp_price * dt_h + circulation_penalty * dt_h,
             np.full(n, UNSERVED_PENALTY_EUR_KWH * dt_h),
             np.full(n, CURTAILMENT_PENALTY_EUR_KWH * dt_h),
             np.array([float(peak_price_eur_kw)]),
@@ -122,6 +125,10 @@ def lp_battery_dispatch(
     discharge = np.clip(x[n : 2 * n], 0.0, None)
     grid_import = np.clip(x[2 * n : 3 * n], 0.0, None)
     grid_export = np.clip(x[3 * n : 4 * n], 0.0, None)
+    # Physical grid is net: a site cannot import and export in the same interval.
+    _circ = np.minimum(grid_import, grid_export)
+    grid_import = grid_import - _circ
+    grid_export = grid_export - _circ
     unserved = np.clip(x[4 * n : 5 * n], 0.0, None)
     curtail = np.clip(x[5 * n : 6 * n], 0.0, None)
 

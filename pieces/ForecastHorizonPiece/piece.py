@@ -67,7 +67,14 @@ def _features(df: pd.DataFrame) -> pd.DataFrame:
     for w in (4, 16, 96):
         out[f"roll_mean_{w}"] = prev.rolling(w).mean()
         out[f"roll_std_{w}"] = prev.rolling(w).std(ddof=0)
-    out["price_eur_kwh"] = pd.to_numeric(out.get("price_eur_kwh"), errors="coerce").interpolate(limit_direction="both")
+    if "price_eur_kwh" not in out.columns:
+        if "price_eur_per_kwh" in out.columns:
+            out["price_eur_kwh"] = out["price_eur_per_kwh"]
+        elif "price_eur_mwh" in out.columns:
+            out["price_eur_kwh"] = pd.to_numeric(out["price_eur_mwh"], errors="coerce") / 1000.0
+        else:
+            out["price_eur_kwh"] = 0.1
+    out["price_eur_kwh"] = pd.to_numeric(out["price_eur_kwh"], errors="coerce").interpolate(limit_direction="both")
     out["price_eur_kwh"] = out["price_eur_kwh"].fillna(0.1)
     return out
 
@@ -191,7 +198,12 @@ def _site_forecast(forecast: pd.DataFrame, history: pd.DataFrame) -> pd.DataFram
         .reset_index(drop=True)
     )
 
-    prices = history.drop_duplicates(subset=["datetime"])[["datetime", "price_eur_kwh"]].copy()
+    hist_prices = history.copy()
+    if "price_eur_kwh" not in hist_prices.columns and "price_eur_per_kwh" in hist_prices.columns:
+        hist_prices["price_eur_kwh"] = hist_prices["price_eur_per_kwh"]
+    if "price_eur_kwh" not in hist_prices.columns:
+        hist_prices["price_eur_kwh"] = 0.12
+    prices = hist_prices.drop_duplicates(subset=["datetime"])[["datetime", "price_eur_kwh"]].copy()
     prices["price_eur_kwh"] = pd.to_numeric(prices["price_eur_kwh"], errors="coerce")
     recent = prices[prices["datetime"] > prices["datetime"].max() - pd.Timedelta(days=7)]
     tod = recent.assign(tod=recent["datetime"].dt.strftime("%H:%M")).groupby("tod")["price_eur_kwh"].mean()
@@ -218,7 +230,16 @@ class ForecastHorizonPiece(BasePiece):
         log_path = Path(self.results_path) / "forecast_horizon.log"
         err_path = Path(self.results_path) / "forecast_horizon_error.txt"
         try:
-            hist = pd.read_csv(input_data.history_csv, parse_dates=["datetime"])
+            hist_path = Path(input_data.history_csv)
+            if hist_path.suffix.lower() == ".parquet":
+                hist = pd.read_parquet(hist_path)
+                hist["datetime"] = pd.to_datetime(hist["datetime"], errors="coerce")
+            else:
+                hist = pd.read_csv(hist_path, parse_dates=["datetime"])
+            if "price_eur_kwh" not in hist.columns and "price_eur_per_kwh" in hist.columns:
+                hist["price_eur_kwh"] = hist["price_eur_per_kwh"]
+            if "price_eur_kwh" not in hist.columns:
+                hist["price_eur_kwh"] = 0.12
             models = json.loads(Path(input_data.models_index_json).read_text(encoding="utf-8"))
             rows = []
             confidence = {}

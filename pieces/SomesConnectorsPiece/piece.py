@@ -142,7 +142,18 @@ class SomesConnectorsPiece(BasePiece):
                         _log(f"{key}: {attempt}")
                 _log(f"{key} resolved from {info['source']} ({info['detail']})")
 
-            files = generate_demo_connectors(src, overwrite_existing=False)
+            files = generate_demo_connectors(
+                src,
+                overwrite_existing=False,
+                allow_demo=bool(input_data.allow_demo_fallback),
+            )
+            if not bool(input_data.allow_demo_fallback):
+                grid_file = src / CONNECTOR_FILES["grid_constraints"]
+                if not grid_file.is_file():
+                    raise ValueError(
+                        "G19: grid_constraints.json is missing and allow_demo_fallback=false. "
+                        "Put the site connection limits in inputs/connectors/ or scenario.yaml grid.*"
+                    )
             for key in provenance:
                 provenance[key].setdefault("source", "demo")
 

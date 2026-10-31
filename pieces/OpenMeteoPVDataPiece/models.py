@@ -35,6 +35,7 @@ OPEN_METEO_CSV_FIELDNAMES = [
 # 15-minute data back to 2021, which is what a 15-minute load profile needs.
 OPEN_METEO_ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
 OPEN_METEO_HISTORICAL_FORECAST_URL = "https://historical-forecast-api.open-meteo.com/v1/forecast"
+OPEN_METEO_FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 
 TIME_RESOLUTIONS = ("15min", "hourly", "auto")
 
@@ -173,6 +174,11 @@ class InputModel(BaseModel):
 
 class OutputModel(BaseModel):
     file_path: Optional[str] = Field(default=None, title="Dataset file path")
+    forecast_file_path: Optional[str] = Field(
+        default=None,
+        title="Forecast file path",
+        description="Open-Meteo D+1 (and D+2) 15-min weather + physical PVOUT in UTC, for the planning day.",
+    )
     target_column: Optional[str] = Field(
         default=None,
         title="Target column",

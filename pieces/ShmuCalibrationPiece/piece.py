@@ -30,7 +30,10 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
-from domino.base_piece import BasePiece
+try:
+    from domino.base_piece import BasePiece
+except ModuleNotFoundError:
+    from local_compat.base_piece import BasePiece
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
@@ -160,6 +163,7 @@ class ShmuCalibrationPiece(BasePiece):
             }
             _log(f"Nearest station: {station.name} ({report['station']['distance_km']} km)")
 
+            weather = self._read_weather(weather_path)
             window = shmu_opendata.available_window()
             if window is None:
                 return self._finish(
@@ -170,10 +174,24 @@ class ShmuCalibrationPiece(BasePiece):
                     ),
                     calibration_json, training_csv, secrets_data, _stage, _run_id,
                 )
-            report["measurement_window"] = {"start": str(window[0]), "end": str(window[1])}
-            _log(f"SHMU rolling window: {window[0]} .. {window[1]}")
+            w_start = weather.index.min().date()
+            w_end = weather.index.max().date()
+            start = max(window[0], w_start)
+            end = min(window[1], w_end)
+            if start > end:
+                return self._finish(
+                    self._write_skip(
+                        report, calibration_json, training_csv,
+                        f"no overlap between weather {w_start}..{w_end} and SHMU {window[0]}..{window[1]}",
+                        _log,
+                        base_path,
+                    ),
+                    calibration_json, training_csv, secrets_data, _stage, _run_id,
+                )
+            report["measurement_window"] = {"start": str(start), "end": str(end)}
+            _log(f"SHMU window clipped to weather overlap: {start} .. {end}")
 
-            measured = shmu_opendata.fetch_global_radiation(station, window[0], window[1])
+            measured = shmu_opendata.fetch_global_radiation(station, start, end)
             if measured.empty:
                 return self._finish(
                     self._write_skip(
@@ -185,7 +203,6 @@ class ShmuCalibrationPiece(BasePiece):
                 )
             _log(f"Measured 1-minute rows: {len(measured)}")
 
-            weather = self._read_weather(weather_path)
             freq = self._infer_freq(weather.index)
             measured_grid = shmu_opendata.resample_to(measured, freq)
             _log(f"Weather grid {freq}, measured resampled to {len(measured_grid)} steps")

@@ -31,7 +31,7 @@
       "type": "string"
      }
     },
-    "title": "FetchEnergyDataPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -170,7 +170,7 @@
     "required": [
      "input_path"
     ],
-    "title": "PreprocessEnergyDataPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -324,7 +324,7 @@
     "required": [
      "data_path"
     ],
-    "title": "TrainModelPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -491,7 +491,7 @@
      "model_path",
      "load_csv"
     ],
-    "title": "PredictPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -645,7 +645,7 @@
      "history_csv",
      "model_registry_dir"
     ],
-    "title": "IncrementalTrainPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -666,6 +666,12 @@
      },
      "training_summary_json": {
       "title": "Training Summary Json",
+      "type": "string"
+     },
+     "model_registry_dir": {
+      "default": "",
+      "description": "This run's model registry (outputs), not the inputs/ seed folder.",
+      "title": "Model Registry Dir",
       "type": "string"
      }
     },
@@ -796,7 +802,7 @@
      "models_index_json",
      "model_registry_dir"
     ],
-    "title": "ForecastHorizonPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -1005,7 +1011,7 @@
       "type": "boolean"
      }
     },
-    "title": "SomesConnectorsPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -1189,7 +1195,7 @@
     "required": [
      "prices_csv"
     ],
-    "title": "PriceForecastPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -1322,7 +1328,7 @@
      "load_csv",
      "scenario_yaml"
     ],
-    "title": "BatteryStrategyOptimizerPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -1521,7 +1527,7 @@
      "scenario_yaml",
      "virtual_solar_csv"
     ],
-    "title": "BatterySimPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -1730,7 +1736,7 @@
     "required": [
      "predictions_csv"
     ],
-    "title": "ModelMonitoringPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -1890,7 +1896,7 @@
     "required": [
      "load_csv"
     ],
-    "title": "FlexibleLoadSchedulePiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -2094,7 +2100,7 @@
      "scenario_yaml",
      "virtual_solar_csv"
     ],
-    "title": "BatterySimPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -2267,7 +2273,7 @@
     "required": [
      "next_day_dispatch_plan_csv"
     ],
-    "title": "GridFeasibilityPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -2494,7 +2500,7 @@
      "next_day_dispatch_plan_csv",
      "technical_validation_json"
     ],
-    "title": "EmsBemsOutputPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -2734,9 +2740,48 @@
       "default": null,
       "description": "Data validation report from ingestion/preprocessing",
       "title": "Data Quality Report Json"
+     },
+     "predictions_vs_actual_csv": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Optional load forecast vs measured CSV for the comparison chart",
+      "title": "Predictions Vs Actual Csv"
+     },
+     "pv_forecast_csv": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Optional PV forecast CSV",
+      "title": "Pv Forecast Csv"
+     },
+     "pv_actual_csv": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Optional measured PV CSV",
+      "title": "Pv Actual Csv"
      }
     },
-    "title": "DashboardPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -2863,6 +2908,19 @@
       "title": "Longitude",
       "type": "number"
      },
+     "load_csv": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Metered load profile. When set, the weather window is taken from its first and last timestamp, so production is modelled over exactly the period the investment case is evaluated on, and start_date / end_date below are ignored.",
+      "title": "Load profile CSV"
+     },
      "start_date": {
       "default": "2026-01-01",
       "description": "First day of the requested period in YYYY-MM-DD format.",
@@ -2886,6 +2944,19 @@
       "description": "Fallback tilt if scenario_yaml has no pv.tilt_deg.",
       "title": "Panel Tilt (degrees)",
       "type": "number"
+     },
+     "time_resolution": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "15min",
+      "description": "One of: `15min` (historical-forecast API, matches a 15-minute load profile), `hourly` (ERA5 archive, longer history), or `auto` to try 15-minute first and fall back to hourly.",
+      "title": "Time Resolution"
      },
      "output_mode": {
       "anyOf": [
@@ -2914,7 +2985,7 @@
       "title": "Output Format"
      }
     },
-    "title": "OpenMeteoPVDataPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -2930,6 +3001,19 @@
       ],
       "default": null,
       "title": "Dataset file path"
+     },
+     "forecast_file_path": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Open-Meteo D+1 (and D+2) 15-min weather + physical PVOUT in UTC, for the planning day.",
+      "title": "Forecast file path"
      },
      "target_column": {
       "anyOf": [
@@ -2948,7 +3032,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -2994,6 +3123,12 @@
    "input_schema": {
     "additionalProperties": true,
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "preprocessing_option": {
       "anyOf": [
        {
@@ -3086,7 +3221,7 @@
       "title": "Target Column"
      }
     },
-    "title": "DataPreprocessingPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -3135,7 +3270,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -3181,6 +3361,12 @@
    "input_schema": {
     "additionalProperties": true,
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "problem_type": {
       "anyOf": [
        {
@@ -3250,7 +3436,7 @@
       "title": "Data Path"
      }
     },
-    "title": "ModelDeciderPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -3324,7 +3510,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -3370,6 +3601,12 @@
    "input_schema": {
     "additionalProperties": true,
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "normalization_type": {
       "anyOf": [
        {
@@ -3452,7 +3689,7 @@
       "title": "Model Type"
      }
     },
-    "title": "DataNormalizationPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -3521,7 +3758,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -3566,6 +3848,12 @@
    "source_image": "ghcr.io/scditech/uc3_3_somes:0.3.0-group0",
    "input_schema": {
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "data_path": {
       "description": "Passthrough preprocessed/normalized CSV path (keeps datetime column).",
       "title": "Data Path",
@@ -3589,7 +3877,7 @@
     "required": [
      "data_path"
     ],
-    "title": "PvoutModelFeatureSelectPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -3631,7 +3919,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -3677,6 +4010,12 @@
    "input_schema": {
     "additionalProperties": true,
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "model_type": {
       "anyOf": [
        {
@@ -3751,7 +4090,7 @@
       "title": "Checkpoint Dir"
      }
     },
-    "title": "PVOUTPredictionModelTrainPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -3943,7 +4282,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 200,
@@ -3990,6 +4374,12 @@
    "input_schema": {
     "additionalProperties": true,
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "model_type": {
       "anyOf": [
        {
@@ -4077,7 +4467,7 @@
       "title": "Checkpoint Dir"
      }
     },
-    "title": "PVOUTErrorCorrectionModelTrainPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -4282,7 +4672,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 200,
@@ -4328,6 +4763,12 @@
    "source_image": "ghcr.io/scditech/uc3_3_somes:0.3.0-group0",
    "input_schema": {
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "baseline_model_path": {
       "description": "PVOUTPredictionModelTrainPiece.model_path (absolute baseline).",
       "title": "Baseline Model Path",
@@ -4373,7 +4814,7 @@
      "correction_model_path",
      "data_path"
     ],
-    "title": "PvoutStagedInferenceSpecPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -4415,7 +4856,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -4625,6 +5111,12 @@
     },
     "additionalProperties": true,
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "pvout_model": {
       "anyOf": [
        {
@@ -4697,7 +5189,7 @@
       "title": "Max Horizon"
      }
     },
-    "title": "InferencePiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -4867,7 +5359,52 @@
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -4912,16 +5449,54 @@
    "source_image": "ghcr.io/scditech/uc3_3_somes:0.3.0-group0",
    "input_schema": {
     "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
      "forecast_csv_path": {
       "description": "Path to UC3.4 InferencePiece forecast CSV (final_forecast / PVOUT).",
       "title": "Forecast Csv Path",
       "type": "string"
+     },
+     "load_csv": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Load CSV to align against. The forecast covers daylight only, because preprocessing drops night rows; when this is set the profile is reindexed onto the load timestamps with zeros at night, which is what BatterySimPiece requires.",
+      "title": "Load Csv"
+     },
+     "irradiance_scale_factor": {
+      "default": 1.0,
+      "description": "Scale from ShmuCalibrationPiece; 1.0 leaves the forecast untouched.",
+      "title": "Irradiance Scale Factor",
+      "type": "number"
+     },
+     "scenario_yaml": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": null,
+      "description": "Scenario the forecast was generated for. Its pv.installed_kwp is the reference size used to normalise the profile per kWp, so sizing can rescale the same shape to any candidate array.",
+      "title": "Scenario Yaml"
      }
     },
     "required": [
      "forecast_csv_path"
     ],
-    "title": "PvoutToVirtualSolarPiece",
+    "title": "InputModel",
     "type": "object"
    },
    "output_schema": {
@@ -4931,19 +5506,76 @@
       "type": "string"
      },
      "virtual_solar_csv": {
-      "description": "SoMES virtual_solar.csv for BatterySimPiece",
+      "description": "datetime, pv_kw and pv_kw_per_kwp for the dispatch and sizing pieces",
       "title": "Virtual Solar Csv",
       "type": "string"
+     },
+     "coverage_report_json": {
+      "description": "Row counts, alignment result and the applied scale factor.",
+      "title": "Coverage Report Json",
+      "type": "string"
+     },
+     "reference_kwp": {
+      "description": "Installed kWp the pv_kw column corresponds to.",
+      "title": "Reference Kwp",
+      "type": "number"
      }
     },
     "required": [
      "message",
-     "virtual_solar_csv"
+     "virtual_solar_csv",
+     "coverage_report_json",
+     "reference_kwp"
     ],
     "title": "OutputModel",
     "type": "object"
    },
-   "secrets_schema": {},
+   "secrets_schema": {
+    "description": "OneData secrets so the piece honours the repository secrets set in Domino\n(output dir, host, token) instead of the built-in defaults.",
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
    "container_resources": {
     "requests": {
      "cpu": 100,
@@ -5345,6 +5977,174 @@
    "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ExplainablePredictionPiece",
    "repository_url": "https://github.com/scditech/uc3_3_somes",
    "repository_id": 101
+  },
+  "213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447": {
+   "id": 9013,
+   "name": "ShmuCalibrationPiece",
+   "description": "Calibrate modelled Open-Meteo irradiance against measured SHMU global radiation for the nearest Slovak station, and emit a measurement-based training target for the PVOUT error-correction model.",
+   "dependency": {
+    "dockerfile": null,
+    "requirements_file": "requirements_0.txt"
+   },
+   "source_image": "ghcr.io/scditech/uc3_3_somes:0.3.0-group0",
+   "input_schema": {
+    "properties": {
+     "run_id": {
+      "default": "",
+      "description": "Workflow run id (generated by UserInputPiece when using OneData)",
+      "title": "Run Id",
+      "type": "string"
+     },
+     "weather_csv_path": {
+      "description": "Open-Meteo dataset CSV produced by OpenMeteoPVDataPiece.",
+      "title": "Weather Csv Path",
+      "type": "string"
+     },
+     "training_base_csv": {
+      "description": "Preprocessed and feature-selected dataset the correction model trains on. Its feature columns are passed through untouched so the model sees the same inputs at serving time; only the PVOUT target is replaced where a ground measurement exists.",
+      "title": "Training Base Csv",
+      "type": "string"
+     },
+     "scenario_yaml": {
+      "description": "Scenario YAML providing site.latitude / site.longitude and the PV array.",
+      "title": "Scenario Yaml",
+      "type": "string"
+     },
+     "max_station_distance_km": {
+      "default": 120.0,
+      "description": "Do not calibrate against a station further than this from the site. Beyond it the measurement says more about the station than the site.",
+      "title": "Max Station Distance Km",
+      "type": "number"
+     },
+     "enabled": {
+      "default": true,
+      "description": "Set false to skip the SHMU download and run on the model series alone.",
+      "title": "Enabled",
+      "type": "boolean"
+     }
+    },
+    "required": [
+     "weather_csv_path",
+     "training_base_csv",
+     "scenario_yaml"
+    ],
+    "title": "InputModel",
+    "type": "object"
+   },
+   "output_schema": {
+    "properties": {
+     "message": {
+      "title": "Message",
+      "type": "string"
+     },
+     "calibration_json": {
+      "description": "Bias report against SHMU measurement plus the applied scale factor.",
+      "title": "Calibration Json",
+      "type": "string"
+     },
+     "calibrated_training_csv": {
+      "description": "Open-Meteo features with PVOUT recomputed from measured irradiance, restricted to the overlap window. Training target for the UC3.4 error-correction model. Empty file when no measurement is available.",
+      "title": "Calibrated Training Csv",
+      "type": "string"
+     },
+     "calibration_available": {
+      "description": "True when a usable measured overlap was found.",
+      "title": "Calibration Available",
+      "type": "boolean"
+     },
+     "irradiance_scale_factor": {
+      "description": "Multiply modelled irradiance by this to remove the mean measured bias.",
+      "title": "Irradiance Scale Factor",
+      "type": "number"
+     }
+    },
+    "required": [
+     "message",
+     "calibration_json",
+     "calibrated_training_csv",
+     "calibration_available",
+     "irradiance_scale_factor"
+    ],
+    "title": "OutputModel",
+    "type": "object"
+   },
+   "secrets_schema": {
+    "properties": {
+     "onedata_onezone_host": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "data.spice-platform.eu",
+      "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+      "title": "Onedata Onezone Host"
+     },
+     "onedata_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "",
+      "description": "Onedata access token (default in code; Domino secrets optional)",
+      "title": "Onedata Token"
+     },
+     "onedata_output_dir": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "default": "onedata:///SCDI/UC3.3_SOMES/outputs",
+      "description": "OneData base dir for run outputs, e.g. onedata:///SCDI/UC3.3_SOMES/outputs",
+      "title": "Onedata Output Dir"
+     }
+    },
+    "title": "SecretsModel",
+    "type": "object"
+   },
+   "container_resources": {
+    "requests": {
+     "cpu": 200,
+     "memory": 256
+    },
+    "limits": {
+     "cpu": 1000,
+     "memory": 1024
+    },
+    "use_gpu": false
+   },
+   "tags": [
+    "SHMU",
+    "Calibration",
+    "PVOUT"
+   ],
+   "style": {
+    "module": "ShmuCalibrationPiece",
+    "label": "SHMÚ Calibration",
+    "nodeType": "default",
+    "nodeStyle": {
+     "backgroundColor": "#ebebeb"
+    },
+    "useIcon": true,
+    "iconClassName": "fa-solid:crosshairs",
+    "iconStyle": {
+     "cursor": "pointer"
+    }
+   },
+   "source_url": "https://github.com/scditech/uc3_3_somes/tree/main/pieces/ShmuCalibrationPiece",
+   "repository_url": "https://github.com/scditech/uc3_3_somes",
+   "repository_id": 101
   }
  },
  "workflowPiecesData": {
@@ -5519,11 +6319,11 @@
    },
    "inputs": {
     "history_csv": {
-     "fromUpstream": false,
-     "upstreamId": "",
-     "upstreamArgument": "",
-     "upstreamValue": "",
-     "value": "onedata:///SCDI/UC3.3_SOMES/inputs/history_by_department.csv"
+     "fromUpstream": true,
+     "upstreamId": "FetchEnerg_88d957781fb14516addc298a3a052669",
+     "upstreamArgument": "output_path",
+     "upstreamValue": "FetchEnergyDataPiece - Output Path",
+     "value": ""
     },
     "model_registry_dir": {
      "fromUpstream": false,
@@ -5573,11 +6373,11 @@
    },
    "inputs": {
     "history_csv": {
-     "fromUpstream": false,
-     "upstreamId": "",
-     "upstreamArgument": "",
-     "upstreamValue": "",
-     "value": "onedata:///SCDI/UC3.3_SOMES/inputs/history_by_department.csv"
+     "fromUpstream": true,
+     "upstreamId": "FetchEnerg_88d957781fb14516addc298a3a052669",
+     "upstreamArgument": "output_path",
+     "upstreamValue": "FetchEnergyDataPiece - Output Path",
+     "value": ""
     },
     "models_index_json": {
      "fromUpstream": true,
@@ -5587,11 +6387,11 @@
      "value": ""
     },
     "model_registry_dir": {
-     "fromUpstream": false,
-     "upstreamId": "",
-     "upstreamArgument": "",
-     "upstreamValue": "",
-     "value": "onedata:///SCDI/UC3.3_SOMES/inputs/model_registry"
+     "fromUpstream": true,
+     "upstreamId": "Incrementa_f493a15c24574e1c9159fa27c5237217",
+     "upstreamArgument": "model_registry_dir",
+     "upstreamValue": "IncrementalTrainPiece - Model Registry Dir",
+     "value": ""
     },
     "horizon_hours": {
      "fromUpstream": false,
@@ -6398,6 +7198,27 @@
      "upstreamArgument": "",
      "upstreamValue": "",
      "value": ""
+    },
+    "predictions_vs_actual_csv": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": ""
+    },
+    "pv_forecast_csv": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": ""
+    },
+    "pv_actual_csv": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": ""
     }
    }
   },
@@ -6430,14 +7251,14 @@
      "upstreamId": "",
      "upstreamArgument": "",
      "upstreamValue": "",
-     "value": "2025-01-01"
+     "value": "2026-10-20"
     },
     "end_date": {
      "fromUpstream": false,
      "upstreamId": "",
      "upstreamArgument": "",
      "upstreamValue": "",
-     "value": "2025-12-31"
+     "value": "2026-10-26"
     },
     "pvout_peak_kw": {
      "fromUpstream": false,
@@ -6473,6 +7294,13 @@
      "upstreamArgument": "",
      "upstreamValue": "",
      "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
+    },
+    "load_csv": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": "onedata:///SCDI/UC3.3_SOMES/inputs/load_input/load.csv"
     }
    }
   },
@@ -6928,10 +7756,10 @@
    "inputs": {
     "forecast_csv_path": {
      "fromUpstream": true,
-     "upstreamId": "InferenceP_4abd69dcfe47404f8f1c0d48a8ab6817",
-     "upstreamArgument": "forecast_csv_path",
-     "upstreamValue": "InferencePiece - Forecast Csv Path",
-     "value": null
+     "upstreamId": "OpenMeteoP_198c7643e8a9478297555401ed175920",
+     "upstreamArgument": "forecast_file_path",
+     "upstreamValue": "Open-Meteo PV Data - Forecast File Path",
+     "value": ""
     },
     "load_csv": {
      "fromUpstream": true,
@@ -6946,6 +7774,13 @@
      "upstreamArgument": "",
      "upstreamValue": "",
      "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
+    },
+    "irradiance_scale_factor": {
+     "fromUpstream": true,
+     "upstreamId": "ShmuCalibr_8f2c1a904b7e4d119c3a2e6f0b18d447",
+     "upstreamArgument": "irradiance_scale_factor",
+     "upstreamValue": "SHMU Calibration - Irradiance Scale Factor",
+     "value": 1.0
     }
    }
   },
@@ -6974,11 +7809,11 @@
      "value": ""
     },
     "model_registry_dir": {
-     "fromUpstream": false,
-     "upstreamId": "",
-     "upstreamArgument": "",
-     "upstreamValue": "",
-     "value": "onedata:///SCDI/UC3.3_SOMES/inputs/model_registry"
+     "fromUpstream": true,
+     "upstreamId": "Incrementa_f493a15c24574e1c9159fa27c5237217",
+     "upstreamArgument": "model_registry_dir",
+     "upstreamValue": "IncrementalTrainPiece - Model Registry Dir",
+     "value": ""
     },
     "run_id": {
      "fromUpstream": false,
@@ -7026,6 +7861,60 @@
      "upstreamArgument": "",
      "upstreamValue": "",
      "value": false
+    }
+   }
+  },
+  "213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447": {
+   "storage": {
+    "storageAccessMode": "Read/Write"
+   },
+   "containerResources": {
+    "cpu": 500,
+    "memory": 1024,
+    "useGpu": false
+   },
+   "inputs": {
+    "weather_csv_path": {
+     "fromUpstream": true,
+     "upstreamId": "OpenMeteoP_198c7643e8a9478297555401ed175920",
+     "upstreamArgument": "file_path",
+     "upstreamValue": "Open-Meteo PV Data - File Path",
+     "value": ""
+    },
+    "training_base_csv": {
+     "fromUpstream": true,
+     "upstreamId": "PvoutModel_00df596befe6440cbd645283c7f88f2b",
+     "upstreamArgument": "data_path",
+     "upstreamValue": "PVOUT Feature Select - Data Path",
+     "value": ""
+    },
+    "scenario_yaml": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": "onedata:///SCDI/UC3.3_SOMES/inputs/scenario.yaml"
+    },
+    "max_station_distance_km": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": 120.0
+    },
+    "enabled": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": true
+    },
+    "run_id": {
+     "fromUpstream": false,
+     "upstreamId": "",
+     "upstreamArgument": "",
+     "upstreamValue": "",
+     "value": ""
     }
    }
   }
@@ -7982,6 +8871,40 @@
     "x": 1160,
     "y": 120
    }
+  },
+  {
+   "id": "213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "type": "CustomNode",
+   "position": {
+    "x": 1680,
+    "y": 420
+   },
+   "data": {
+    "name": "ShmuCalibrationPiece",
+    "style": {
+     "module": "ShmuCalibrationPiece",
+     "label": "SHMÚ Calibration",
+     "nodeType": "default",
+     "nodeStyle": {
+      "backgroundColor": "#ebebeb"
+     },
+     "useIcon": true,
+     "iconClassName": "fa-solid:crosshairs",
+     "iconStyle": {
+      "cursor": "pointer"
+     }
+    },
+    "validationError": false,
+    "orientation": "horizontal"
+   },
+   "width": 150,
+   "height": 70,
+   "selected": false,
+   "dragging": false,
+   "positionAbsolute": {
+    "x": 1680,
+    "y": 420
+   }
   }
  ],
  "workflowEdges": [
@@ -8581,6 +9504,78 @@
    "target": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
    "targetHandle": "target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
    "id": "reactflow__edge-105_cfd055f3-92b7-43a8-90a3-61965d222554source-105_cfd055f3-92b7-43a8-90a3-61965d222554-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+   "markerEnd": {
+    "type": "arrowclosed",
+    "width": 20,
+    "height": 20
+   }
+  },
+  {
+   "source": "100_88d95778-1fb1-4516-addc-298a3a052669",
+   "sourceHandle": "source-100_88d95778-1fb1-4516-addc-298a3a052669",
+   "target": "104_f493a15c-2457-4e1c-9159-fa27c5237217",
+   "targetHandle": "target-104_f493a15c-2457-4e1c-9159-fa27c5237217",
+   "id": "reactflow__edge-100_88d95778-1fb1-4516-addc-298a3a052669source-100_88d95778-1fb1-4516-addc-298a3a052669-104_f493a15c-2457-4e1c-9159-fa27c5237217target-104_f493a15c-2457-4e1c-9159-fa27c5237217",
+   "markerEnd": {
+    "type": "arrowclosed",
+    "width": 20,
+    "height": 20
+   }
+  },
+  {
+   "source": "100_88d95778-1fb1-4516-addc-298a3a052669",
+   "sourceHandle": "source-100_88d95778-1fb1-4516-addc-298a3a052669",
+   "target": "105_cfd055f3-92b7-43a8-90a3-61965d222554",
+   "targetHandle": "target-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+   "id": "reactflow__edge-100_88d95778-1fb1-4516-addc-298a3a052669source-100_88d95778-1fb1-4516-addc-298a3a052669-105_cfd055f3-92b7-43a8-90a3-61965d222554target-105_cfd055f3-92b7-43a8-90a3-61965d222554",
+   "markerEnd": {
+    "type": "arrowclosed",
+    "width": 20,
+    "height": 20
+   }
+  },
+  {
+   "source": "200_198c7643-e8a9-4782-9755-5401ed175920",
+   "sourceHandle": "source-200_198c7643-e8a9-4782-9755-5401ed175920",
+   "target": "213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "targetHandle": "target-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "id": "reactflow__edge-200_198c7643-e8a9-4782-9755-5401ed175920source-200_198c7643-e8a9-4782-9755-5401ed175920-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447target-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "markerEnd": {
+    "type": "arrowclosed",
+    "width": 20,
+    "height": 20
+   }
+  },
+  {
+   "source": "204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+   "sourceHandle": "source-204_00df596b-efe6-440c-bd64-5283c7f88f2b",
+   "target": "213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "targetHandle": "target-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "id": "reactflow__edge-204_00df596b-efe6-440c-bd64-5283c7f88f2bsource-204_00df596b-efe6-440c-bd64-5283c7f88f2b-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447target-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "markerEnd": {
+    "type": "arrowclosed",
+    "width": 20,
+    "height": 20
+   }
+  },
+  {
+   "source": "200_198c7643-e8a9-4782-9755-5401ed175920",
+   "sourceHandle": "source-200_198c7643-e8a9-4782-9755-5401ed175920",
+   "target": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+   "targetHandle": "target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+   "id": "reactflow__edge-200_198c7643-e8a9-4782-9755-5401ed175920source-200_198c7643-e8a9-4782-9755-5401ed175920-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+   "markerEnd": {
+    "type": "arrowclosed",
+    "width": 20,
+    "height": 20
+   }
+  },
+  {
+   "source": "213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "sourceHandle": "source-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447",
+   "target": "212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+   "targetHandle": "target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
+   "id": "reactflow__edge-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447source-213_8f2c1a90-4b7e-4d11-9c3a-2e6f0b18d447-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846target-212_c16cdd4d-658e-41eb-a6ba-676ed60f6846",
    "markerEnd": {
     "type": "arrowclosed",
     "width": 20,

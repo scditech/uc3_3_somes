@@ -82,7 +82,11 @@ class BatterySimPiece(BasePiece):
                 operational_kpis_from_dispatch,
                 write_json,
             )
-            from pieces.common_somes.connectors import load_grid_constraints, read_bess_state
+            from pieces.common_somes.connectors import (
+                assert_bess_fresh_for_plan,
+                load_grid_constraints,
+                read_bess_state,
+            )
             from pieces.common_somes.dispatch import plan_dispatch, plans_to_frames
 
             sim = _load_simulate_module()
@@ -159,9 +163,9 @@ class BatterySimPiece(BasePiece):
                 _missing = int(_merged_pv["pv_kw"].isna().sum())
                 pv_kw = pd.to_numeric(_merged_pv["pv_kw"], errors="coerce").fillna(0.0).to_numpy(dtype=float)
                 if _missing:
-                    _log(
-                        f"PV forecast chýba pre {_missing}/{len(df)} krokov plánu — "
-                        f"doplnené 0 kW (over časové zarovnanie FV)"
+                    raise ValueError(
+                        f"ALN-001/G21: PV forecast missing for {_missing}/{len(df)} "
+                        f"planning steps after timestamp join. Refusing to fill 0 kW."
                     )
             else:
                 pv_kw = solar_df["pv_kw"].astype(float).values[: len(df)]
@@ -186,6 +190,7 @@ class BatterySimPiece(BasePiece):
             )
             for warn in bess_state.get("warnings", []):
                 _log(f"BESS warning: {warn}")
+            assert_bess_fresh_for_plan(bess_state, df["datetime"].iloc[0])
 
             result = plan_dispatch(
                 method=str(input_data.dispatch_method or "auto"),
@@ -271,6 +276,7 @@ class BatterySimPiece(BasePiece):
                 load_kw=load_kw,
                 export_price_eur_kwh=float(input_data.export_price_eur_kwh),
                 forecast_accuracy=forecast_accuracy,
+                energy_kwh=energy_kwh,
             )
             kpi_path = write_json(out_dir / "operational_kpis.json", kpis)
             _log(f"Operational battery plan rows={len(soc_df)} approved={validation['overall_ok']}")

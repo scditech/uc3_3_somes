@@ -108,6 +108,26 @@ class DashboardPiece(BasePiece):
                         "warning": int((sev == "warning").sum()),
                         "info": int((sev == "info").sum()),
                     }
+                    cols = [
+                        c
+                        for c in [
+                            "datetime",
+                            "department_id",
+                            "severity",
+                            "reason",
+                            "actual_kw",
+                            "expected_kw",
+                            "delta_kw",
+                            "robust_z",
+                        ]
+                        if c in alerts_df.columns
+                    ]
+                    latest = alerts_df.sort_values("datetime", ascending=True, na_position="last")
+                    records = latest[cols].to_dict(orient="records")
+                    for row in records:
+                        if "datetime" in row:
+                            row["datetime"] = str(row["datetime"])
+                    alerts_block["latest"] = records
             if drift_path and drift_path.is_file():
                 alerts_block["drift"] = json.loads(drift_path.read_text(encoding="utf-8"))
             seed_appendix = {
@@ -120,6 +140,34 @@ class DashboardPiece(BasePiece):
             feedback = {}
             if input_data.forecast_vs_actual_json and Path(input_data.forecast_vs_actual_json).is_file():
                 feedback = json.loads(Path(input_data.forecast_vs_actual_json).read_text(encoding="utf-8"))
+            pred_vs_path = getattr(input_data, "predictions_vs_actual_csv", None)
+            if pred_vs_path and Path(pred_vs_path).is_file():
+                pred_df = pd.read_csv(pred_vs_path)
+                if "datetime" in pred_df.columns:
+                    fc_col = next((c for c in ("prediction_load_kw", "load_forecast_kw") if c in pred_df.columns), None)
+                    act_col = next((c for c in ("load_kw", "load_kw_measured") if c in pred_df.columns), None)
+                    if fc_col and act_col:
+                        feedback["load_series"] = {
+                            "x": pred_df["datetime"].astype(str).tolist(),
+                            "forecast": pd.to_numeric(pred_df[fc_col], errors="coerce").fillna(0).round(3).tolist(),
+                            "actual": pd.to_numeric(pred_df[act_col], errors="coerce").fillna(0).round(3).tolist(),
+                        }
+            pv_fc_path = getattr(input_data, "pv_forecast_csv", None)
+            pv_act_path = getattr(input_data, "pv_actual_csv", None)
+            if pv_fc_path and pv_act_path and Path(pv_fc_path).is_file() and Path(pv_act_path).is_file():
+                pv_fc = pd.read_csv(pv_fc_path, parse_dates=["datetime"])
+                pv_act = pd.read_csv(pv_act_path, parse_dates=["datetime"])
+                fc_col = next((c for c in ("pv_kw", "pv_generation_kw") if c in pv_fc.columns), None)
+                act_col = next((c for c in ("pv_kw_measured", "pv_kw") if c in pv_act.columns), None)
+                if fc_col and act_col:
+                    joined = pv_fc[["datetime", fc_col]].merge(
+                        pv_act[["datetime", act_col]], on="datetime", how="inner"
+                    )
+                    feedback["pv_series"] = {
+                        "x": joined["datetime"].astype(str).tolist(),
+                        "forecast": pd.to_numeric(joined[fc_col], errors="coerce").fillna(0).round(3).tolist(),
+                        "actual": pd.to_numeric(joined[act_col], errors="coerce").fillna(0).round(3).tolist(),
+                    }
             data_quality = {}
             if input_data.data_quality_report_json and Path(input_data.data_quality_report_json).is_file():
                 dq = json.loads(Path(input_data.data_quality_report_json).read_text(encoding="utf-8"))

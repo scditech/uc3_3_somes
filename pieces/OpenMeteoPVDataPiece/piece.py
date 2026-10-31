@@ -1,12 +1,15 @@
 import math
 import csv
 import sys
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from typing import Any
 from pathlib import Path
 import json
 
-from domino.base_piece import BasePiece
+try:
+    from domino.base_piece import BasePiece
+except ModuleNotFoundError:
+    from local_compat.base_piece import BasePiece
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
@@ -25,6 +28,7 @@ from .models import (
     TARGET_COLUMN,
     OPEN_METEO_CSV_FIELDNAMES,
     OPEN_METEO_ARCHIVE_URL,
+    OPEN_METEO_FORECAST_URL,
     OPEN_METEO_HISTORICAL_FORECAST_URL,
 )
 
@@ -68,7 +72,7 @@ def _fetch_open_meteo(
         "start_date": start_date,
         "end_date": end_date,
         "wind_speed_unit": "ms",
-        "timezone": "auto",
+        "timezone": "UTC",
     }
 
     def _try_15min() -> tuple[dict[str, Any], int] | None:
@@ -118,6 +122,35 @@ def _fetch_open_meteo(
         )
     block, offset = got
     return {**block, "_utc_offset_seconds": offset}, "15min"
+
+
+def _fetch_open_meteo_forecast(
+    latitude: float,
+    longitude: float,
+    forecast_days: int = 2,
+    timeout: int = 90,
+) -> dict[str, Any]:
+    """Live forecast API, 15-min, UTC (planning day)."""
+    import requests
+
+    resp = requests.get(
+        OPEN_METEO_FORECAST_URL,
+        params={
+            "latitude": latitude,
+            "longitude": longitude,
+            "minutely_15": _MINUTELY_15_VARS,
+            "forecast_days": int(forecast_days),
+            "timezone": "UTC",
+            "wind_speed_unit": "ms",
+        },
+        timeout=timeout,
+    )
+    resp.raise_for_status()
+    body = resp.json()
+    block = body.get("minutely_15") or body.get("hourly") or {}
+    if not block.get("time"):
+        raise RuntimeError("Open-Meteo forecast API returned no minutely_15/hourly data.")
+    return {**block, "_utc_offset_seconds": 0}
 
 
 def _build_records(
@@ -361,8 +394,55 @@ class OpenMeteoPVDataPiece(BasePiece):
             self.logger.info("Open-Meteo dataset saved to %s", file_path)
             self.display_result = {"file_type": "csv", "file_path": file_path}
 
+            forecast_file_path = None
+            try:
+                # Planning PV must cover the day AFTER the metered load (D+1),
+                # not "today" from the wall clock. Historical replay (load ends
+                # in the past) uses the historical-forecast API; a live site
+                # whose last meter day is today uses the forecast API.
+                forecast_days = 2
+                plan_start = date.fromisoformat(str(end_date)) + timedelta(days=1)
+                plan_end = plan_start + timedelta(days=max(forecast_days - 1, 0))
+                if plan_start > date.today():
+                    forecast_series = _fetch_open_meteo_forecast(
+                        latitude, longitude, forecast_days=forecast_days
+                    )
+                else:
+                    forecast_series, _ = _fetch_open_meteo(
+                        latitude,
+                        longitude,
+                        plan_start.isoformat(),
+                        plan_end.isoformat(),
+                        resolution,
+                    )
+                forecast_records = _build_records(forecast_series, latitude, longitude, spec)
+                if forecast_records:
+                    forecast_file_path = str(Path(self.results_path) / f"open_meteo_forecast.{output_format}")
+                    if output_format == "json":
+                        Path(forecast_file_path).write_text(
+                            json.dumps(forecast_records, indent=4), encoding="utf-8"
+                        )
+                    else:
+                        with open(forecast_file_path, "w", encoding="utf-8", newline="") as csvfile:
+                            writer = csv.DictWriter(
+                                csvfile,
+                                fieldnames=OPEN_METEO_CSV_FIELDNAMES,
+                                delimiter=";",
+                                extrasaction="ignore",
+                            )
+                            writer.writeheader()
+                            writer.writerows(forecast_records)
+                    self.logger.info(
+                        "Open-Meteo D+1 forecast saved to %s (%d rows)",
+                        forecast_file_path,
+                        len(forecast_records),
+                    )
+            except Exception:
+                self.logger.exception("Open-Meteo forecast fetch failed; planning PV will have no D+1 file.")
+
             out = OutputModel(
                 file_path=file_path,
+                forecast_file_path=forecast_file_path,
                 target_column=TARGET_COLUMN,
             )
             if od is not None:

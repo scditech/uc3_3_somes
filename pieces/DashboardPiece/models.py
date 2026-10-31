@@ -72,6 +72,11 @@ class InputModel(RunIdInputMixin):
     data_quality_report_json: str | None = Field(
         default=None, description="Data validation report from ingestion/preprocessing"
     )
+    predictions_vs_actual_csv: str | None = Field(
+        default=None, description="Optional load forecast vs measured CSV for the comparison chart"
+    )
+    pv_forecast_csv: str | None = Field(default=None, description="Optional PV forecast CSV")
+    pv_actual_csv: str | None = Field(default=None, description="Optional measured PV CSV")
 
 
 class SecretsModel(OneDataSecretsModel):
