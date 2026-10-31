@@ -119,6 +119,8 @@ def _shift_features_for_datetimes(dt: pd.Series, profile: dict) -> pd.DataFrame:
 def _add_load_features(df: pd.DataFrame, target: str) -> pd.DataFrame:
     out = df.copy()
     for lag in (1, 4, 96, 192, 672):
+        if lag >= len(out):
+            continue
         out[f"lag_{lag}"] = out[target].shift(lag)
     prev = out[target].shift(1)
     for w in (4, 16, 96):
@@ -215,6 +217,9 @@ class TrainModelPiece(BasePiece):
 
             X_test = test_df[feature_cols]
             y_test = test_df[target]
+            if len(X_test) == 0 and len(X_train) > 0:
+                print("[WARN] Empty test split on a short sample; evaluating on train rows")
+                X_test, y_test = X_train, y_train
 
             print(f"[INFO] Train rows: {len(X_train)}")
             print(f"[INFO] Test rows: {len(X_test)}")
