@@ -242,12 +242,18 @@ def _window_from_load_csv(path: str | None) -> tuple[str, str] | None:
     if not path:
         return None
     p = Path(str(path))
+    if p.is_dir():
+        files = sorted(p.glob("load*.csv")) or sorted(p.glob("*.csv"))
+        p = files[0] if files else p
     if not p.is_file():
         return None
     try:
         import pandas as pd
 
-        frame = pd.read_csv(p, sep=None, engine="python", encoding="utf-8-sig")
+        if p.suffix.lower() == ".parquet":
+            frame = pd.read_parquet(p)
+        else:
+            frame = pd.read_csv(p, sep=None, engine="python", encoding="utf-8-sig")
         frame.columns = [c.strip().lower().replace(" ", "_") for c in frame.columns]
         if "datetime" not in frame.columns:
             return None
