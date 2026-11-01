@@ -122,11 +122,27 @@ class DataNormalizationPiece(BasePiece):
         echo_target_column = str(payload.get("target_column") or "PVOUT")
         echo_model_type = str(payload.get("model_type") or "xgb_regressor_model")
 
-        # Load from CSV path if no inline dataframe was provided.
+        # Load from CSV/parquet path if no inline dataframe was provided.
         if df is None and data_path:
-            import pandas as pd  # type: ignore
+            from pathlib import Path as _P
 
-            df = pd.read_csv(data_path)
+            try:
+                from common.table_io import read_history_table
+            except ModuleNotFoundError:
+                from pieces.common.table_io import read_history_table
+            p = _P(str(data_path))
+            if not p.exists() and p.parent.is_dir():
+                for cand in ("preprocessed.csv", "preprocessed.parquet"):
+                    alt = p.parent / cand
+                    if alt.exists():
+                        p = alt
+                        break
+            if not p.exists():
+                raise FileNotFoundError(
+                    f"DataNormalization input missing: {data_path}. "
+                    "Upstream data_path was probably a deleted OneData staging temp."
+                )
+            df = read_history_table(p)
 
         if df is None:
             self.logger.info("No dataframe provided; skipping normalization.")

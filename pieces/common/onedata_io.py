@@ -498,6 +498,9 @@ class StageHandle:
     def __init__(self) -> None:
         self.tmpdirs: list[str] = []
         self.active: bool = False
+        # local staged path -> original onedata:// URL (passthrough pieces
+        # must echo the remote URL, not /tmp/od_in_* which cleanup deletes)
+        self.local_to_remote: dict[str, str] = {}
 
     def cleanup(self) -> None:
         for d in self.tmpdirs:
@@ -555,12 +558,14 @@ def stage_inputs(input_data: Any, secrets_data: Any):
                         write_bytes(os.path.join(local_dir, _remote_name(entry)),
                                     read_bytes(entry))
                 overrides[name] = local_dir
+                stage.local_to_remote[local_dir] = val
             elif isfile(val):
                 tmp = tempfile.mkdtemp(prefix="od_in_")
                 stage.tmpdirs.append(tmp)
                 local_f = os.path.join(tmp, _remote_name(val))
                 write_bytes(local_f, read_bytes(val))
                 overrides[name] = local_f
+                stage.local_to_remote[local_f] = val
             else:
                 raise FileNotFoundError(
                     f"OneData input missing for '{name}': {val}. "
@@ -752,6 +757,35 @@ def rewrite_output_paths(output: Any, results_path: str | os.PathLike,
     return output
 
 
+def restore_passthrough_remotes(output: Any, stage: Any) -> Any:
+    """Put original onedata:// URLs back on fields that still hold /tmp/od_in_* paths.
+
+    Passthrough pieces (ModelDecider, …) echo ``data_path`` after staging. If that
+    local temp path leaks downstream, the next piece dies with FileNotFoundError
+    because ``stage.cleanup()`` already deleted it.
+    """
+    mapping = getattr(stage, "local_to_remote", None) if stage is not None else None
+    if not mapping or output is None:
+        return output
+    updates: dict[str, Any] = {}
+    fields = getattr(output, "model_fields", None) or getattr(output, "__fields__", {})
+    for name in fields:
+        val = getattr(output, name, None)
+        if isinstance(val, str) and val in mapping:
+            updates[name] = mapping[val]
+        elif isinstance(val, dict) and "data_path" in val and val.get("data_path") in mapping:
+            new_art = dict(val)
+            new_art["data_path"] = mapping[val["data_path"]]
+            updates[name] = new_art
+    if not updates:
+        return output
+    if hasattr(output, "model_copy"):
+        return output.model_copy(update=updates)
+    for k, v in updates.items():
+        setattr(output, k, v)
+    return output
+
+
 def finish_piece(output: Any, results_path: str | os.PathLike, secrets_data: Any,
                  piece_name: str, stage: Any = None,
                  *, registry_local: str | None = None,
@@ -761,10 +795,11 @@ def finish_piece(output: Any, results_path: str | os.PathLike, secrets_data: Any
     if registry_local and registry_target:
         upload_registry(registry_local, registry_target)
     target = mirror_results(results_path, secrets_data, piece_name, run_id=run_id)
+    if target and output is not None:
+        output = rewrite_output_paths(output, results_path, target)
+    output = restore_passthrough_remotes(output, stage)
     if stage is not None:
         stage.cleanup()
-    if target and output is not None:
-        return rewrite_output_paths(output, results_path, target)
     return output
 
 
