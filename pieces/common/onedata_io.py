@@ -107,9 +107,26 @@ def _resolve_token() -> str | None:
         return None
 
 
+def _sanitize_onezone_host(host: Any) -> str | None:
+    """Domino sometimes injects ``onedata_onezone_host data.spice-platform.eu``."""
+    if host is None:
+        return None
+    text = str(host).strip().replace("https://", "").replace("http://", "")
+    if not text:
+        return None
+    for prefix in ("onedata_onezone_host", "ONEDATA_ONEZONE_HOST"):
+        if text.startswith(prefix):
+            text = text[len(prefix) :].lstrip("= :\t")
+    token = text.split()[-1] if text.split() else text
+    token = token.strip().strip("/")
+    return token or None
+
+
 def effective_secrets(secrets_data: Any, *, use_defaults: bool = False) -> dict[str, str | None]:
     """Merge Domino secrets, env vars, and (optionally) production defaults."""
-    host = _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
+    host = _sanitize_onezone_host(
+        _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
+    )
     token = _get(secrets_data, "onedata_token")
     if not token and use_defaults:
         token = _resolve_token() or DEFAULT_ONEDATA_TOKEN

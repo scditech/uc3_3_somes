@@ -5,6 +5,16 @@
   "dependency": {
     "requirements_file": "requirements_0.txt"
   },
+  "container_resources": {
+    "requests": {
+      "cpu": 500,
+      "memory": 2048
+    },
+    "limits": {
+      "cpu": 2000,
+      "memory": 4096
+    }
+  },
   "style": {
     "node_label": "IncrementalTrainPiece",
     "icon_class_name": "fa-solid:brain"

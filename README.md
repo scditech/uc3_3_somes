@@ -3,7 +3,7 @@
 Operational next-day microgrid optimisation (load / PV / prices / BESS dispatch)
 for Domino, with **OneData** I/O.
 
-Current import is a **28-node** DAG: load forecast, Open-Meteo PVOUT chain,
+Version **0.3.1**. Current import is a **29-node** sequential DAG: load forecast, Open-Meteo PVOUT chain,
 connectors, LP dispatch, grid feasibility, EMS/BEMS, anomaly/drift alerts,
 dashboard.
 
@@ -32,8 +32,8 @@ editor can still override fallbacks (e.g. Open-Meteo lat/lon/kWp).
 
 1. Open **Workflow editor** (workspace where this repo is registered)
 2. Import → from file:
-   - [`domino_import/uc33_somes.customization`](domino_import/uc33_somes.customization) — OneData paths, token-free
-   - [`domino_import/uc33_somes.spice.customization`](domino_import/uc33_somes.spice.customization) — same DAG with GHCR `source_image`
+   - [`domino_import/UC3.3_SOMES_sequential.json`](domino_import/UC3.3_SOMES_sequential.json) — same DAG as GitLab workflows pack (GHCR `0.3.1-group0`)
+   - [`domino_import/uc33_somes.spice.customization`](domino_import/uc33_somes.spice.customization) — identical graph, Harbor `0.3.1-group0`
 3. **Settings**: name letters/numbers/`_` only; **Storage Source = Local**
    (results mount; inputs/outputs still use OneData URLs)
 4. Create → Run

@@ -157,10 +157,11 @@ class TrainModelPiece(BasePiece):
             if not data_path.exists():
                 raise FileNotFoundError(f"Training data not found: {data_path}")
 
-            if data_path.suffix == ".parquet":
-                df = pd.read_parquet(data_path)
-            else:
-                df = pd.read_csv(data_path)
+            try:
+                from common.table_io import read_history_table
+            except ModuleNotFoundError:
+                from pieces.common.table_io import read_history_table
+            df = read_history_table(data_path)
 
             if "datetime" not in df.columns:
                 raise ValueError("Dataset must contain 'datetime' column")

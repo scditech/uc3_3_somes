@@ -107,12 +107,11 @@ class AnomalyAlertPiece(BasePiece):
         log_path = Path(self.results_path) / "anomaly_alert.log"
         err_path = Path(self.results_path) / "anomaly_alert_error.txt"
         try:
-            hist_path = Path(input_data.history_csv)
-            if hist_path.suffix.lower() == ".parquet":
-                hist = pd.read_parquet(hist_path)
-                hist["datetime"] = pd.to_datetime(hist["datetime"], errors="coerce")
-            else:
-                hist = pd.read_csv(hist_path, parse_dates=["datetime"])
+            try:
+                from common.table_io import read_history_table
+            except ModuleNotFoundError:
+                from pieces.common.table_io import read_history_table
+            hist = read_history_table(input_data.history_csv)
             models = json.loads(Path(input_data.models_index_json).read_text(encoding="utf-8"))
 
             alerts: list[dict] = []
