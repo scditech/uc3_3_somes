@@ -61,9 +61,13 @@ class PreprocessEnergyDataPiece(BasePiece):
             if not input_path.exists():
                 raise FileNotFoundError(f"Input file not found: {input_path}")
             if input_path.is_dir():
-                raise ValueError(f"input_path must be a parquet file, not a directory: {input_path}")
+                raise ValueError(f"input_path must be a table file, not a directory: {input_path}")
 
-            df = pd.read_parquet(input_path)
+            try:
+                from common.table_io import read_history_table
+            except ModuleNotFoundError:
+                from pieces.common.table_io import read_history_table
+            df = read_history_table(input_path)
 
             if "datetime" not in df.columns:
                 raise ValueError(f"Input must contain datetime column. Found: {df.columns}")

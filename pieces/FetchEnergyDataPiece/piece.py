@@ -172,15 +172,15 @@ class FetchEnergyDataPiece(BasePiece):
             if "price_eur_kwh" in merged_df.columns:
                 merged_df["price_eur_kwh"] = merged_df.groupby("department_id")["price_eur_kwh"].ffill().bfill()
 
-            parquet_path = Path(self.results_path) / "merged_energy_data.parquet"
-            output_path = Path(self.results_path) / "merged_energy_data.csv"
-            merged_df.to_parquet(parquet_path, index=False)
-            merged_df.to_csv(output_path, index=False)
+            output_path = Path(self.results_path) / "merged_energy_data.parquet"
+            csv_path = Path(self.results_path) / "merged_energy_data.csv"
+            merged_df.to_parquet(output_path, index=False)
+            merged_df.to_csv(csv_path, index=False)
 
             _log(self.results_path, f"[SUCCESS] Data merged, rows: {len(merged_df)}")
             _log(self.results_path, f"[SUCCESS] Output written to {output_path}")
 
-            self.display_result = {"file_type": "csv", "file_path": str(output_path)}
+            self.display_result = {"file_type": "parquet", "file_path": str(output_path)}
             _piece_out = OutputModel(
                 message=f"Data merged successfully ({len(merged_df)} rows)",
                 output_path=str(output_path),
