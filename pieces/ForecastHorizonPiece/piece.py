@@ -234,7 +234,11 @@ class ForecastHorizonPiece(BasePiece):
                 from common.table_io import read_history_table
             except ModuleNotFoundError:
                 from pieces.common.table_io import read_history_table
-            hist = read_history_table(input_data.history_csv)
+            try:
+                from common.table_io import ensure_department_id
+            except ModuleNotFoundError:
+                from pieces.common.table_io import ensure_department_id
+            hist = ensure_department_id(read_history_table(input_data.history_csv))
             if "price_eur_kwh" not in hist.columns and "price_eur_per_kwh" in hist.columns:
                 hist["price_eur_kwh"] = hist["price_eur_per_kwh"]
             if "price_eur_kwh" not in hist.columns:

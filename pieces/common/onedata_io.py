@@ -523,10 +523,26 @@ def stage_inputs(input_data: Any, secrets_data: Any):
     except Exception:
         return input_data, stage
 
-    remote_fields = [
-        name for name, val in values.items()
-        if isinstance(val, str) and has_protocol(normalize_remote_path(val))
-    ]
+    def _remote_labels(obj: Any, label: str) -> list[str]:
+        if isinstance(obj, str) and has_protocol(normalize_remote_path(obj)):
+            return [label]
+        if isinstance(obj, dict):
+            found: list[str] = []
+            for key, child in obj.items():
+                found.extend(_remote_labels(child, f"{label}.{key}"))
+            return found
+        if isinstance(obj, list):
+            found = []
+            for index, child in enumerate(obj):
+                found.extend(_remote_labels(child, f"{label}[{index}]"))
+            return found
+        return []
+
+    remote_fields: list[str] = []
+    for name, val in values.items():
+        if name in _STAGE_SKIP_FIELDS:
+            continue
+        remote_fields.extend(_remote_labels(val, name))
     if remote_fields and not configure_onedata(secrets_data, force=True):
         eff = effective_secrets(secrets_data, use_defaults=True)
         raise ValueError(
@@ -538,50 +554,61 @@ def stage_inputs(input_data: Any, secrets_data: Any):
             f"Fields: {', '.join(remote_fields)}"
         )
 
-    overrides: dict[str, str] = {}
-    for name, val in values.items():
-        if not isinstance(val, str):
-            continue
-        val = normalize_remote_path(val)
-        if not has_protocol(val):
-            continue
-        if name in _STAGE_SKIP_FIELDS:
-            continue
+    def _materialize(remote: str, label: str) -> str:
+        remote = normalize_remote_path(remote)
         try:
-            if isdir(val):
+            if isdir(remote):
                 tmp = tempfile.mkdtemp(prefix="od_in_")
                 stage.tmpdirs.append(tmp)
-                local_dir = os.path.join(tmp, _remote_name(val) or "dir")
+                local_dir = os.path.join(tmp, _remote_name(remote) or "dir")
                 os.makedirs(local_dir, exist_ok=True)
-                for entry in listdir(val):
+                for entry in listdir(remote):
                     if isfile(entry):
                         write_bytes(os.path.join(local_dir, _remote_name(entry)),
                                     read_bytes(entry))
-                overrides[name] = local_dir
-                stage.local_to_remote[local_dir] = val
-            elif isfile(val):
+                stage.local_to_remote[local_dir] = remote
+                return local_dir
+            if isfile(remote):
                 tmp = tempfile.mkdtemp(prefix="od_in_")
                 stage.tmpdirs.append(tmp)
-                local_f = os.path.join(tmp, _remote_name(val))
-                write_bytes(local_f, read_bytes(val))
-                overrides[name] = local_f
-                stage.local_to_remote[local_f] = val
-            else:
-                raise FileNotFoundError(
-                    f"OneData input missing for '{name}': {val}. "
-                    "Upstream piece may not have mirrored output; check DAG edges "
-                    "(Predict -> Solar/Battery) and re-import test_sus_onedata.customization."
-                )
+                local_f = os.path.join(tmp, _remote_name(remote))
+                write_bytes(local_f, read_bytes(remote))
+                stage.local_to_remote[local_f] = remote
+                return local_f
+            raise FileNotFoundError(
+                f"OneData input missing for '{label}': {remote}. "
+                "Upstream piece may not have mirrored output."
+            )
         except Exception as exc:
             host = (effective_secrets(secrets_data, use_defaults=True) or {}).get(
                 "onedata_onezone_host", DEFAULT_ONEZONE_HOST
             )
             raise RuntimeError(
-                f"Failed to download OneData input '{name}' ({val}): {exc}. "
+                f"Failed to download OneData input '{label}' ({remote}): {exc}. "
                 f"Host {host} must be reachable from the piece container. "
-                "On local Domino (PC without VPN in Docker) use test_sus_local.customization "
-                "and scripts/seed_shared_storage.py instead of OneData paths."
+                "On local Domino (PC without VPN in Docker) use local shared-storage paths "
+                "instead of OneData paths."
             ) from exc
+
+    def _stage_tree(obj: Any, label: str) -> Any:
+        if isinstance(obj, str):
+            remote = normalize_remote_path(obj)
+            if has_protocol(remote):
+                return _materialize(remote, label)
+            return obj
+        if isinstance(obj, dict):
+            return {k: _stage_tree(v, f"{label}.{k}") for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [_stage_tree(v, f"{label}[{i}]") for i, v in enumerate(obj)]
+        return obj
+
+    overrides: dict[str, Any] = {}
+    for name, val in values.items():
+        if name in _STAGE_SKIP_FIELDS:
+            continue
+        staged = _stage_tree(val, name)
+        if staged != val:
+            overrides[name] = staged
 
     if overrides:
         stage.active = True
@@ -723,30 +750,42 @@ def rewrite_output_paths(output: Any, results_path: str | os.PathLike,
     if output is None:
         return output
     base = onedata_target.rstrip("/")
-    updates: dict[str, Any] = {}
 
+    def _rewrite(obj: Any) -> Any:
+        if isinstance(obj, str):
+            rel = _rel_under_results(obj, results_path)
+            if rel is None:
+                return obj
+            return f"{base}/{rel}" if rel else base
+        if isinstance(obj, dict):
+            new = {k: _rewrite(v) for k, v in obj.items()}
+            if all(new[k] is obj[k] for k in obj):
+                return obj
+            return new
+        if isinstance(obj, list):
+            new = [_rewrite(v) for v in obj]
+            if len(new) == len(obj) and all(a is b for a, b in zip(new, obj)):
+                return obj
+            return new
+        nested = getattr(obj, "model_fields", None) or getattr(obj, "__fields__", None)
+        if nested and hasattr(obj, "model_copy"):
+            nested_updates: dict[str, Any] = {}
+            for nested_name in nested:
+                nested_val = getattr(obj, nested_name, None)
+                rewritten = _rewrite(nested_val)
+                if rewritten is not nested_val:
+                    nested_updates[nested_name] = rewritten
+            if nested_updates:
+                return obj.model_copy(update=nested_updates)
+        return obj
+
+    updates: dict[str, Any] = {}
     fields = getattr(output, "model_fields", None) or getattr(output, "__fields__", {})
     for name in fields:
         val = getattr(output, name, None)
-        if isinstance(val, str):
-            rel = _rel_under_results(val, results_path)
-            if rel is not None:
-                updates[name] = f"{base}/{rel}" if rel else base
-        elif isinstance(val, list):
-            new_list = []
-            changed = False
-            for item in val:
-                if isinstance(item, str):
-                    rel = _rel_under_results(item, results_path)
-                    if rel is not None:
-                        new_list.append(f"{base}/{rel}" if rel else base)
-                        changed = True
-                    else:
-                        new_list.append(item)
-                else:
-                    new_list.append(item)
-            if changed:
-                updates[name] = new_list
+        rewritten = _rewrite(val)
+        if rewritten is not val:
+            updates[name] = rewritten
 
     if not updates:
         return output
@@ -767,16 +806,39 @@ def restore_passthrough_remotes(output: Any, stage: Any) -> Any:
     mapping = getattr(stage, "local_to_remote", None) if stage is not None else None
     if not mapping or output is None:
         return output
+
+    def _restore(obj: Any) -> Any:
+        if isinstance(obj, str):
+            return mapping.get(obj, obj)
+        if isinstance(obj, dict):
+            new = {k: _restore(v) for k, v in obj.items()}
+            if all(new[k] is obj[k] for k in obj):
+                return obj
+            return new
+        if isinstance(obj, list):
+            new = [_restore(v) for v in obj]
+            if len(new) == len(obj) and all(a is b for a, b in zip(new, obj)):
+                return obj
+            return new
+        nested = getattr(obj, "model_fields", None) or getattr(obj, "__fields__", None)
+        if nested and hasattr(obj, "model_copy"):
+            nested_updates: dict[str, Any] = {}
+            for nested_name in nested:
+                nested_val = getattr(obj, nested_name, None)
+                restored = _restore(nested_val)
+                if restored is not nested_val:
+                    nested_updates[nested_name] = restored
+            if nested_updates:
+                return obj.model_copy(update=nested_updates)
+        return obj
+
     updates: dict[str, Any] = {}
     fields = getattr(output, "model_fields", None) or getattr(output, "__fields__", {})
     for name in fields:
         val = getattr(output, name, None)
-        if isinstance(val, str) and val in mapping:
-            updates[name] = mapping[val]
-        elif isinstance(val, dict) and "data_path" in val and val.get("data_path") in mapping:
-            new_art = dict(val)
-            new_art["data_path"] = mapping[val["data_path"]]
-            updates[name] = new_art
+        restored = _restore(val)
+        if restored != val:
+            updates[name] = restored
     if not updates:
         return output
     if hasattr(output, "model_copy"):

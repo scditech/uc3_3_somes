@@ -36,3 +36,11 @@ def read_history_table(path: str | Path) -> pd.DataFrame:
     if "datetime" in df.columns:
         df["datetime"] = pd.to_datetime(df["datetime"], errors="coerce")
     return df
+
+
+def ensure_department_id(df: pd.DataFrame, default: str = "default") -> pd.DataFrame:
+    """Load series such as measured_last_day.csv have no department column."""
+    if "department_id" not in df.columns:
+        df = df.copy()
+        df["department_id"] = default
+    return df

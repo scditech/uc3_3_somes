@@ -111,7 +111,11 @@ class AnomalyAlertPiece(BasePiece):
                 from common.table_io import read_history_table
             except ModuleNotFoundError:
                 from pieces.common.table_io import read_history_table
-            hist = read_history_table(input_data.history_csv)
+            try:
+                from common.table_io import ensure_department_id
+            except ModuleNotFoundError:
+                from pieces.common.table_io import ensure_department_id
+            hist = ensure_department_id(read_history_table(input_data.history_csv))
             models = json.loads(Path(input_data.models_index_json).read_text(encoding="utf-8"))
 
             alerts: list[dict] = []

@@ -97,7 +97,11 @@ class IncrementalTrainPiece(BasePiece):
                 from common.table_io import read_history_table
             except ModuleNotFoundError:
                 from pieces.common.table_io import read_history_table
-            hist = read_history_table(input_data.history_csv)
+            try:
+                from common.table_io import ensure_department_id
+            except ModuleNotFoundError:
+                from pieces.common.table_io import ensure_department_id
+            hist = ensure_department_id(read_history_table(input_data.history_csv))
             # G33: never overwrite inputs/model_registry — write this run's models
             # under results_path and only seed from the input dir when present.
             model_dir = Path(self.results_path) / "model_registry"
