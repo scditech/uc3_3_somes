@@ -1,19 +1,10 @@
-Import (GitHub / GHCR): UC3.3_SOMES_sequential.json
-Same file also as uc33_somes.customization
-SPICE / Harbor: uc33_somes.spice.customization
+Import tento jeden subor: UC3.3_SOMES.json
 
-Version: 0.3.1
-DAG: 29 nodes, one piece at a time, 2 GiB per pod.
-Same graph as GitLab workflows/UC3.3_SOMES.
+Image: ghcr.io/scditech/uc3_3_somes:0.3.1-group0
+29 nodov, sekvencne, 2 GiB na pod.
 
-Space: SCDI
-Inputs:  onedata:///SCDI/UC3.3_SOMES/inputs/
-Outputs: onedata:///SCDI/UC3.3_SOMES/outputs/
+OneData:
+  onedata:///SCDI/UC3.3_SOMES/inputs/
+  onedata:///SCDI/UC3.3_SOMES/outputs/
 
-Images:
-- ghcr.io/scditech/uc3_3_somes:0.3.1-group0
-- harbor.testbed.spice-platform.eu/partner/uc3/uc3_3_somes:0.3.1-group0
-
-Domino Settings before Create:
-- Storage Source = Local
-- Name: letters/numbers/_ only
+Pred Create: Storage Source = Local. Meno len pismena/cisla/_.
