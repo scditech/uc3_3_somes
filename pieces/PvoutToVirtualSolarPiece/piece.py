@@ -203,6 +203,27 @@ class PvoutToVirtualSolarPiece(BasePiece):
         else:
             report["alignment_mode"] = "exact_timestamp"
 
+        # A forecast that starts the day after the load plan (or the day before)
+        # shares no calendar day. Filling those steps with 0 reports a night and
+        # drops the whole PV plant. Map the nearest forecast day by clock time.
+        if matched < 0.5 * len(load_index) and not series.empty:
+            load_day = pd.Timestamp(load_index.median()).normalize()
+            fc_index = pd.to_datetime(series.index)
+            fc_days = pd.Index(fc_index.normalize().unique()).sort_values()
+            nearest = min(fc_days, key=lambda day: abs(pd.Timestamp(day) - load_day))
+            day_mask = fc_index.normalize() == pd.Timestamp(nearest)
+            by_clock = series.loc[day_mask].copy()
+            by_clock.index = pd.to_datetime(by_clock.index).strftime("%H:%M")
+            by_clock = by_clock[~by_clock.index.duplicated(keep="first")]
+            mapped_clock = by_clock.reindex(pd.to_datetime(load_index).dt.strftime("%H:%M"))
+            clock_hits = int(mapped_clock.notna().sum())
+            if clock_hits > matched:
+                aligned = pd.Series(mapped_clock.to_numpy(), index=load_index.values)
+                matched = clock_hits
+                report["alignment_mode"] = "clock_time_nearest_forecast_day"
+                report["forecast_day_used"] = str(pd.Timestamp(nearest).date())
+                report["load_day"] = str(load_day.date())
+
         filled = aligned.fillna(0.0).clip(lower=0.0)
 
         report["aligned_to_load"] = True
