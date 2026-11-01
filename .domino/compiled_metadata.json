@@ -4719,8 +4719,8 @@
                 "memory": 256
             },
             "limits": {
-                "cpu": 1000,
-                "memory": 1024
+                "cpu": 2000,
+                "memory": 4096
             }
         },
         "input_schema": {
@@ -5603,6 +5603,16 @@
         },
         "description": "Train or incrementally update load models by department",
         "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 500,
+                "memory": 2048
+            },
+            "limits": {
+                "cpu": 2000,
+                "memory": 4096
+            }
+        },
         "input_schema": {
             "properties": {
                 "run_id": {
